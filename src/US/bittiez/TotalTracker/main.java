@@ -10,7 +10,6 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
-import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
 import java.util.logging.Logger;
@@ -24,12 +23,12 @@ public class main extends JavaPlugin implements Listener{
     public final static boolean debug = true;
     private static Logger log;
     private final static Long processEveryMinutes = 10L;
-    private ArrayList<queObject> queObjects;
+    private ArrayList<QueObject> QueObjects;
 
     @Override
     public void onEnable() {
         log = getLogger();
-        queObjects = new ArrayList<queObject>();
+        QueObjects = new ArrayList<QueObject>();
 
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(this, this);
@@ -38,7 +37,7 @@ public class main extends JavaPlugin implements Listener{
         scheduler.scheduleSyncRepeatingTask(this, new Runnable() {
             @Override
             public void run() {
-                if(queObjects.size() > 0){
+                if(QueObjects.size() > 0){
                     runQue();
                 }
             }
@@ -46,7 +45,7 @@ public class main extends JavaPlugin implements Listener{
     }
 
     private void runQue(){
-        queProcessor qp = new queProcessor(queObjects, log);
+        QueProcessor qp = new QueProcessor(new ArrayList<>(QueObjects), log);
         qp.runTaskAsynchronously(this);
     }
 
@@ -57,6 +56,9 @@ public class main extends JavaPlugin implements Listener{
             Entity ekiller = nEvent.getDamager();
             if (ekiller instanceof Player) {
                 //Player killed entity
+                Player p = (Player)ekiller;
+                QueObject queObject = new QueObject(p.getUniqueId().toString(), SQLTABLE.MOB_KILLS);
+                QueObjects.add(queObject);
             }
         }
 
@@ -67,7 +69,12 @@ public class main extends JavaPlugin implements Listener{
         Player victim = e.getEntity();
         Player killer = victim.getKiller();
         if(killer != null){
-
+            QueObject queObject = new QueObject(killer.getUniqueId().toString(), SQLTABLE.PVP_KILLS);
+            QueObjects.add(queObject);
+        }
+        if(victim != null){
+            QueObject queObject = new QueObject(victim.getUniqueId().toString(), SQLTABLE.DEATHS);
+            QueObjects.add(queObject);
         }
     }
 }
