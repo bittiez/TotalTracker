@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 // Every 5? minutes create a processor thread, send the array list to it and clear the original
 
 public class main extends JavaPlugin implements Listener{
+    public final static boolean debug = true;
     private static Logger log;
 
     @Override
