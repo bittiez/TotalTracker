@@ -1,28 +1,40 @@
-#KillTracker
+# TotalTracker
 
-Spigot 1.11 plugin to keep track of various kill stats
+Spigot 1.11 plugin to keep track of all kinds of stats
 
+**This is not functional yet**
 
-#Description
+# Description
 Note: This requires Java 1.8+
 
-This will keep track of players pvp kills and deaths, and also keep track of individual monster kills.
+This will keep track of many stats, currently:
+- PvP kills
+- Mob kills
+- Blocks broken
+- Blocks placed
 
-#Usage
+# Usage
 
-Kill or be killed.
+Do stuff in game
 
-#Permissions
+# Permissions
 
 None, may add them upon request.
 
 
-#Installation
+# Installation
 
 - Place the jar file in your plugins folder
 - Restart your server
+- More installation information to come
 
 
-#Configuration
+# Configuration
 
-Currently no configuration options, may add message templates later.
+Currently no configuration options.
+
+# To-do
+- Create mysql table generator, run on plugin enable
+- Make que actually process que items
+- Finish up queObject
+- Add a mysql library

@@ -20,7 +20,6 @@ public class queProcessor extends BukkitRunnable {
         if(queObjects != null && queObjects.size() > 0){
             if(main.debug)
                 log.info("Trying to process a que of " + queObjects.size() + " queObjects.");
-
         }
     }
 }
