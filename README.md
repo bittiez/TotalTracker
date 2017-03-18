@@ -36,5 +36,5 @@ Currently no configuration options.
 # To-do
 - Create mysql table generator, run on plugin enable
 - Make que actually process que items
-- Finish up queObject
+- Finish up QueObject
 - Add a mysql library
