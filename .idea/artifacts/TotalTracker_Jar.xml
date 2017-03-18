@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="TotalTracker:Jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/TotalTracker_Jar</output-path>
+    <root id="archive" name="TotalTracker.jar">
+      <element id="module-output" name="TotalTracker" />
+    </root>
+  </artifact>
+</component>
