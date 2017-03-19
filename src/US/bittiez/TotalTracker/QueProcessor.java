@@ -29,8 +29,8 @@ public class QueProcessor extends BukkitRunnable {
 
                 //Combine same QueTypes
                 for(QueObject co : ConsolidatedQueObjects){
-                    if (co.Player == o.Player) {
-                        if (co.QueType == o.QueType) {
+                    if (co.Player.equals(o.Player)) {
+                        if (co.QueType.equals(o.QueType)) {
                             co.Quantity += o.Quantity;
                             addNew = false;
                             break;

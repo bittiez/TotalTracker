@@ -9,5 +9,5 @@ public class SQLTABLE {
     public final static String DEATHS = "deaths";
     public final static String MOB_KILLS = "mob_kills";
     public final static String BLOCKS_BROKEN = "blocks_broken";
-    public final static String BLOCKS_PLACED = "blocks_places";
+    public final static String BLOCKS_PLACED = "blocks_placed";
 }

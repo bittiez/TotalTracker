@@ -22,6 +22,7 @@ public class main extends JavaPlugin implements Listener{
     public final static boolean debug = true;
     private static Logger log;
     private final static Long processEveryMinutes = 10L;
+    private final static int MaxCapacity = 250;
     private ArrayList<QueObject> QueObjects;
 
     @Override
@@ -86,16 +87,22 @@ public class main extends JavaPlugin implements Listener{
             QueObject queObject = new QueObject(victim.getUniqueId().toString(), SQLTABLE.DEATHS);
             QueObjects.add(queObject);
         }
+        if(QueObjects.size() >= MaxCapacity)
+            runQue();
     }
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e){
         if(e.getPlayer() != null)
             QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.BLOCKS_BROKEN));
+        if(QueObjects.size() >= MaxCapacity)
+            runQue();
     }
     @EventHandler
     public void onBlockPlaced(BlockPlaceEvent e){
         if(e.getPlayer() != null)
             QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.BLOCKS_PLACED));
+        if(QueObjects.size() >= MaxCapacity)
+            runQue();
     }
 }
