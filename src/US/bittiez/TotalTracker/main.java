@@ -6,6 +6,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -84,5 +86,16 @@ public class main extends JavaPlugin implements Listener{
             QueObject queObject = new QueObject(victim.getUniqueId().toString(), SQLTABLE.DEATHS);
             QueObjects.add(queObject);
         }
+    }
+
+    @EventHandler
+    public void onBlockBreak(BlockBreakEvent e){
+        if(e.getPlayer() != null)
+            QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.BLOCKS_BROKEN));
+    }
+    @EventHandler
+    public void onBlockPlaced(BlockPlaceEvent e){
+        if(e.getPlayer() != null)
+            QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.BLOCKS_PLACED));
     }
 }

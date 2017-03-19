@@ -33,6 +33,7 @@ public class QueProcessor extends BukkitRunnable {
                         if (co.QueType == o.QueType) {
                             co.Quantity += o.Quantity;
                             addNew = false;
+                            break;
                         }
                     }
                 }
