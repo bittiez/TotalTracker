@@ -3,10 +3,16 @@ version: 1.0.0
 author: bittiez
 main: US.bittiez.TotalTracker.main
 commands:
-    tt:
-        description: /tt sync
+    tt sync:
+        description: Processes the que immidiatly
         usage: /tt sync
         permission: TotalTracker.sync
+    tt reload:
+        description: Reloads the config file
+        usage: /tt reload
+        permission: TotalTracker.reload
 permissions:
     TotalTracker.sync:
         description: Allows the use of /tt sync
+    TotalTracker.reload:
+        description: Allows the use of /tt reload

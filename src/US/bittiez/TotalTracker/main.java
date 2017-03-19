@@ -2,6 +2,7 @@ package US.bittiez.TotalTracker;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,11 +25,13 @@ public class main extends JavaPlugin implements Listener{
     private final static Long processEveryMinutes = 10L;
     private final static int MaxCapacity = 250;
     private ArrayList<QueObject> QueObjects;
+    public FileConfiguration config = getConfig();
 
     @Override
     public void onEnable() {
         log = getLogger();
         QueObjects = new ArrayList<QueObject>();
+        createConfig();
 
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(this, this);
@@ -48,6 +51,12 @@ public class main extends JavaPlugin implements Listener{
         if (cmd.getName().equalsIgnoreCase("tt")) {
             if (args[0].equalsIgnoreCase("sync") && sender.hasPermission("TotalTracker.sync")) {
                 runQue();
+                sender.sendMessage("Processing the que now!");
+                return true;
+            } else if(args[0].equalsIgnoreCase("reload") && sender.hasPermission("TotalTracker.reload")){
+                this.reloadConfig();
+                config = getConfig();
+                sender.sendMessage("Config reloaded!");
                 return true;
             }
         }
@@ -58,6 +67,11 @@ public class main extends JavaPlugin implements Listener{
         QueProcessor qp = new QueProcessor(new ArrayList<>(QueObjects), log);
         QueObjects.clear();
         qp.runTaskAsynchronously(this);
+    }
+
+    private void createConfig() {
+        config.options().copyDefaults();
+        saveDefaultConfig();
     }
 
     @EventHandler
