@@ -2,3 +2,11 @@ name: TotalTracker
 version: 1.0.0
 author: bittiez
 main: US.bittiez.TotalTracker.main
+commands:
+    tt:
+        description: /tt sync
+        usage: /tt sync
+        permission: TotalTracker.sync
+permissions:
+    TotalTracker.sync:
+        description: Allows the use of /tt sync

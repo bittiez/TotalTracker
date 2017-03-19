@@ -37,4 +37,3 @@ Currently no configuration options.
 - Create mysql table generator, run on plugin enable
 - Make que actually process que items
 - Add a mysql library
-- Make QueProcessor combine the same que items

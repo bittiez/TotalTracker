@@ -1,5 +1,7 @@
 package US.bittiez.TotalTracker;
 
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,11 +15,6 @@ import org.bukkit.scheduler.BukkitScheduler;
 
 import java.util.ArrayList;
 import java.util.logging.Logger;
-
-//
-// Plan
-// Main Thread
-// Every 5? minutes create a processor thread, send the array list to it and clear the original
 
 public class main extends JavaPlugin implements Listener{
     public final static boolean debug = true;
@@ -44,8 +41,19 @@ public class main extends JavaPlugin implements Listener{
         }, (20L * 60L)*processEveryMinutes, (20L * 60L)*processEveryMinutes);
     }
 
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String args[]) {
+        if (cmd.getName().equalsIgnoreCase("tt")) {
+            if (args[0].equalsIgnoreCase("sync") && sender.hasPermission("TotalTracker.sync")) {
+                runQue();
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void runQue(){
         QueProcessor qp = new QueProcessor(new ArrayList<>(QueObjects), log);
+        QueObjects.clear();
         qp.runTaskAsynchronously(this);
     }
 

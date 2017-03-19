@@ -1,6 +1,5 @@
 package US.bittiez.TotalTracker;
 
-import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
