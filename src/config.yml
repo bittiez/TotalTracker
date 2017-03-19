@@ -3,4 +3,6 @@ mysql_username: "root"
 mysql_password: "12345"
 mysql_database: "myDB"
 mysql_address: "localhost"
+
+# Most MySQL installs default to 3306
 mysql_port: 3306

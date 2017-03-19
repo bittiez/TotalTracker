@@ -24,14 +24,16 @@ None, may add them upon request.
 
 # Installation
 
+- Create a new MySQL Database, do not create an tables, the plugin will do that for you.
 - Place the jar file in your plugins folder
 - Restart your server
-- More installation information to come
+- Edit the configuration options
 
 
 # Configuration
 
-Currently no configuration options.
+
+https://github.com/bittiez/TotalTracker/blob/master/src/config.yml
 
 # To-do
 - Create mysql table generator, run on plugin enable
