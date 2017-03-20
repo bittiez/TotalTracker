@@ -61,7 +61,7 @@ public class SQLTABLE {
         String insert = "INSERT INTO "
                 + genFullTableSQL()
                 + " (" + PLAYER + ", " + PLAYER + "_name, " + queObject.QueType + ")"
-                + " VALUES (" + queObject.Player + ", " + MySQLQuotes(queObject.PlayerName) + ", " + queObject.Quantity + ") "
+                + " VALUES (" + MySQLQuotes(queObject.Player) + ", " + MySQLQuotes(queObject.PlayerName) + ", " + queObject.Quantity + ") "
                 + "ON DUPLICATE KEY UPDATE "
                 + queObject.QueType + "=" + queObject.QueType + "+" + queObject.Quantity + ";"
             ;
