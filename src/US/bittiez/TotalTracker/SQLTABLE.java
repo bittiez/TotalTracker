@@ -31,7 +31,8 @@ public class SQLTABLE {
             sql.append("`" + DEATHS + "` int(10), ");
             sql.append("`" + MOB_KILLS + "` int(10), ");
             sql.append("`" + BLOCKS_PLACED + "` int(10), ");
-            sql.append("PRIMARY KEY (`id`)");
+            sql.append("PRIMARY KEY (`id`),");
+            sql.append("UNIQUE KEY (`player`)");
             sql.append(") ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;");
             sqlQueries.add(sql.toString());
             version++;
@@ -56,11 +57,23 @@ public class SQLTABLE {
         return sqlQueries;
     }
 
-    public static String genINSERT(String player, QueObject queObject){
-        return "";
+    public static String genINSERT(QueObject queObject){
+        String insert = "INSERT INTO "
+                + genFullTableSQL()
+                + " (" + PLAYER + ", " + PLAYER + "_name, " + queObject.QueType + ")"
+                + " VALUES (" + queObject.Player + ", " + MySQLQuotes(queObject.PlayerName) + ", " + queObject.Quantity + ") "
+                + "ON DUPLICATE KEY UPDATE "
+                + queObject.QueType + "=" + queObject.QueType + "+" + queObject.Quantity + ";"
+            ;
+
+        return insert;
     }
 
     public static String genFullTableSQL(){
         return "`" + main.database + "`.`" + main.prefix + "`";
+    }
+
+    private static String MySQLQuotes(String original){
+        return "'" + original + "'";
     }
 }

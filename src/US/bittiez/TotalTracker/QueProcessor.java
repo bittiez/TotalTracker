@@ -44,8 +44,10 @@ public class QueProcessor extends BukkitRunnable {
             }
             //Done consolidating, time to do the MySQL
             for(QueObject co : ConsolidatedQueObjects) {
-                if(main.debug)
-                    log.info("Saving [" + co.Quantity + "] x [" + co.QueType + "] for [[UUID]" + co.Player + "]");
+                if(main.debug) {
+                    log.info("Saving [" + co.Quantity + "] x [" + co.QueType + "] for [" + co.PlayerName + "]");
+                    log.info("RUNSQL: " + SQLTABLE.genINSERT(co));
+                }
             }
         }
     }

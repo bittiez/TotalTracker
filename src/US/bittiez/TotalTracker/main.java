@@ -98,7 +98,7 @@ public class main extends JavaPlugin implements Listener{
             if (ekiller instanceof Player) {
                 //Player killed entity
                 Player p = (Player)ekiller;
-                QueObject queObject = new QueObject(p.getUniqueId().toString(), SQLTABLE.MOB_KILLS);
+                QueObject queObject = new QueObject(p.getUniqueId().toString(), SQLTABLE.MOB_KILLS, p.getDisplayName());
                 QueObjects.add(queObject);
             }
         }
@@ -110,11 +110,11 @@ public class main extends JavaPlugin implements Listener{
         Player victim = e.getEntity();
         Player killer = victim.getKiller();
         if(killer != null){
-            QueObject queObject = new QueObject(killer.getUniqueId().toString(), SQLTABLE.PVP_KILLS);
+            QueObject queObject = new QueObject(killer.getUniqueId().toString(), SQLTABLE.PVP_KILLS, killer.getDisplayName());
             QueObjects.add(queObject);
         }
         if(victim != null){
-            QueObject queObject = new QueObject(victim.getUniqueId().toString(), SQLTABLE.DEATHS);
+            QueObject queObject = new QueObject(victim.getUniqueId().toString(), SQLTABLE.DEATHS, victim.getDisplayName());
             QueObjects.add(queObject);
         }
         if(QueObjects.size() >= MaxCapacity)
@@ -124,14 +124,14 @@ public class main extends JavaPlugin implements Listener{
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e){
         if(e.getPlayer() != null)
-            QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.BLOCKS_BROKEN));
+            QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.BLOCKS_BROKEN, e.getPlayer().getDisplayName()));
         if(QueObjects.size() >= MaxCapacity)
             runQue();
     }
     @EventHandler
     public void onBlockPlaced(BlockPlaceEvent e){
         if(e.getPlayer() != null)
-            QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.BLOCKS_PLACED));
+            QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.BLOCKS_PLACED, e.getPlayer().getDisplayName()));
         if(QueObjects.size() >= MaxCapacity)
             runQue();
     }
