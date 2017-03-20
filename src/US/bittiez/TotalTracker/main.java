@@ -37,7 +37,7 @@ public class main extends JavaPlugin implements Listener{
         createConfig();
 
         if(!config.getBoolean("setup_complete")){
-            log.warning("You must edit your config file and restart the server to finish setting up TotalTracker.");
+            log.warning("You must edit your config file and restart the server to finish setting up TotalTracker. Make sure to change setup_complete to true when you are finished.");
             setEnabled(false);
         } else {
 
