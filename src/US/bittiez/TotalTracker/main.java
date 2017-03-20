@@ -22,8 +22,8 @@ import java.util.logging.Logger;
 public class main extends JavaPlugin implements Listener{
     public final static boolean debug = true;
     public static Logger log;
-    private final static Long processEveryMinutes = 10L;
-    private final static int MaxCapacity = 250;
+    private final static Long processEveryMinutes = 5L;
+    private final static int MaxCapacity = 150;
     private ArrayList<QueObject> QueObjects;
 
     public FileConfiguration config = getConfig();
