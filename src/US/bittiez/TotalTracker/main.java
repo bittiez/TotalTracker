@@ -21,11 +21,14 @@ import java.util.logging.Logger;
 
 public class main extends JavaPlugin implements Listener{
     public final static boolean debug = true;
-    private static Logger log;
+    public static Logger log;
     private final static Long processEveryMinutes = 10L;
     private final static int MaxCapacity = 250;
     private ArrayList<QueObject> QueObjects;
+
     public FileConfiguration config = getConfig();
+    public static String prefix;
+    public static String database;
 
     @Override
     public void onEnable() {
@@ -33,18 +36,31 @@ public class main extends JavaPlugin implements Listener{
         QueObjects = new ArrayList<QueObject>();
         createConfig();
 
-        PluginManager pm = getServer().getPluginManager();
-        pm.registerEvents(this, this);
+        if(!config.getBoolean("setup_complete")){
+            log.warning("You must edit your config file and restart the server to finish setting up TotalTracker.");
+            setEnabled(false);
+        } else {
 
-        BukkitScheduler scheduler = getServer().getScheduler();
-        scheduler.scheduleSyncRepeatingTask(this, new Runnable() {
-            @Override
-            public void run() {
-                if(QueObjects.size() > 0){
-                    runQue();
+            prefix = config.getString("mysql_db_prefix", "") + "TotalTracker";
+            database = config.getString("mysql_database");
+
+            PluginManager pm = getServer().getPluginManager();
+            pm.registerEvents(this, this);
+
+            BukkitScheduler scheduler = getServer().getScheduler();
+            scheduler.scheduleSyncRepeatingTask(this, new Runnable() {
+                @Override
+                public void run() {
+                    if (QueObjects.size() > 0) {
+                        runQue();
+                    }
                 }
-            }
-        }, (20L * 60L)*processEveryMinutes, (20L * 60L)*processEveryMinutes);
+            }, (20L * 60L) * processEveryMinutes, (20L * 60L) * processEveryMinutes);
+
+            ArrayList<String> queries = SQLTABLE.genSQL(config);
+            for (String q : queries)
+                log.info("RUN SQL: " + q);
+        }
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String args[]) {
