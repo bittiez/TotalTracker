@@ -1,8 +1,9 @@
 package US.bittiez.TotalTracker;
 
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class SQLTABLE {
@@ -13,7 +14,7 @@ public class SQLTABLE {
     public final static String BLOCKS_BROKEN = "blocks_broken";
     public final static String BLOCKS_PLACED = "blocks_placed";
 
-    public static ArrayList<String> genSQL(FileConfiguration config){
+    public static ArrayList<String> genSQL(FileConfiguration config, File dataPath){
         int version = config.getInt("db_version", 1);
         ArrayList<String> sqlQueries = new ArrayList<String>();
 
@@ -40,11 +41,17 @@ public class SQLTABLE {
             version++;
         }
 
-        try {
-            config.set("db_version", version);
-            config.save(config.getCurrentPath() + "/" + config.getName());
-        } catch(Exception e) {
-            main.log.severe("Could not save the config file, please manually change db_version to " + version + " before starting your server next!");
+        if(version != config.getInt("db_version", 1)){
+            try {
+                config.set("db_version", version);
+                if (main.debug)
+                    main.log.info("Saving config file at: " + Paths.get(dataPath.getPath(), "TotalTracker", "config.yml").toString());
+                config.save(Paths.get(dataPath.getPath(), "config.yml").toString());
+            } catch (Exception e) {
+                main.log.severe("Could not save the config file, please manually change db_version to " + version + " before starting your server next!");
+                if (main.debug)
+                    e.printStackTrace();
+            }
         }
         return sqlQueries;
     }

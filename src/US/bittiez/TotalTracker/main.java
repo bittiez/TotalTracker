@@ -57,7 +57,7 @@ public class main extends JavaPlugin implements Listener{
                 }
             }, (20L * 60L) * processEveryMinutes, (20L * 60L) * processEveryMinutes);
 
-            ArrayList<String> queries = SQLTABLE.genSQL(config);
+            ArrayList<String> queries = SQLTABLE.genSQL(config, getDataFolder());
             for (String q : queries)
                 log.info("RUN SQL: " + q);
         }
