@@ -4,5 +4,16 @@ mysql_password: "12345"
 mysql_database: "myDB"
 mysql_address: "localhost"
 
+# If set, this will add a prefix to the TotalTracker table
+mysql_db_prefix: ""
+
 # Most MySQL installs default to 3306
 mysql_port: 3306
+
+
+# Do not edit this, you WILL break the plugin.
+# Reset to 1 if you want to wipe your database and start fresh
+db_version: 1
+
+# Set this to true after you have set up your database information, then you have to restart your server(reload will not work for the first set up)
+setup_complete: false
