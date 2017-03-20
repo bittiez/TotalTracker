@@ -21,9 +21,9 @@ public class SQLTABLE {
         if(version == 1) {
             StringBuilder sql = new StringBuilder();
 
-            sqlQueries.add("DROP TABLE IF EXISTS `" + main.database + "." + main.prefix + "`");
+            sqlQueries.add("DROP TABLE IF EXISTS " + genFullTableSQL() + ";");
 
-            sql.append("CREATE TABLE IF NOT EXISTS `" + main.database + "." + main.prefix + "` (");
+            sql.append("CREATE TABLE IF NOT EXISTS "+genFullTableSQL()+" (");
             sql.append("`id` int(10) not null auto_increment, ");
             sql.append("`" + PLAYER + "` char(36), ");
             sql.append("`" + PLAYER + "_name` text(32), ");
@@ -37,7 +37,7 @@ public class SQLTABLE {
             version++;
         }
         if(version == 2){
-            sqlQueries.add("ALTER TABLE `" + main.database + "." + main.prefix + "` ADD `"+ BLOCKS_BROKEN +"` int(10);");
+            sqlQueries.add("ALTER TABLE "+genFullTableSQL()+" ADD `"+ BLOCKS_BROKEN +"` int(10);");
             version++;
         }
 
@@ -58,5 +58,9 @@ public class SQLTABLE {
 
     public static String genINSERT(String player, QueObject queObject){
         return "";
+    }
+
+    public static String genFullTableSQL(){
+        return "`" + main.database + "`.`" + main.prefix + "`";
     }
 }
