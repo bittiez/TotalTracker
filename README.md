@@ -2,13 +2,15 @@
 
 Spigot 1.11 plugin to keep track of all kinds of stats
 
-**This is not functional yet**
+**This requires MySQL**   
+I do not plan to develop this for other databases for several reasons, sorry!
 
 # Description
 Note: This requires Java 1.8+
 
 This will keep track of many stats, currently:
 - PvP kills
+- Deaths
 - Mob kills
 - Blocks broken
 - Blocks placed
@@ -28,6 +30,7 @@ None, may add them upon request.
 - Place the jar file in your plugins folder
 - Restart your server
 - Edit the configuration options
+- Restart your server again
 
 
 # Configuration
@@ -36,5 +39,6 @@ None, may add them upon request.
 https://github.com/bittiez/TotalTracker/blob/master/src/config.yml
 
 # To-do
-- Create mysql table generator, run on plugin enable
-- Add a mysql library
+- Add distance walked
+- Add log-ins
+- Add chat messages
