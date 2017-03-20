@@ -25,3 +25,5 @@ db_version: 1
 
 # Set this to true after you have set up your database information, then you have to restart your server(reload will not work for the first set up)
 setup_complete: false
+
+debug: false

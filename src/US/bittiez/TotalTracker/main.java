@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 
 public class main extends JavaPlugin implements Listener{
-    public final static boolean debug = true;
+    public static boolean debug = true;
     public static Logger log;
     private static Long processEveryMinutes = 5L;
     private static int MaxCapacity = 150;
@@ -47,6 +47,7 @@ public class main extends JavaPlugin implements Listener{
             database = config.getString("mysql_database");
             processEveryMinutes = config.getLong("sync_interval", 5);
             MaxCapacity = config.getInt("max_before_sync", 150);
+            debug = config.getBoolean("debug", false);
 
             PluginManager pm = getServer().getPluginManager();
             pm.registerEvents(this, this);
