@@ -63,7 +63,8 @@ public class SQLTABLE {
                 + " (" + PLAYER + ", " + PLAYER + "_name, " + queObject.QueType + ")"
                 + " VALUES (" + MySQLQuotes(queObject.Player) + ", " + MySQLQuotes(queObject.PlayerName) + ", " + queObject.Quantity + ") "
                 + "ON DUPLICATE KEY UPDATE "
-                + queObject.QueType + "=" + queObject.QueType + "+" + queObject.Quantity + ";"
+                + queObject.QueType + "=" + queObject.QueType + "+" + queObject.Quantity + ", "
+                + PLAYER + "_name=" + MySQLQuotes(queObject.PlayerName) + ";"
             ;
 
         return insert;

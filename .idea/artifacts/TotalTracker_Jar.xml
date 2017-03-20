@@ -3,6 +3,7 @@
     <output-path>$PROJECT_DIR$/out/artifacts/TotalTracker_Jar</output-path>
     <root id="archive" name="TotalTracker.jar">
       <element id="module-output" name="TotalTracker" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/sql2o-1.5.4.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

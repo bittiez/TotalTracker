@@ -15,6 +15,8 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
+import org.sql2o.Connection;
+import org.sql2o.Sql2o;
 
 import java.util.ArrayList;
 import java.util.logging.Logger;
@@ -59,10 +61,30 @@ public class main extends JavaPlugin implements Listener{
                 }
             }, (20L * 60L) * processEveryMinutes, (20L * 60L) * processEveryMinutes);
 
-            ArrayList<String> queries = SQLTABLE.genSQL(config, getDataFolder());
-            for (String q : queries)
-                log.info("RUN SQL: " + q);
+            tableSetup();
         }
+    }
+
+    public void tableSetup(){
+        ArrayList<String> queries = SQLTABLE.genSQL(config, getDataFolder());
+        if(queries.size() > 0) {
+            Sql2o SQL = new Sql2o(genMySQLUrl(config), config.getString("mysql_username"), config.getString("mysql_password"));
+            try(Connection con = SQL.open()) {
+                for (String q : queries) {
+                    if (debug)
+                        log.info("RUN SQL: " + q);
+                    con.createQuery(q).executeUpdate();
+                }
+            } catch (Exception e) {
+                log.severe("Failed to connect to the database, make sure your connection information is correct!");
+                if(debug)
+                    e.printStackTrace();
+            }
+        }
+    }
+
+    public static String genMySQLUrl(FileConfiguration config){
+        return "jdbc:mysql://" + config.getString("mysql_address") + ":" + config.getString("mysql_port") + "/" + config.getString("mysql_database");
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String args[]) {
@@ -82,7 +104,7 @@ public class main extends JavaPlugin implements Listener{
     }
 
     private void runQue(){
-        QueProcessor qp = new QueProcessor(new ArrayList<>(QueObjects), log);
+        QueProcessor qp = new QueProcessor(new ArrayList<>(QueObjects), log, config);
         QueObjects.clear();
         qp.runTaskAsynchronously(this);
     }
