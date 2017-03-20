@@ -1,3 +1,11 @@
+# Sync config
+
+# How many minutes in between saving to the database? Higher = more to process at one time, and should the server crash anything not synced will be lost
+sync_interval: 5.0
+#How many actions should be saved in memory before syncing to the database? More = higher memory usage
+max_before_sync: 150
+
+
 # MySQL
 mysql_username: "root"
 mysql_password: "12345"

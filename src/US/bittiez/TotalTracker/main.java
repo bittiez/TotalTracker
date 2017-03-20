@@ -22,8 +22,8 @@ import java.util.logging.Logger;
 public class main extends JavaPlugin implements Listener{
     public final static boolean debug = true;
     public static Logger log;
-    private final static Long processEveryMinutes = 5L;
-    private final static int MaxCapacity = 150;
+    private static Long processEveryMinutes = 5L;
+    private static int MaxCapacity = 150;
     private ArrayList<QueObject> QueObjects;
 
     public FileConfiguration config = getConfig();
@@ -43,6 +43,8 @@ public class main extends JavaPlugin implements Listener{
 
             prefix = config.getString("mysql_db_prefix", "") + "TotalTracker";
             database = config.getString("mysql_database");
+            processEveryMinutes = config.getLong("sync_interval", 5);
+            MaxCapacity = config.getInt("max_before_sync", 150);
 
             PluginManager pm = getServer().getPluginManager();
             pm.registerEvents(this, this);

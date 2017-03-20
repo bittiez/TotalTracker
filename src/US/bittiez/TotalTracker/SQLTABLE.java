@@ -27,10 +27,10 @@ public class SQLTABLE {
             sql.append("`id` int(10) not null auto_increment, ");
             sql.append("`" + PLAYER + "` char(36), ");
             sql.append("`" + PLAYER + "_name` text(32), ");
-            sql.append("`" + PVP_KILLS + "` int(10), ");
-            sql.append("`" + DEATHS + "` int(10), ");
-            sql.append("`" + MOB_KILLS + "` int(10), ");
-            sql.append("`" + BLOCKS_PLACED + "` int(10), ");
+            sql.append("`" + PVP_KILLS + "` int(10) default '0', ");
+            sql.append("`" + DEATHS + "` int(10) default '0', ");
+            sql.append("`" + MOB_KILLS + "` int(10) default '0', ");
+            sql.append("`" + BLOCKS_PLACED + "` int(10) default '0', ");
             sql.append("PRIMARY KEY (`id`),");
             sql.append("UNIQUE KEY (`player`)");
             sql.append(") ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;");
@@ -38,7 +38,7 @@ public class SQLTABLE {
             version++;
         }
         if(version == 2){
-            sqlQueries.add("ALTER TABLE "+genFullTableSQL()+" ADD `"+ BLOCKS_BROKEN +"` int(10);");
+            sqlQueries.add("ALTER TABLE "+genFullTableSQL()+" ADD `"+ BLOCKS_BROKEN +"` int(10) default '0';");
             version++;
         }
 
