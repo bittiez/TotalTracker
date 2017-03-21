@@ -12,6 +12,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -147,16 +148,25 @@ public class main extends JavaPlugin implements Listener{
     }
 
     @EventHandler
+    public void OnPlayerJoin(PlayerJoinEvent e){
+        QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.JOINS, e.getPlayer().getDisplayName()));
+        checkQue();
+    }
+
+    @EventHandler
     public void onBlockBreak(BlockBreakEvent e){
         if(e.getPlayer() != null)
             QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.BLOCKS_BROKEN, e.getPlayer().getDisplayName()));
-        if(QueObjects.size() >= MaxCapacity)
-            runQue();
+        checkQue();
     }
     @EventHandler
     public void onBlockPlaced(BlockPlaceEvent e){
         if(e.getPlayer() != null)
             QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.BLOCKS_PLACED, e.getPlayer().getDisplayName()));
+        checkQue();
+    }
+
+    private void checkQue(){
         if(QueObjects.size() >= MaxCapacity)
             runQue();
     }
