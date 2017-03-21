@@ -42,3 +42,13 @@ https://github.com/bittiez/TotalTracker/blob/master/src/config.yml
 - Add distance walked
 - Add log-ins
 - Add chat messages
+- Add fish caught
+- Add items crafted
+- Add XP Gained
+- Add Damage taken
+- Add Damage done
+- Add food eaten
+- Add items picked up
+- Add items dropped
+- Add buckets filled
+- Add arrows shot
