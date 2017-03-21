@@ -40,7 +40,6 @@ https://github.com/bittiez/TotalTracker/blob/master/src/config.yml
 
 # To-do
 - Add distance walked
-- Add log-ins
 - Add chat messages
 - Add fish caught
 - Add items crafted
