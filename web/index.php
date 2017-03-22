@@ -9,7 +9,7 @@
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/sb-admin.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -20,52 +20,46 @@
     <![endif]-->
   </head>
   <body>
-    <div class="container-fluid">
-      <div id="page-wrapper">
-
-      <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">
-                TotalTracker Stats
-            </h1>
-        </div>
-    </div>
-
+<div class="wrapper">
 
     <div class="row">
-      <div class="col-sm-3">
+      <div class="col-sm-6">
         <h2>Blocks Broken</h2>
         <div class="table-responsive" id="bBroken">
             Loading stats..
         </div>
       </div>
-      <div class="col-sm-3">
+      <div class="col-sm-6">
         <h2>Blocks Placed</h2>
         <div class="table-responsive" id="bPlaced">
             Loading stats..
         </div>
       </div>
-      <div class="col-sm-3">
-        <h2>Player Kills</h2>
-        <div class="table-responsive" id="pKills">
-            Loading stats..
-        </div>
-      </div>
     </div>
+
     <div class="row">
-      <div class="col-sm-3">
+      <div class="col-sm-6">
         <h2>Player Deaths</h2>
         <div class="table-responsive" id="pDeaths">
             Loading stats..
         </div>
       </div>
-      <div class="col-sm-3">
+      <div class="col-sm-6">
         <h2>Mob Kills</h2>
         <div class="table-responsive" id="mKills">
             Loading stats..
         </div>
       </div>
-      <div class="col-sm-3">
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <h2>Player Kills</h2>
+        <div class="table-responsive" id="pKills">
+            Loading stats..
+        </div>
+      </div>
+      <div class="col-sm-6">
         <h2>Player Logins</h2>
         <div class="table-responsive" id="pLogins">
             Loading stats..
@@ -73,7 +67,7 @@
       </div>
     </div>
 
-</div>
+
 </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
