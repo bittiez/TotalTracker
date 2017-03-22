@@ -8,12 +8,15 @@ I do not plan to develop this for other databases for several reasons, sorry!
 # Description
 Note: This requires Java 1.8+
 
+All stats are processed asynchronously so your server never experiences any lag.
+
 This will keep track of many stats, currently:
 - PvP kills
 - Deaths
 - Mob kills
 - Blocks broken
 - Blocks placed
+- Logins
 
 # Usage
 
