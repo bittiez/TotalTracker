@@ -1,8 +1,3 @@
-<?php
-require_once('config.php');
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -40,34 +35,62 @@ require_once('config.php');
     <div class="row">
       <div class="col-sm-3">
         <h2>Blocks Broken</h2>
-          <div class="table-responsive">
-              <table class="table table-bordered table-hover">
-                  <thead>
-                      <tr>
-                          <th>Player</th>
-                          <th>Blocks Broken</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      <tr>
-                          <td>/index.html</td>
-                          <td>1265</td>
-                      </tr>
-                      <tr>
-                          <td>/about.html</td>
-                          <td>261</td>
-                      </tr>
-                  </tbody>
-              </table>
-          </div>
+        <div class="table-responsive" id="bBroken">
+            Loading stats..
+        </div>
       </div>
-      <div class="col-sm-3"></div>
-      <div class="col-sm-3"></div>
+      <div class="col-sm-3">
+        <h2>Blocks Placed</h2>
+        <div class="table-responsive" id="bPlaced">
+            Loading stats..
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <h2>Player Kills</h2>
+        <div class="table-responsive" id="pKills">
+            Loading stats..
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-3">
+        <h2>Player Deaths</h2>
+        <div class="table-responsive" id="pDeaths">
+            Loading stats..
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <h2>Mob Kills</h2>
+        <div class="table-responsive" id="mKills">
+            Loading stats..
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <h2>Player Logins</h2>
+        <div class="table-responsive" id="pLogins">
+            Loading stats..
+        </div>
+      </div>
     </div>
 
 </div>
 </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+
+    <script>
+    function loadStat(id, type){
+      $.get( "ajax.php?type=" + type, function( data ) {
+        $("#" + id).html(data);
+      });
+    }
+
+    loadStat("bBroken", "blocks_broken");
+    loadStat("bPlaced", "blocks_placed");
+    loadStat("pKills", "pvp_kills");
+    loadStat("pDeaths", "deaths");
+    loadStat("mKills", "mob_kills");
+    loadStat("pLogins", "logins");
+    </script>
   </body>
 </html>
