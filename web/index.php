@@ -23,48 +23,46 @@
 <div class="wrapper">
 
     <div class="row">
-      <div class="col-sm-6">
+
+      <div class="col-sm-3">
         <h2>Blocks Broken</h2>
-        <div class="table-responsive" id="bBroken">
+        <div id="bBroken">
             Loading stats..
         </div>
       </div>
-      <div class="col-sm-6">
+      <div class="col-sm-3">
         <h2>Blocks Placed</h2>
-        <div class="table-responsive" id="bPlaced">
+        <div id="bPlaced">
             Loading stats..
         </div>
       </div>
-    </div>
 
-    <div class="row">
-      <div class="col-sm-6">
+      <div class="col-sm-3">
         <h2>Player Deaths</h2>
-        <div class="table-responsive" id="pDeaths">
+        <div id="pDeaths">
             Loading stats..
         </div>
       </div>
-      <div class="col-sm-6">
+      <div class="col-sm-3">
         <h2>Mob Kills</h2>
-        <div class="table-responsive" id="mKills">
+        <div id="mKills">
             Loading stats..
         </div>
       </div>
-    </div>
 
-    <div class="row">
-      <div class="col-sm-6">
+      <div class="col-sm-3">
         <h2>Player Kills</h2>
-        <div class="table-responsive" id="pKills">
+        <div id="pKills">
             Loading stats..
         </div>
       </div>
-      <div class="col-sm-6">
+      <div class="col-sm-3">
         <h2>Player Logins</h2>
-        <div class="table-responsive" id="pLogins">
+        <div id="pLogins">
             Loading stats..
         </div>
       </div>
+
     </div>
 
 
