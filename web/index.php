@@ -71,18 +71,28 @@
     <script src="js/bootstrap.min.js"></script>
 
     <script>
-    function loadStat(id, type){
-      $.get( "ajax.php?type=" + type, function( data ) {
+    function loadStat(id, type, args){
+      var url = "ajax.php?type=" + type;
+      if(args.title != null)
+        url = url + "&table_title="+args.title;
+      $.get( url, function( data ) {
         $("#" + id).html(data);
       });
     }
 
-    loadStat("bBroken", "blocks_broken");
-    loadStat("bPlaced", "blocks_placed");
-    loadStat("pKills", "pvp_kills");
-    loadStat("pDeaths", "deaths");
-    loadStat("mKills", "mob_kills");
-    loadStat("pLogins", "logins");
+    //Stats setup: [ID Of where to put the ajax content, database column name, title for the # column]
+    var stats = [
+      ["bBroken", "blocks_broken", "Blocks Broken"],
+      ["bPlaced", "blocks_placed", "Blocks Placed"],
+      ["pKills", "pvp_kills", "PvP Kills"],
+      ["pDeaths", "deaths", "Deaths"],
+      ["mKills", "mob_kills", "Mob Kills"],
+      ["pLogins", "logins", "Login Count"]
+    ];
+
+    for (var i = 0; i < stats.length; i++) {
+      loadStat(stats[i][0], stats[i][1], {title:stats[i][2]});
+    }
     </script>
   </body>
 </html>
