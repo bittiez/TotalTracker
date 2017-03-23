@@ -29,7 +29,7 @@ None, may add them upon request.
 
 # Installation
 
-- Create a new MySQL Database, do not create an tables, the plugin will do that for you.
+- Create a new MySQL Database, do not create any tables, the plugin will do that for you.
 - Place the jar file in your plugins folder
 - Restart your server
 - Edit the configuration options
