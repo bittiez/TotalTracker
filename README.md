@@ -35,6 +35,13 @@ None, may add them upon request.
 - Edit the configuration options
 - Restart your server again
 
+**Web Portion**
+
+- Upload the included files
+- Edit the config.php
+- Done!
+- (You may edit any files you want to suit your needs/preferences)
+
 
 # Configuration
 
