@@ -23,40 +23,40 @@
 <div class="wrapper">
 
     <div class="row">
-
-      <div class="col-sm-3">
+<?php $gClass = "col-lg-3 col-md-4 col-sm-6 col-xs-12"; ?>
+      <div class="<?php echo $gClass; ?>">
         <h2>Blocks Broken</h2>
         <div id="bBroken">
             Loading stats..
         </div>
       </div>
-      <div class="col-sm-3">
+      <div class="<?php echo $gClass; ?>">
         <h2>Blocks Placed</h2>
         <div id="bPlaced">
             Loading stats..
         </div>
       </div>
 
-      <div class="col-sm-3">
+      <div class="<?php echo $gClass; ?>">
         <h2>Player Deaths</h2>
         <div id="pDeaths">
             Loading stats..
         </div>
       </div>
-      <div class="col-sm-3">
+      <div class="<?php echo $gClass; ?>">
         <h2>Mob Kills</h2>
         <div id="mKills">
             Loading stats..
         </div>
       </div>
 
-      <div class="col-sm-3">
+      <div class="<?php echo $gClass; ?>">
         <h2>Player Kills</h2>
         <div id="pKills">
             Loading stats..
         </div>
       </div>
-      <div class="col-sm-3">
+      <div class="<?php echo $gClass; ?>">
         <h2>Player Logins</h2>
         <div id="pLogins">
             Loading stats..
