@@ -1,5 +1,5 @@
 name: TotalTracker
-version: 1.2.0
+version: 1.3.0
 author: bittiez
 main: US.bittiez.TotalTracker.main
 commands:

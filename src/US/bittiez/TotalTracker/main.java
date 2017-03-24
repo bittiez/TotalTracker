@@ -166,6 +166,17 @@ public class main extends JavaPlugin implements Listener{
     }
 
     @EventHandler
+    public void OnEntityDamageByEntity(EntityDamageByEntityEvent e){
+        if(e.getDamager() instanceof Player){
+            Player p = (Player)e.getDamager();
+            QueObject de = new QueObject(p.getUniqueId().toString(), SQLTABLE.DAMAGE_CAUSED, p.getDisplayName());
+            de.Quantity = (int)e.getFinalDamage();
+            QueObjects.add(de);
+            checkQue();
+        }
+    }
+
+    @EventHandler
     public void onBlockBreak(BlockBreakEvent e){
         if(e.getPlayer() != null)
             QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.BLOCKS_BROKEN, e.getPlayer().getDisplayName()));
