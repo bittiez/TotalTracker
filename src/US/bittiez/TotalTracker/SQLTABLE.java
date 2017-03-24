@@ -14,6 +14,7 @@ public class SQLTABLE {
     public final static String BLOCKS_BROKEN = "blocks_broken";
     public final static String BLOCKS_PLACED = "blocks_placed";
     public final static String JOINS = "logins";
+    public final static String DAMAGE_TAKEN = "damage_taken";
 
     public static ArrayList<String> genSQL(FileConfiguration config, File dataPath){
         int version = config.getInt("db_version", 1);
@@ -44,6 +45,10 @@ public class SQLTABLE {
         }
         if(version == 3){
             sqlQueries.add("ALTER TABLE "+genFullTableSQL()+" ADD `"+ JOINS +"` int(10) default '0';");
+            version++;
+        }
+        if(version == 4){
+            sqlQueries.add("ALTER TABLE "+genFullTableSQL()+" ADD `"+ DAMAGE_TAKEN +"` int(10) default '0';");
             version++;
         }
 

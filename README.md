@@ -17,6 +17,7 @@ This will keep track of many stats, currently:
 - Blocks broken
 - Blocks placed
 - Logins
+- Damage Taken
 
 # Usage
 
@@ -57,7 +58,6 @@ https://github.com/bittiez/TotalTracker/blob/master/src/config.yml
 - Add fish caught
 - Add items crafted
 - Add XP Gained
-- Add Damage taken
 - Add Damage done
 - Add food eaten
 - Add items picked up

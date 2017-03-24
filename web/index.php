@@ -62,6 +62,12 @@
             Loading stats..
         </div>
       </div>
+      <div class="<?php echo $gClass; ?>">
+        <h2>Damage Taken</h2>
+        <div id="dTaken">
+            Loading stats..
+        </div>
+      </div>
 
     </div>
 
@@ -87,7 +93,8 @@
       ["pKills", "pvp_kills", "PvP Kills"],
       ["pDeaths", "deaths", "Deaths"],
       ["mKills", "mob_kills", "Mob Kills"],
-      ["pLogins", "logins", "Login Count"]
+      ["pLogins", "logins", "Login Count"],
+      ["dTaken", "damage_taken", "Damage Taken"]
     ];
 
     for (var i = 0; i < stats.length; i++) {

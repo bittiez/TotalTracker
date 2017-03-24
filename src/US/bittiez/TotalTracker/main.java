@@ -10,6 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -151,6 +152,17 @@ public class main extends JavaPlugin implements Listener{
     public void OnPlayerJoin(PlayerJoinEvent e){
         QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.JOINS, e.getPlayer().getDisplayName()));
         checkQue();
+    }
+
+    @EventHandler
+    public void OnEntityDamage(EntityDamageEvent e){
+        if(e.getEntity() instanceof Player){
+            Player p = (Player)e.getEntity();
+            QueObject de = new QueObject(p.getUniqueId().toString(), SQLTABLE.DAMAGE_TAKEN, p.getDisplayName());
+            de.Quantity = (int)e.getFinalDamage();
+            QueObjects.add(de);
+            checkQue();
+        }
     }
 
     @EventHandler
