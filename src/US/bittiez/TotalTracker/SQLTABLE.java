@@ -16,6 +16,7 @@ public class SQLTABLE {
     public final static String JOINS = "logins";
     public final static String DAMAGE_TAKEN = "damage_taken";
     public final static String DAMAGE_CAUSED = "damage_caused";
+    public final static String ITEM_PICKUP = "items_picked_up";
 
     public static ArrayList<String> genSQL(FileConfiguration config, File dataPath){
         int version = config.getInt("db_version", 1);
@@ -54,6 +55,10 @@ public class SQLTABLE {
         }
         if(version == 5){
             sqlQueries.add("ALTER TABLE "+genFullTableSQL()+" ADD `"+ DAMAGE_CAUSED +"` int(10) default '0';");
+            version++;
+        }
+        if(version == 6){
+            sqlQueries.add("ALTER TABLE "+genFullTableSQL()+" ADD `"+ ITEM_PICKUP +"` int(10) default '0';");
             version++;
         }
 

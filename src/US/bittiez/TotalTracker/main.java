@@ -14,6 +14,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -131,7 +132,6 @@ public class main extends JavaPlugin implements Listener{
         }
 
     }
-
     @EventHandler
     public void onDeath(PlayerDeathEvent e) {
         Player victim = e.getEntity();
@@ -147,13 +147,16 @@ public class main extends JavaPlugin implements Listener{
         if(QueObjects.size() >= MaxCapacity)
             runQue();
     }
-
     @EventHandler
     public void OnPlayerJoin(PlayerJoinEvent e){
         QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.JOINS, e.getPlayer().getDisplayName()));
         checkQue();
     }
-
+    @EventHandler
+    public void OnItemPickedUp(PlayerPickupItemEvent e){
+        QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.ITEM_PICKUP, e.getPlayer().getDisplayName()));
+        checkQue();
+    }
     @EventHandler
     public void OnEntityDamage(EntityDamageEvent e){
         if(e.getEntity() instanceof Player){
@@ -164,7 +167,6 @@ public class main extends JavaPlugin implements Listener{
             checkQue();
         }
     }
-
     @EventHandler
     public void OnEntityDamageByEntity(EntityDamageByEntityEvent e){
         if(e.getDamager() instanceof Player){
@@ -175,7 +177,6 @@ public class main extends JavaPlugin implements Listener{
             checkQue();
         }
     }
-
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e){
         if(e.getPlayer() != null)

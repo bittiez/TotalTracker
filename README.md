@@ -19,6 +19,7 @@ This will keep track of many stats, currently:
 - Logins
 - Damage Taken
 - Damage Caused
+- Items Picked Up
 
 # Usage
 
@@ -44,6 +45,9 @@ None, may add them upon request.
 - Done!
 - (You may edit any files you want to suit your needs/preferences)
 
+**Updating**  
+The plugin will automatically update your database, all you have to do is install the new jar file!
+
 
 # Configuration
 
@@ -61,7 +65,6 @@ https://github.com/bittiez/TotalTracker/blob/master/src/config.yml
 - Add items crafted
 - Add XP Gained
 - Add food eaten
-- Add items picked up
 - Add items dropped
 - Add buckets filled
 - Add arrows shot
