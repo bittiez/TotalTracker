@@ -2,7 +2,9 @@ package US.bittiez.TotalTracker;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,6 +23,9 @@ import org.bukkit.scheduler.BukkitScheduler;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -31,15 +36,18 @@ public class main extends JavaPlugin implements Listener{
     private static int MaxCapacity = 150;
     private ArrayList<QueObject> QueObjects;
 
+    public FileConfiguration playerVersion;
     public FileConfiguration config = getConfig();
     public static String prefix;
     public static String database;
+    public static File playerVersionFile;
 
     @Override
     public void onEnable() {
         log = getLogger();
         QueObjects = new ArrayList<QueObject>();
         createConfig();
+        playerVersionFile = new File(Paths.get(this.getDataFolder().getAbsolutePath().toString(), "players.yml").toAbsolutePath().toString());
 
         if(!config.getBoolean("setup_complete")){
             log.warning("You must edit your config file and restart the server to finish setting up TotalTracker. Make sure to change setup_complete to true when you are finished.");
@@ -66,6 +74,9 @@ public class main extends JavaPlugin implements Listener{
             }, (20L * 60L) * processEveryMinutes, (20L * 60L) * processEveryMinutes);
 
             tableSetup();
+
+            playerVersion = YamlConfiguration.loadConfiguration(playerVersionFile);
+
         }
     }
 
@@ -151,6 +162,10 @@ public class main extends JavaPlugin implements Listener{
     public void OnPlayerJoin(PlayerJoinEvent e){
         QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.JOINS, e.getPlayer().getDisplayName()));
         checkQue();
+
+        if(config.getBoolean("auto_import", true)){
+            new ImportProcessor(e.getPlayer(), playerVersion, QueObjects).run();
+        }
     }
     @EventHandler
     public void OnItemPickedUp(PlayerPickupItemEvent e){

@@ -18,6 +18,10 @@ mysql_db_prefix: ""
 # Most MySQL installs default to 3306
 mysql_port: 3306
 
+#Other config options
+#Auto import old player statistics from bukkit/spigot?
+auto_import: true
+
 
 # Do not edit this, you WILL break the plugin.
 # Reset to 1 if you want to wipe your database and start fresh

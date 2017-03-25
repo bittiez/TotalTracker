@@ -5,7 +5,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 

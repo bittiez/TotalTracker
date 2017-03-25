@@ -1,6 +1,6 @@
 # TotalTracker
 
-Spigot 1.11 plugin to keep track of all kinds of stats
+Spigot 1.11 plugin to keep track of all kinds of stats. See description for a current list.
 
 **This requires MySQL**   
 I do not plan to develop this for other databases for several reasons, sorry!
@@ -8,7 +8,8 @@ I do not plan to develop this for other databases for several reasons, sorry!
 # Description
 Note: This requires Java 1.8+
 
-All stats are processed asynchronously so your server never experiences any lag.
+All stats are processed asynchronously so your server never experiences any lag.  
+Stats will automatically be imported from bukkit/spigot statistics(This will occur on player login).
 
 This will keep track of many stats, currently:
 - PvP kills
