@@ -137,7 +137,7 @@ public class main extends JavaPlugin implements Listener{
             if (ekiller instanceof Player) {
                 //Player killed entity
                 Player p = (Player)ekiller;
-                QueObject queObject = new QueObject(p.getUniqueId().toString(), SQLTABLE.MOB_KILLS, p.getDisplayName());
+                QueObject queObject = new QueObject(p.getUniqueId().toString(), SQLTABLE.MOB_KILLS, p.getName());
                 QueObjects.add(queObject);
             }
         }
@@ -148,11 +148,11 @@ public class main extends JavaPlugin implements Listener{
         Player victim = e.getEntity();
         Player killer = victim.getKiller();
         if(killer != null){
-            QueObject queObject = new QueObject(killer.getUniqueId().toString(), SQLTABLE.PVP_KILLS, killer.getDisplayName());
+            QueObject queObject = new QueObject(killer.getUniqueId().toString(), SQLTABLE.PVP_KILLS, killer.getName());
             QueObjects.add(queObject);
         }
         if(victim != null){
-            QueObject queObject = new QueObject(victim.getUniqueId().toString(), SQLTABLE.DEATHS, victim.getDisplayName());
+            QueObject queObject = new QueObject(victim.getUniqueId().toString(), SQLTABLE.DEATHS, victim.getName());
             QueObjects.add(queObject);
         }
         if(QueObjects.size() >= MaxCapacity)
@@ -160,7 +160,7 @@ public class main extends JavaPlugin implements Listener{
     }
     @EventHandler
     public void OnPlayerJoin(PlayerJoinEvent e){
-        QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.JOINS, e.getPlayer().getDisplayName()));
+        QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.JOINS, e.getPlayer().getName()));
         checkQue();
 
         if(config.getBoolean("auto_import", true)){
@@ -169,14 +169,14 @@ public class main extends JavaPlugin implements Listener{
     }
     @EventHandler
     public void OnItemPickedUp(PlayerPickupItemEvent e){
-        QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.ITEM_PICKUP, e.getPlayer().getDisplayName()));
+        QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.ITEM_PICKUP, e.getPlayer().getName()));
         checkQue();
     }
     @EventHandler
     public void OnEntityDamage(EntityDamageEvent e){
         if(e.getEntity() instanceof Player){
             Player p = (Player)e.getEntity();
-            QueObject de = new QueObject(p.getUniqueId().toString(), SQLTABLE.DAMAGE_TAKEN, p.getDisplayName());
+            QueObject de = new QueObject(p.getUniqueId().toString(), SQLTABLE.DAMAGE_TAKEN, p.getName());
             de.Quantity = (int)e.getFinalDamage();
             QueObjects.add(de);
             checkQue();
@@ -184,14 +184,14 @@ public class main extends JavaPlugin implements Listener{
     }
     @EventHandler
     public void OnChatMessage(AsyncPlayerChatEvent e){
-        QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.PLAYER_CHAT, e.getPlayer().getDisplayName()));
+        QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.PLAYER_CHAT, e.getPlayer().getName()));
         checkQue();
     }
     @EventHandler
     public void OnEntityDamageByEntity(EntityDamageByEntityEvent e){
         if(e.getDamager() instanceof Player){
             Player p = (Player)e.getDamager();
-            QueObject de = new QueObject(p.getUniqueId().toString(), SQLTABLE.DAMAGE_CAUSED, p.getDisplayName());
+            QueObject de = new QueObject(p.getUniqueId().toString(), SQLTABLE.DAMAGE_CAUSED, p.getName());
             de.Quantity = (int)e.getFinalDamage();
             QueObjects.add(de);
             checkQue();
@@ -200,13 +200,13 @@ public class main extends JavaPlugin implements Listener{
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e){
         if(e.getPlayer() != null)
-            QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.BLOCKS_BROKEN, e.getPlayer().getDisplayName()));
+            QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.BLOCKS_BROKEN, e.getPlayer().getName()));
         checkQue();
     }
     @EventHandler
     public void onBlockPlaced(BlockPlaceEvent e){
         if(e.getPlayer() != null)
-            QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.BLOCKS_PLACED, e.getPlayer().getDisplayName()));
+            QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.BLOCKS_PLACED, e.getPlayer().getName()));
         checkQue();
     }
 

@@ -28,15 +28,15 @@ public class ImportProcessor extends BukkitRunnable {
 
 
         if(v == 1) {
-            QueObject qe = new QueObject(player.getUniqueId().toString(), SQLTABLE.PVP_KILLS, player.getDisplayName());
+            QueObject qe = new QueObject(player.getUniqueId().toString(), SQLTABLE.PVP_KILLS, player.getName());
             qe.Quantity = player.getStatistic(Statistic.PLAYER_KILLS);
             QueObjects.add(qe);
 
-            qe = new QueObject(player.getUniqueId().toString(), SQLTABLE.DEATHS, player.getDisplayName());
+            qe = new QueObject(player.getUniqueId().toString(), SQLTABLE.DEATHS, player.getName());
             qe.Quantity = player.getStatistic(Statistic.DEATHS);
             QueObjects.add(qe);
 
-            qe = new QueObject(player.getUniqueId().toString(), SQLTABLE.MOB_KILLS, player.getDisplayName());
+            qe = new QueObject(player.getUniqueId().toString(), SQLTABLE.MOB_KILLS, player.getName());
             qe.Quantity = player.getStatistic(Statistic.MOB_KILLS);
             QueObjects.add(qe);
             //Missing: Blocks Placed
@@ -45,19 +45,19 @@ public class ImportProcessor extends BukkitRunnable {
         if(v == 2)
          v++;
         if(v == 3) {
-            QueObject qee = new QueObject(player.getUniqueId().toString(), SQLTABLE.JOINS, player.getDisplayName());
+            QueObject qee = new QueObject(player.getUniqueId().toString(), SQLTABLE.JOINS, player.getName());
             qee.Quantity = player.getStatistic(Statistic.LEAVE_GAME);
             QueObjects.add(qee);
             v++;
         }
         if(v == 4) {
-            QueObject qeee = new QueObject(player.getUniqueId().toString(), SQLTABLE.DAMAGE_TAKEN, player.getDisplayName());
+            QueObject qeee = new QueObject(player.getUniqueId().toString(), SQLTABLE.DAMAGE_TAKEN, player.getName());
             qeee.Quantity = player.getStatistic(Statistic.DAMAGE_TAKEN)/10;
             QueObjects.add(qeee);
             v++;
         }
         if(v == 5) {
-            QueObject we = new QueObject(player.getUniqueId().toString(), SQLTABLE.DAMAGE_CAUSED, player.getDisplayName());
+            QueObject we = new QueObject(player.getUniqueId().toString(), SQLTABLE.DAMAGE_CAUSED, player.getName());
             we.Quantity = player.getStatistic(Statistic.DAMAGE_DEALT)/10;
             QueObjects.add(we);
             v++;
