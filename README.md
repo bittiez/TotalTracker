@@ -71,3 +71,5 @@ https://github.com/bittiez/TotalTracker/blob/master/src/config.yml
 - Add arrows shot
 - Time played
 - Demo site
+- Money earned (Vault)
+- Current money (Vault)
