@@ -16,6 +16,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerExpChangeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.plugin.PluginManager;
@@ -223,6 +224,13 @@ public class main extends JavaPlugin implements Listener{
             QueObjects.add(new QueObject(p.getUniqueId().toString(), SQLTABLE.ITEMS_CRAFTED, p.getName()));
             checkQue();
         }
+    }
+    @EventHandler
+    public void OnXPGained(PlayerExpChangeEvent e){
+        QueObject qe = new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.XP_GAINED, e.getPlayer().getName());
+        qe.Quantity = e.getAmount();
+        QueObjects.add(qe);
+        checkQue();
     }
 
     private void checkQue(){

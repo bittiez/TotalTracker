@@ -63,10 +63,11 @@ public class ImportProcessor extends BukkitRunnable {
             v++;
         }
         if(v == 6)
-            v++; //No items picked up statistic
-        if(v == 7){
-            v++; //Items crafted statistic has to be per individual item =/
-        }
+            v++; //Items picked up had to be per individual items
+        if(v == 7)
+            v++; //Items crafted statistic has to be per individual item
+        if(v == 8)
+            v++; //No total xp gained statistic
 
         if(v != playerVersion.getInt(player.getUniqueId().toString() + ".version")) {
             playerVersion.set(player.getUniqueId().toString() + ".version", v);

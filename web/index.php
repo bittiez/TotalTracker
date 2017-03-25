@@ -93,6 +93,12 @@ $content = "<img src=\"img/cube.svg\">"; ?>
           <?php echo $content; ?>
       </div>
     </div>
+    <div class="<?php echo $gClass; ?>">
+      <h2>XP Gained</h2>
+      <div id="xpGained">
+          <?php echo $content; ?>
+      </div>
+    </div>
 
     </div>
 
@@ -123,7 +129,8 @@ $content = "<img src=\"img/cube.svg\">"; ?>
       ["dCaused", "damage_caused", "Damage Caused"],
       ["iPickUp", "items_picked_up", "Items Picked Up"],
       ["pChatMsg", "chat_messages", "Chat Messages"],
-      ["iCrafted", "items_crafted", "Items Crafted"]
+      ["iCrafted", "items_crafted", "Items Crafted"],
+      ["xpGained", "xp_gained", "XP Gained"]
     ];
 
     for (var i = 0; i < stats.length; i++) {
