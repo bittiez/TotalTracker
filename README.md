@@ -69,3 +69,5 @@ https://github.com/bittiez/TotalTracker/blob/master/src/config.yml
 - Add items dropped
 - Add buckets filled
 - Add arrows shot
+- Time played
+- Demo site
