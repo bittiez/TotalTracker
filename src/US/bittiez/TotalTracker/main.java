@@ -103,17 +103,21 @@ public class main extends JavaPlugin implements Listener{
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String args[]) {
         if (cmd.getName().equalsIgnoreCase("tt")) {
-            if (args[0].equalsIgnoreCase("sync") && sender.hasPermission("TotalTracker.sync")) {
-                runQue();
-                sender.sendMessage("Processing the que now!");
-                return true;
-            } else if(args[0].equalsIgnoreCase("reload") && sender.hasPermission("TotalTracker.reload")){
-                this.reloadConfig();
-                config = getConfig();
-                sender.sendMessage("Config reloaded!");
-                return true;
+            if(args.length > 0) {
+                if (args[0].equalsIgnoreCase("sync") && sender.hasPermission("TotalTracker.sync")) {
+                    runQue();
+                    sender.sendMessage("Processing the que now!");
+                    return true;
+                } else if (args[0].equalsIgnoreCase("reload") && sender.hasPermission("TotalTracker.reload")) {
+                    this.reloadConfig();
+                    config = getConfig();
+                    sender.sendMessage("Config reloaded!");
+                    return true;
+                }
+            } else {
+                sender.sendMessage("/tt usage: /tt ( sync || reload )");
             }
-            return true;
+            return false;
         }
         return false;
     }
