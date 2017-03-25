@@ -14,6 +14,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
@@ -203,15 +204,25 @@ public class main extends JavaPlugin implements Listener{
     }
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e){
-        if(e.getPlayer() != null)
+        if(e.getPlayer() != null) {
             QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.BLOCKS_BROKEN, e.getPlayer().getName()));
-        checkQue();
+            checkQue();
+        }
     }
     @EventHandler
     public void onBlockPlaced(BlockPlaceEvent e){
-        if(e.getPlayer() != null)
+        if(e.getPlayer() != null) {
             QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.BLOCKS_PLACED, e.getPlayer().getName()));
-        checkQue();
+            checkQue();
+        }
+    }
+    @EventHandler
+    public void onItemCraft(CraftItemEvent e){
+        if(e.getWhoClicked() != null && e.getWhoClicked() instanceof Player){
+            Player p = (Player)e.getWhoClicked();
+            QueObjects.add(new QueObject(p.getUniqueId().toString(), SQLTABLE.ITEMS_CRAFTED, p.getName()));
+            checkQue();
+        }
     }
 
     private void checkQue(){

@@ -45,25 +45,28 @@ public class ImportProcessor extends BukkitRunnable {
         if(v == 2)
          v++;
         if(v == 3) {
-            QueObject qee = new QueObject(player.getUniqueId().toString(), SQLTABLE.JOINS, player.getName());
-            qee.Quantity = player.getStatistic(Statistic.LEAVE_GAME);
-            QueObjects.add(qee);
+            QueObject qe = new QueObject(player.getUniqueId().toString(), SQLTABLE.JOINS, player.getName());
+            qe.Quantity = player.getStatistic(Statistic.LEAVE_GAME);
+            QueObjects.add(qe);
             v++;
         }
         if(v == 4) {
-            QueObject qeee = new QueObject(player.getUniqueId().toString(), SQLTABLE.DAMAGE_TAKEN, player.getName());
-            qeee.Quantity = player.getStatistic(Statistic.DAMAGE_TAKEN)/10;
-            QueObjects.add(qeee);
+            QueObject qe = new QueObject(player.getUniqueId().toString(), SQLTABLE.DAMAGE_TAKEN, player.getName());
+            qe.Quantity = player.getStatistic(Statistic.DAMAGE_TAKEN)/10;
+            QueObjects.add(qe);
             v++;
         }
         if(v == 5) {
-            QueObject we = new QueObject(player.getUniqueId().toString(), SQLTABLE.DAMAGE_CAUSED, player.getName());
-            we.Quantity = player.getStatistic(Statistic.DAMAGE_DEALT)/10;
-            QueObjects.add(we);
+            QueObject qe = new QueObject(player.getUniqueId().toString(), SQLTABLE.DAMAGE_CAUSED, player.getName());
+            qe.Quantity = player.getStatistic(Statistic.DAMAGE_DEALT)/10;
+            QueObjects.add(qe);
             v++;
         }
         if(v == 6)
-            v++;
+            v++; //No items picked up statistic
+        if(v == 7){
+            v++; //Items crafted statistic has to be per individual item =/
+        }
 
         if(v != playerVersion.getInt(player.getUniqueId().toString() + ".version")) {
             playerVersion.set(player.getUniqueId().toString() + ".version", v);

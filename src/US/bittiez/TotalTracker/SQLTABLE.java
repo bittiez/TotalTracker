@@ -18,6 +18,7 @@ public class SQLTABLE {
     public final static String DAMAGE_CAUSED = "damage_caused";
     public final static String ITEM_PICKUP = "items_picked_up";
     public final static String PLAYER_CHAT = "chat_messages";
+    public final static String ITEMS_CRAFTED = "items_crafted";
 
     public static ArrayList<String> genSQL(FileConfiguration config, File dataPath){
         int version = config.getInt("db_version", 1);
@@ -66,6 +67,11 @@ public class SQLTABLE {
             sqlQueries.add("ALTER TABLE "+genFullTableSQL()+" ADD `"+ PLAYER_CHAT +"` int(10) default '0';");
             version++;
         }
+        if(version == 8){
+            sqlQueries.add("ALTER TABLE "+genFullTableSQL()+" ADD `"+ ITEMS_CRAFTED +"` int(10) default '0';");
+            version++;
+        }
+
 
         if(version != config.getInt("db_version", 1)){
             try {

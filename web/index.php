@@ -23,67 +23,74 @@
 <div class="wrapper">
 
     <div class="row">
-<?php $gClass = "col-lg-3 col-md-4 col-sm-6 col-xs-12"; ?>
+<?php $gClass = "col-lg-3 col-md-4 col-sm-6 col-xs-12";
+$content = "<img src=\"img/cube.svg\">"; ?>
       <div class="<?php echo $gClass; ?>">
         <h2>Blocks Broken</h2>
         <div id="bBroken">
-            Loading stats..
+            <?php echo $content; ?>
         </div>
       </div>
       <div class="<?php echo $gClass; ?>">
         <h2>Blocks Placed</h2>
         <div id="bPlaced">
-            Loading stats..
+            <?php echo $content; ?>
         </div>
       </div>
 
       <div class="<?php echo $gClass; ?>">
         <h2>Player Deaths</h2>
         <div id="pDeaths">
-            Loading stats..
+            <?php echo $content; ?>
         </div>
       </div>
       <div class="<?php echo $gClass; ?>">
         <h2>Mob Kills</h2>
         <div id="mKills">
-            Loading stats..
+            <?php echo $content; ?>
         </div>
       </div>
 
       <div class="<?php echo $gClass; ?>">
         <h2>Player Kills</h2>
         <div id="pKills">
-            Loading stats..
+            <?php echo $content; ?>
         </div>
       </div>
       <div class="<?php echo $gClass; ?>">
         <h2>Player Logins</h2>
         <div id="pLogins">
-            Loading stats..
+            <?php echo $content; ?>
         </div>
       </div>
       <div class="<?php echo $gClass; ?>">
         <h2>Damage Taken</h2>
         <div id="dTaken">
-            Loading stats..
+            <?php echo $content; ?>
         </div>
       </div>
     <div class="<?php echo $gClass; ?>">
       <h2>Damage Caused</h2>
       <div id="dCaused">
-          Loading stats..
+          <?php echo $content; ?>
       </div>
     </div>
     <div class="<?php echo $gClass; ?>">
       <h2>Items Picked Up</h2>
       <div id="iPickUp">
-          Loading stats..
+          <?php echo $content; ?>
       </div>
     </div>
     <div class="<?php echo $gClass; ?>">
       <h2>Chat Messages</h2>
       <div id="pChatMsg">
-          Loading stats..
+          <?php echo $content; ?>
+      </div>
+    </div>
+    <div class="<?php echo $gClass; ?>">
+      <h2>Items Crafted</h2>
+      <div id="iCrafted">
+          <?php echo $content; ?>
       </div>
     </div>
 
@@ -115,7 +122,8 @@
       ["dTaken", "damage_taken", "Damage Taken"],
       ["dCaused", "damage_caused", "Damage Caused"],
       ["iPickUp", "items_picked_up", "Items Picked Up"],
-      ["pChatMsg", "chat_messages", "Chat Messages"]
+      ["pChatMsg", "chat_messages", "Chat Messages"],
+      ["iCrafted", "items_crafted", "Items Crafted"]
     ];
 
     for (var i = 0; i < stats.length; i++) {
