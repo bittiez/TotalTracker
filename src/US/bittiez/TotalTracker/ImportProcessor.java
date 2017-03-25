@@ -24,10 +24,7 @@ public class ImportProcessor extends BukkitRunnable {
 
     @Override
     public void run() {
-        int v = 1;
-        if(playerVersion.contains(player.getUniqueId().toString() + ".version")){
-            v = playerVersion.getInt(player.getUniqueId().toString() + ".version");
-        }
+        int v = playerVersion.getInt(player.getUniqueId().toString() + ".version", 1);
 
 
         if(v == 1) {
@@ -46,9 +43,7 @@ public class ImportProcessor extends BukkitRunnable {
             v++;
         }
         if(v == 2)
-        {
          v++;
-        }
         if(v == 3) {
             QueObject qee = new QueObject(player.getUniqueId().toString(), SQLTABLE.JOINS, player.getDisplayName());
             qee.Quantity = player.getStatistic(Statistic.LEAVE_GAME);
@@ -67,14 +62,17 @@ public class ImportProcessor extends BukkitRunnable {
             QueObjects.add(we);
             v++;
         }
+        if(v == 6)
+            v++;
 
-
-        playerVersion.set(player.getUniqueId().toString() + ".version", v);
-        try {
-            playerVersion.save(main.playerVersionFile);
-        } catch (IOException e) {
-            if(main.debug)
-                e.printStackTrace();
+        if(v != playerVersion.getInt(player.getUniqueId().toString() + ".version")) {
+            playerVersion.set(player.getUniqueId().toString() + ".version", v);
+            try {
+                playerVersion.save(main.playerVersionFile);
+            } catch (IOException e) {
+                if (main.debug)
+                    e.printStackTrace();
+            }
         }
     }
 }

@@ -80,6 +80,12 @@
           Loading stats..
       </div>
     </div>
+    <div class="<?php echo $gClass; ?>">
+      <h2>Chat Messages</h2>
+      <div id="pChatMsg">
+          Loading stats..
+      </div>
+    </div>
 
     </div>
 
@@ -108,11 +114,12 @@
       ["pLogins", "logins", "Login Count"],
       ["dTaken", "damage_taken", "Damage Taken"],
       ["dCaused", "damage_caused", "Damage Caused"],
-      ["iPickUp", "items_picked_up", "Items Picked Up"]
+      ["iPickUp", "items_picked_up", "Items Picked Up"],
+      ["pChatMsg", "chat_messages", "Chat Messages"]
     ];
 
     for (var i = 0; i < stats.length; i++) {
-      loadStat(stats[i][0], stats[i][1], {title:stats[i][2]});
+       loadStat(stats[i][0], stats[i][1], {title:stats[i][2]});
     }
     </script>
   </body>

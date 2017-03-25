@@ -2,7 +2,6 @@ package US.bittiez.TotalTracker;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
@@ -15,6 +14,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.plugin.PluginManager;
@@ -24,7 +24,6 @@ import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.logging.Logger;
@@ -114,6 +113,7 @@ public class main extends JavaPlugin implements Listener{
                 sender.sendMessage("Config reloaded!");
                 return true;
             }
+            return true;
         }
         return false;
     }
@@ -181,6 +181,11 @@ public class main extends JavaPlugin implements Listener{
             QueObjects.add(de);
             checkQue();
         }
+    }
+    @EventHandler
+    public void OnChatMessage(AsyncPlayerChatEvent e){
+        QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.PLAYER_CHAT, e.getPlayer().getDisplayName()));
+        checkQue();
     }
     @EventHandler
     public void OnEntityDamageByEntity(EntityDamageByEntityEvent e){
