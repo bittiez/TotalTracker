@@ -105,6 +105,12 @@ $content = "<img src=\"img/cube.svg\">"; ?>
           <?php echo $content; ?>
       </div>
     </div>
+    <div class="<?php echo $gClass; ?>">
+      <h2>Food Eaten</h2>
+      <div id="foodEaten">
+          <?php echo $content; ?>
+      </div>
+    </div>
 
     </div>
 
@@ -125,6 +131,11 @@ $content = "<img src=\"img/cube.svg\">"; ?>
       });
     }
 
+    function delayTimer(time, i){
+      setTimeout(function() {
+        loadStat(stats[i][0], stats[i][1], {title:stats[i][2], reloadId:stats[i][0]});
+     }, time);
+    }
     //Stats setup: [ID Of where to put the ajax content, database column name, title for the # column]
     var stats = [
       ["bBroken", "blocks_broken", "Blocks Broken"],
@@ -139,11 +150,12 @@ $content = "<img src=\"img/cube.svg\">"; ?>
       ["pChatMsg", "chat_messages", "Chat Messages"],
       ["iCrafted", "items_crafted", "Items Crafted"],
       ["xpGained", "xp_gained", "XP Gained"],
-      ["timePlayed", "time_played", "Time Played"]
+      ["timePlayed", "time_played", "Time Played"],
+      ["foodEaten", "food_eaten", "Food Eaten"]
     ];
 
     for (var i = 0; i < stats.length; i++) {
-       loadStat(stats[i][0], stats[i][1], {title:stats[i][2], reloadId:stats[i][0]});
+       delayTimer(500 * i, i);
     }
     </script>
   </body>

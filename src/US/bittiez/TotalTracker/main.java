@@ -16,10 +16,8 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerExpChangeEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.event.player.*;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -249,6 +247,13 @@ public class main extends JavaPlugin implements Listener{
         qe.Quantity = e.getAmount();
         QueObjects.add(qe);
         checkQue();
+    }
+    @EventHandler
+    public void onFoodEated(PlayerItemConsumeEvent e){
+        ItemStack IS = e.getItem();
+        if(IS.getType().isEdible()){
+            QueObjects.add(new QueObject(e.getPlayer(), SQLTABLE.FOOD_EATEN));
+        }
     }
 
     private void checkQue(){

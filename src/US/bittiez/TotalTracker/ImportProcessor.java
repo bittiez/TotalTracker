@@ -28,17 +28,9 @@ public class ImportProcessor extends BukkitRunnable {
 
 
         if(v == 1) {
-            QueObject qe = new QueObject(player.getUniqueId().toString(), SQLTABLE.PVP_KILLS, player.getName());
-            qe.Quantity = player.getStatistic(Statistic.PLAYER_KILLS);
-            QueObjects.add(qe);
-
-            qe = new QueObject(player.getUniqueId().toString(), SQLTABLE.DEATHS, player.getName());
-            qe.Quantity = player.getStatistic(Statistic.DEATHS);
-            QueObjects.add(qe);
-
-            qe = new QueObject(player.getUniqueId().toString(), SQLTABLE.MOB_KILLS, player.getName());
-            qe.Quantity = player.getStatistic(Statistic.MOB_KILLS);
-            QueObjects.add(qe);
+            QueObjects.add(new QueObject(player, SQLTABLE.PVP_KILLS, player.getStatistic(Statistic.PLAYER_KILLS)));
+            QueObjects.add(new QueObject(player, SQLTABLE.DEATHS, player.getStatistic(Statistic.DEATHS)));
+            QueObjects.add(new QueObject(player, SQLTABLE.MOB_KILLS, player.getStatistic(Statistic.MOB_KILLS)));
             //Missing: Blocks Placed
             v++;
         }
@@ -72,6 +64,12 @@ public class ImportProcessor extends BukkitRunnable {
             QueObject qe = new QueObject(player, SQLTABLE.TIME_PLAYED);
             // 20 ticks per second
             qe.Quantity = ( player.getStatistic(Statistic.PLAY_ONE_TICK) / 20 ) / 60;
+            QueObjects.add(qe);
+            v++;
+        }
+        if(v == 10){
+            QueObject qe = new QueObject(player, SQLTABLE.FOOD_EATEN);
+            qe.Quantity = player.getStatistic(Statistic.CAKE_SLICES_EATEN);
             QueObjects.add(qe);
             v++;
         }

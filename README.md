@@ -25,6 +25,7 @@ This will keep track of many stats, currently:
 - Items Crafted
 - XP Gained
 - Time Played
+- Food Eaten
 
 # Usage
 
@@ -66,10 +67,10 @@ https://github.com/bittiez/TotalTracker/blob/master/src/config.yml
 - Add pages(Currently only shows top 10) to the web portion
 - Add distance walked
 - Add fish caught
-- Add food eaten
 - Add items dropped
 - Add buckets filled
 - Add arrows shot
 - Demo site
 - Money earned (Vault)
 - Current money (Vault)
+- Items Enchanted
