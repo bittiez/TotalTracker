@@ -24,8 +24,20 @@ if(isset($_GET['type'])){
     $ttitle = $_GET['table_title'];
 
   $results = DB::query("SELECT player_name, " . $type . " FROM `" . $mysql['database'] . "`.`" . $mysql['prefix'] . "TotalTracker` ORDER BY ".$type." DESC LIMIT " . $limit);
+  if($type == "time_played"){
+    foreach($results as $key => $row){
+      $results[$key][$type] = formatTime($row[$type]);
+    }
+  }
   include('templates/statTable.php');
 
 
+}
+
+function formatTime($minutes){
+  return toDateInterval($minutes * 60)->format('%a days, %h hours, %i minutes');
+}
+function toDateInterval($seconds) {
+  return date_create('@' . (($now = time()) + $seconds))->diff(date_create('@' . $now));
 }
 ?>

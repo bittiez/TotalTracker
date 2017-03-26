@@ -20,6 +20,7 @@ public class SQLTABLE {
     public final static String PLAYER_CHAT = "chat_messages";
     public final static String ITEMS_CRAFTED = "items_crafted";
     public final static String XP_GAINED = "xp_gained";
+    public final static String TIME_PLAYED = "time_played";
 
     public static ArrayList<String> genSQL(FileConfiguration config, File dataPath){
         int version = config.getInt("db_version", 1);
@@ -76,6 +77,10 @@ public class SQLTABLE {
             sqlQueries.add("ALTER TABLE "+genFullTableSQL()+" ADD `"+ XP_GAINED +"` int(10) default '0';");
             version++;
         }
+        if(version == 10){
+            sqlQueries.add("ALTER TABLE "+genFullTableSQL()+" ADD `"+ TIME_PLAYED +"` int(10) default '0';");
+            version++;
+        }
 
 
         if(version != config.getInt("db_version", 1)){
@@ -97,7 +102,7 @@ public class SQLTABLE {
         String insert = "INSERT INTO "
                 + genFullTableSQL()
                 + " (" + PLAYER + ", " + PLAYER + "_name, " + queObject.QueType + ")"
-                + " VALUES (" + MySQLQuotes(queObject.Player) + ", " + MySQLQuotes(queObject.PlayerName) + ", " + queObject.Quantity + ") "
+                + " VALUES (" + MySQLQuotes(queObject.PlayerUUID) + ", " + MySQLQuotes(queObject.PlayerName) + ", " + queObject.Quantity + ") "
                 + "ON DUPLICATE KEY UPDATE "
                 + queObject.QueType + "=" + queObject.QueType + "+" + queObject.Quantity + ", "
                 + PLAYER + "_name=" + MySQLQuotes(queObject.PlayerName) + ";"

@@ -22,7 +22,6 @@ mysql_port: 3306
 #Auto import old player statistics from bukkit/spigot?
 auto_import: true
 
-
 # Do not edit this, you WILL break the plugin.
 # Reset to 1 if you want to wipe your database and start fresh
 db_version: 1

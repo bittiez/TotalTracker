@@ -24,6 +24,7 @@ This will keep track of many stats, currently:
 - Chat Messages
 - Items Crafted
 - XP Gained
+- Time Played
 
 # Usage
 
@@ -49,9 +50,11 @@ None, may add them upon request.
 - Done!
 - (You may edit any files you want to suit your needs/preferences)
 
-**Updating**  
-The plugin will automatically update your database, all you have to do is install the new jar file!
+# Updating
+- The plugin will automatically update your database, all you have to do is install the new jar file!
 
+**Updating the web portion**  
+- Just upload all file **except** the config.php file. Unless you have made custom changes, then it's up to you to update it with the new changes.
 
 # Configuration
 
@@ -69,7 +72,6 @@ https://github.com/bittiez/TotalTracker/blob/master/src/config.yml
 - Add items dropped
 - Add buckets filled
 - Add arrows shot
-- Time played
 - Demo site
 - Money earned (Vault)
 - Current money (Vault)

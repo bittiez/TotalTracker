@@ -68,6 +68,13 @@ public class ImportProcessor extends BukkitRunnable {
             v++; //Items crafted statistic has to be per individual item
         if(v == 8)
             v++; //No total xp gained statistic
+        if(v == 9){
+            QueObject qe = new QueObject(player, SQLTABLE.TIME_PLAYED);
+            // 20 ticks per second
+            qe.Quantity = ( player.getStatistic(Statistic.PLAY_ONE_TICK) / 20 ) / 60;
+            QueObjects.add(qe);
+            v++;
+        }
 
         if(v != playerVersion.getInt(player.getUniqueId().toString() + ".version")) {
             playerVersion.set(player.getUniqueId().toString() + ".version", v);

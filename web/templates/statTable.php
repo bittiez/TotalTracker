@@ -9,7 +9,7 @@
       </div>
     </div>
 
-<?php  foreach($results as $row) { ?>
+<?php  foreach($results as $key => $row) { ?>
     <div class="row">
       <div class="cell">
         <?php echo $row['player_name']; ?>

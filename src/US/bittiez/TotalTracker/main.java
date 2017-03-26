@@ -64,6 +64,9 @@ public class main extends JavaPlugin implements Listener{
             PluginManager pm = getServer().getPluginManager();
             pm.registerEvents(this, this);
 
+            tableSetup();
+            playerVersion = YamlConfiguration.loadConfiguration(playerVersionFile);
+
             BukkitScheduler scheduler = getServer().getScheduler();
             scheduler.scheduleSyncRepeatingTask(this, new Runnable() {
                 @Override
@@ -73,11 +76,15 @@ public class main extends JavaPlugin implements Listener{
                     }
                 }
             }, (20L * 60L) * processEveryMinutes, (20L * 60L) * processEveryMinutes);
-
-            tableSetup();
-
-            playerVersion = YamlConfiguration.loadConfiguration(playerVersionFile);
-
+            scheduler.scheduleSyncRepeatingTask(this, new Runnable() {
+                @Override
+                public void run() {
+                    for(Player player : getServer().getOnlinePlayers()){
+                        QueObjects.add(new QueObject(player, SQLTABLE.TIME_PLAYED, 2));
+                    }
+                    checkQue();
+                }
+            }, (20L * 60L) * 2, (20L * 60L) * 2); //Run every 2 minutes, starting in 2 minutes
         }
     }
 
@@ -227,7 +234,7 @@ public class main extends JavaPlugin implements Listener{
     }
     @EventHandler
     public void OnXPGained(PlayerExpChangeEvent e){
-        QueObject qe = new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.XP_GAINED, e.getPlayer().getName());
+        QueObject qe = new QueObject(e.getPlayer(), SQLTABLE.XP_GAINED);
         qe.Quantity = e.getAmount();
         QueObjects.add(qe);
         checkQue();
