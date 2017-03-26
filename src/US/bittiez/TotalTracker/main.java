@@ -127,6 +127,8 @@ public class main extends JavaPlugin implements Listener{
                     config = getConfig();
                     sender.sendMessage("Config reloaded!");
                     return true;
+                } else {
+                    sender.sendMessage("It looks like you don't have permission to use that command!");
                 }
             } else {
                 sender.sendMessage("/tt usage: /tt ( sync || reload )");
