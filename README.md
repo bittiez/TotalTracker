@@ -58,12 +58,10 @@ None, may add them upon request.
 
 # Configuration
 
-
 https://github.com/bittiez/TotalTracker/blob/master/src/config.yml
 
 # To-do
 - Add auto updater?
-- Config option for block counting in creative mode
 - Add a search function to the web portion
 - Add pages(Currently only shows top 10) to the web portion
 - Add distance walked

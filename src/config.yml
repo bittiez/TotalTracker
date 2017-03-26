@@ -21,6 +21,10 @@ mysql_port: 3306
 #Other config options
 #Auto import old player statistics from bukkit/spigot?
 auto_import: true
+#Ignore blocks broken in creative
+ignore_broken_creative: false
+#Ignore blocks placed in creative
+ignore_placed_creative: false
 
 # Do not edit this, you WILL break the plugin.
 # Reset to 1 if you want to wipe your database and start fresh

@@ -1,5 +1,6 @@
 package US.bittiez.TotalTracker;
 
+import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -36,6 +37,8 @@ public class main extends JavaPlugin implements Listener{
     private static Long processEveryMinutes = 5L;
     private static int MaxCapacity = 150;
     private ArrayList<QueObject> QueObjects;
+    private boolean ignoreBrokenCreative = false;
+    private boolean ignorePlacedCreative = false;
 
     public FileConfiguration playerVersion;
     public FileConfiguration config = getConfig();
@@ -60,6 +63,8 @@ public class main extends JavaPlugin implements Listener{
             processEveryMinutes = config.getLong("sync_interval", 5);
             MaxCapacity = config.getInt("max_before_sync", 150);
             debug = config.getBoolean("debug", false);
+            ignoreBrokenCreative = config.getBoolean("ignore_broken_creative", false);
+            ignorePlacedCreative = config.getBoolean("ignore_placed_creative", false);
 
             PluginManager pm = getServer().getPluginManager();
             pm.registerEvents(this, this);
@@ -212,6 +217,8 @@ public class main extends JavaPlugin implements Listener{
     }
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e){
+        if(ignoreBrokenCreative && e.getPlayer().getGameMode().equals(GameMode.CREATIVE))
+            return;
         if(e.getPlayer() != null) {
             QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.BLOCKS_BROKEN, e.getPlayer().getName()));
             checkQue();
@@ -219,6 +226,8 @@ public class main extends JavaPlugin implements Listener{
     }
     @EventHandler
     public void onBlockPlaced(BlockPlaceEvent e){
+        if(ignorePlacedCreative && e.getPlayer().getGameMode().equals(GameMode.CREATIVE))
+            return;
         if(e.getPlayer() != null) {
             QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.BLOCKS_PLACED, e.getPlayer().getName()));
             checkQue();
