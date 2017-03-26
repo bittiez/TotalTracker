@@ -23,7 +23,7 @@ if(isset($_GET['type'])){
   if(isset($_GET['table_title']))
     $ttitle = $_GET['table_title'];
 
-  $results = DB::query("SELECT player_name, " . $type . " FROM `" . $mysql['database'] . "`.`" . $mysql['prefix'] . "TotalTracker` ORDER BY ".$type." DESC LIMIT " . $limit);
+  $results = DB::query("SELECT player_name, " . mysql_escape_string($type) . " FROM `" . $mysql['database'] . "`.`" . $mysql['prefix'] . "TotalTracker` ORDER BY ".mysql_escape_string($type)." DESC LIMIT " . mysql_escape_string($limit));
   if($type == "time_played"){
     foreach($results as $key => $row){
       $results[$key][$type] = formatTime($row[$type]);
