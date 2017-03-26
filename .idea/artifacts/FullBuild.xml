@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact name="FullBuild">
+    <output-path>$PROJECT_DIR$/out/artifacts/FullBuild</output-path>
+    <root id="root">
+      <element id="archive" name="web.zip">
+        <element id="dir-copy" path="$PROJECT_DIR$/web" />
+      </element>
+      <element id="artifact" artifact-name="TotalTracker:Jar" />
+    </root>
+  </artifact>
+</component>

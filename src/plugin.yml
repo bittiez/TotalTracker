@@ -1,5 +1,5 @@
 name: TotalTracker
-version: 1.12.0
+version: 1.13.0
 author: bittiez
 main: US.bittiez.TotalTracker.main
 commands:
@@ -11,3 +11,6 @@ permissions:
         description: Allows the use of /tt sync
     TotalTracker.reload:
         description: Allows the use of /tt reload
+    TotalTracker.updates:
+        description: Will receive notifications when an update is available
+        default: op

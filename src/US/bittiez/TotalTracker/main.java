@@ -1,8 +1,11 @@
 package US.bittiez.TotalTracker;
 
+import org.apache.commons.io.IOUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
@@ -23,8 +26,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
+import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URI;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.logging.Logger;
@@ -37,6 +43,7 @@ public class main extends JavaPlugin implements Listener{
     private ArrayList<QueObject> QueObjects;
     private boolean ignoreBrokenCreative = false;
     private boolean ignorePlacedCreative = false;
+    private BukkitScheduler scheduler = getServer().getScheduler();
 
     public FileConfiguration playerVersion;
     public FileConfiguration config = getConfig();
@@ -70,7 +77,7 @@ public class main extends JavaPlugin implements Listener{
             tableSetup();
             playerVersion = YamlConfiguration.loadConfiguration(playerVersionFile);
 
-            BukkitScheduler scheduler = getServer().getScheduler();
+
             scheduler.scheduleSyncRepeatingTask(this, new Runnable() {
                 @Override
                 public void run() {
@@ -88,6 +95,7 @@ public class main extends JavaPlugin implements Listener{
                     checkQue();
                 }
             }, (20L * 60L) * 2, (20L * 60L) * 2); //Run every 2 minutes, starting in 2 minutes
+            checkForUpdates();
         }
     }
 
@@ -140,6 +148,40 @@ public class main extends JavaPlugin implements Listener{
         QueProcessor qp = new QueProcessor(new ArrayList<>(QueObjects), log, config);
         QueObjects.clear();
         qp.runTaskAsynchronously(this);
+    }
+
+    private void checkForUpdates(){
+        String currentVersion = getDescription().getVersion();
+
+        try {
+            FileConfiguration updated = new YamlConfiguration();
+            updated.loadFromString(IOUtils.toString(URI.create("https://raw.githubusercontent.com/bittiez/TotalTracker/master/src/plugin.yml")));
+            String updatedVersion = updated.getString("version");
+            if(!currentVersion.equals(updatedVersion)){
+                log.warning(genVersionOutdatedMessage(currentVersion, updatedVersion));
+                scheduler.scheduleSyncRepeatingTask(this, new Runnable() {
+                    @Override
+                    public void run() {
+                        for(Player player : getServer().getOnlinePlayers()){
+                            if(player.isOp() || player.hasPermission("TotalTracker.updates")){
+                                player.sendMessage(genVersionOutdatedMessage(currentVersion, updatedVersion));
+                            }
+                        }
+                    }
+                }, (20L * 60L) * 2, (20L * 60L) * 10); //Run every 10 minutes, starting in 2 minutes
+            }
+        } catch (IOException e) {
+            log.warning("[CE1]Failed to check for updates, you can check manually at: https://github.com/bittiez/TotalTracker/releases or https://www.spigotmc.org/resources/totaltracker.38304/");
+            if(debug)
+                e.printStackTrace();
+        } catch (InvalidConfigurationException e){
+            log.warning("[CE2]Failed to check for updates, you can check manually at: https://github.com/bittiez/TotalTracker/releases or https://www.spigotmc.org/resources/totaltracker.38304/");
+            if(debug)
+                e.printStackTrace();
+        }
+    }
+    private String genVersionOutdatedMessage(String version, String updatedVersion){
+        return "Your version("+version+") of "+ ChatColor.GOLD +" TotalTracker "+ChatColor.RESET+"is not up to date("+updatedVersion+"), you can get the latest version at https://github.com/bittiez/TotalTracker/releases or https://www.spigotmc.org/resources/totaltracker.38304/";
     }
 
     private void createConfig() {

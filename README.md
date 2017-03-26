@@ -33,7 +33,7 @@ Do stuff in game
 
 # Permissions
 
-None, may add them upon request.
+https://github.com/bittiez/TotalTracker/blob/master/src/plugin.yml
 
 
 # Installation
