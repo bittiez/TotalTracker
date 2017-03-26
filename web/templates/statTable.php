@@ -6,6 +6,7 @@
       </div>
       <div class="cell">
         <?php echo $ttitle; ?>
+        <span style="float: right;"><i class="fa fa-refresh" aria-hidden="true" onclick="loadStat('<?php echo $reloadId; ?>', '<?php echo $type; ?>', {title:'<?php echo $ttitle; ?>', reloadId:'<?php echo $reloadId; ?>'})"></i></span>
       </div>
     </div>
 

@@ -118,6 +118,8 @@ $content = "<img src=\"img/cube.svg\">"; ?>
       var url = "ajax.php?type=" + type;
       if(args.title != null)
         url = url + "&table_title="+args.title;
+      if(args.reloadId != null)
+        url = url + "&reload_id="+args.reloadId;
       $.get( url, function( data ) {
         $("#" + id).html(data);
       });
@@ -141,7 +143,7 @@ $content = "<img src=\"img/cube.svg\">"; ?>
     ];
 
     for (var i = 0; i < stats.length; i++) {
-       loadStat(stats[i][0], stats[i][1], {title:stats[i][2]});
+       loadStat(stats[i][0], stats[i][1], {title:stats[i][2], reloadId:stats[i][0]});
     }
     </script>
   </body>

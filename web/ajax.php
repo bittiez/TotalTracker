@@ -15,6 +15,7 @@ if(isset($_GET['type'])){
   $page = 1;
   $limit = 10;
   $ttitle = "";
+  $reloadId = "";
 
   if(isset($_GET['page']))
     $page = $_GET['page'];
@@ -22,8 +23,11 @@ if(isset($_GET['type'])){
     $limit = $_GET['limit'];
   if(isset($_GET['table_title']))
     $ttitle = $_GET['table_title'];
+  if(isset($_GET['reload_id']))
+    $reloadId = $_GET['reload_id'];
 
-  $results = DB::query("SELECT player_name, " . mysql_escape_string($type) . " FROM `" . $mysql['database'] . "`.`" . $mysql['prefix'] . "TotalTracker` ORDER BY ".mysql_escape_string($type)." DESC LIMIT " . mysql_escape_string($limit));
+  $results = DB::query("SELECT %b, %b FROM `" . $mysql['database'] . "`.`" . $mysql['prefix'] . "TotalTracker` ORDER BY %b DESC LIMIT %i", "player_name", $type, $type, $limit);
+
   if($type == "time_played"){
     foreach($results as $key => $row){
       $results[$key][$type] = formatTime($row[$type]);
