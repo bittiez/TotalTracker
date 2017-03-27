@@ -8,7 +8,7 @@ DB::$dbName = $mysql['database'];
 DB::$host = $mysql['address'];
 DB::$port = $mysql['port'];
 
-// ?type=TYPE&page=1&limit=10&table_title=BlahBlah
+// ?type=TYPE&page=1&limit=10&table_title=BlahBlah&prefix=test_
 
 if(isset($_GET['type'])){
   $type = $_GET['type'];
@@ -25,6 +25,8 @@ if(isset($_GET['type'])){
     $ttitle = $_GET['table_title'];
   if(isset($_GET['reload_id']))
     $reloadId = $_GET['reload_id'];
+  if(isset($_GET['prefix']))
+    $mysql['prefix'] = $_GET['prefix'];
 
   $results = DB::query("SELECT %b, %b FROM `" . $mysql['database'] . "`.`" . $mysql['prefix'] . "TotalTracker` ORDER BY %b DESC LIMIT %i", "player_name", $type, $type, $limit);
 
