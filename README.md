@@ -80,3 +80,4 @@ https://github.com/bittiez/TotalTracker/blob/master/src/config.yml
 - Money earned (Vault)
 - Current money (Vault)
 - Items Enchanted
+- Add online/offline
