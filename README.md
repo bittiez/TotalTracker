@@ -50,6 +50,7 @@ https://github.com/bittiez/TotalTracker/blob/master/src/plugin.yml
 - Edit the config.php
 - Done!
 - (You may edit any files you want to suit your needs/preferences)
+- For multiple servers, open index.php and look for the commented out section for server "Tabs" and change the button prefixes, add more buttons, remove, etc.
 
 # Updating
 - The plugin will automatically update your database, all you have to do is install the new jar file!
