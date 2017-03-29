@@ -56,7 +56,8 @@ public class QueProcessor extends BukkitRunnable {
                             log.info("Saving [" + co.Quantity + "] x [" + co.QueType + "] for [" + co.PlayerName + "]");
                             log.info("RUNSQL: " + SQLTABLE.genINSERT(co));
                         }
-                        con.createQuery(SQLTABLE.genINSERT(co)).executeUpdate();
+                        if(co.Quantity > 0)
+                            con.createQuery(SQLTABLE.genINSERT(co)).executeUpdate();
                     }
                 } catch (Exception e) {
                     log.severe("Failed to connect to the database, make sure your connection information is correct!");
