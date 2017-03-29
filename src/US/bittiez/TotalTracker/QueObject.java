@@ -9,12 +9,13 @@ public class QueObject {
     public int Quantity = 1;
     public String PlayerName;
 
-    public QueObject(String PlayerUUID, String queType, String PlayerName){
+    public QueObject(String PlayerUUID, String queType, String PlayerName) {
         this.PlayerUUID = PlayerUUID;
         this.QueType = queType;
         this.PlayerName = PlayerName;
     }
-    public QueObject(String PlayerUUID, String queType, String PlayerName, int Quantity){
+
+    public QueObject(String PlayerUUID, String queType, String PlayerName, int Quantity) {
         this.PlayerUUID = PlayerUUID;
         this.QueType = queType;
         this.PlayerName = PlayerName;
@@ -22,10 +23,11 @@ public class QueObject {
     }
 
 
-    public QueObject(Player player, String queType){
+    public QueObject(Player player, String queType) {
         this(player.getUniqueId().toString(), queType, player.getName());
     }
-    public QueObject(Player player, String queType, int Quantity){
+
+    public QueObject(Player player, String queType, int Quantity) {
         this(player.getUniqueId().toString(), queType, player.getName(), Quantity);
     }
 }

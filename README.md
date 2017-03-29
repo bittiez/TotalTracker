@@ -31,6 +31,7 @@ This will keep track of many stats, currently:
 - XP Gained
 - Time Played
 - Food Eaten
+- Add Items Dropped
 
 # Usage
 
@@ -68,16 +69,13 @@ https://github.com/bittiez/TotalTracker/blob/master/src/plugin.yml
 https://github.com/bittiez/TotalTracker/blob/master/src/config.yml
 
 # To-do
-- Add auto updater?
 - Add a search function to the web portion
 - Add pages(Currently only shows top 10) to the web portion
 - Add distance walked
 - Add fish caught
-- Add items dropped
 - Add buckets filled
 - Add arrows shot
 - Demo site
 - Money earned (Vault)
 - Current money (Vault)
 - Items Enchanted
-- Add online/offline

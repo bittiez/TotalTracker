@@ -22,17 +22,18 @@ public class SQLTABLE {
     public final static String XP_GAINED = "xp_gained";
     public final static String TIME_PLAYED = "time_played";
     public final static String FOOD_EATEN = "food_eaten";
+    public final static String ITEMS_DROPPED = "items_dropped";
 
-    public static ArrayList<String> genSQL(FileConfiguration config, File dataPath){
+    public static ArrayList<String> genSQL(FileConfiguration config, File dataPath) {
         int version = config.getInt("db_version", 1);
         ArrayList<String> sqlQueries = new ArrayList<String>();
 
-        if(version == 1) {
+        if (version == 1) {
             StringBuilder sql = new StringBuilder();
 
             sqlQueries.add("DROP TABLE IF EXISTS " + genFullTableSQL() + ";");
 
-            sql.append("CREATE TABLE IF NOT EXISTS "+genFullTableSQL()+" (");
+            sql.append("CREATE TABLE IF NOT EXISTS " + genFullTableSQL() + " (");
             sql.append("`id` int(10) not null auto_increment, ");
             sql.append("`" + PLAYER + "` char(36), ");
             sql.append("`" + PLAYER + "_name` text(32), ");
@@ -46,49 +47,53 @@ public class SQLTABLE {
             sqlQueries.add(sql.toString());
             version++;
         }
-        if(version == 2){
-            sqlQueries.add("ALTER TABLE "+genFullTableSQL()+" ADD `"+ BLOCKS_BROKEN +"` int(10) default '0';");
+        if (version == 2) {
+            sqlQueries.add("ALTER TABLE " + genFullTableSQL() + " ADD `" + BLOCKS_BROKEN + "` int(10) default '0';");
             version++;
         }
-        if(version == 3){
-            sqlQueries.add("ALTER TABLE "+genFullTableSQL()+" ADD `"+ JOINS +"` int(10) default '0';");
+        if (version == 3) {
+            sqlQueries.add("ALTER TABLE " + genFullTableSQL() + " ADD `" + JOINS + "` int(10) default '0';");
             version++;
         }
-        if(version == 4){
-            sqlQueries.add("ALTER TABLE "+genFullTableSQL()+" ADD `"+ DAMAGE_TAKEN +"` int(10) default '0';");
+        if (version == 4) {
+            sqlQueries.add("ALTER TABLE " + genFullTableSQL() + " ADD `" + DAMAGE_TAKEN + "` int(10) default '0';");
             version++;
         }
-        if(version == 5){
-            sqlQueries.add("ALTER TABLE "+genFullTableSQL()+" ADD `"+ DAMAGE_CAUSED +"` int(10) default '0';");
+        if (version == 5) {
+            sqlQueries.add("ALTER TABLE " + genFullTableSQL() + " ADD `" + DAMAGE_CAUSED + "` int(10) default '0';");
             version++;
         }
-        if(version == 6){
-            sqlQueries.add("ALTER TABLE "+genFullTableSQL()+" ADD `"+ ITEM_PICKUP +"` int(10) default '0';");
+        if (version == 6) {
+            sqlQueries.add("ALTER TABLE " + genFullTableSQL() + " ADD `" + ITEM_PICKUP + "` int(10) default '0';");
             version++;
         }
-        if(version == 7){
-            sqlQueries.add("ALTER TABLE "+genFullTableSQL()+" ADD `"+ PLAYER_CHAT +"` int(10) default '0';");
+        if (version == 7) {
+            sqlQueries.add("ALTER TABLE " + genFullTableSQL() + " ADD `" + PLAYER_CHAT + "` int(10) default '0';");
             version++;
         }
-        if(version == 8){
-            sqlQueries.add("ALTER TABLE "+genFullTableSQL()+" ADD `"+ ITEMS_CRAFTED +"` int(10) default '0';");
+        if (version == 8) {
+            sqlQueries.add("ALTER TABLE " + genFullTableSQL() + " ADD `" + ITEMS_CRAFTED + "` int(10) default '0';");
             version++;
         }
-        if(version == 9){
-            sqlQueries.add("ALTER TABLE "+genFullTableSQL()+" ADD `"+ XP_GAINED +"` int(10) default '0';");
+        if (version == 9) {
+            sqlQueries.add("ALTER TABLE " + genFullTableSQL() + " ADD `" + XP_GAINED + "` int(10) default '0';");
             version++;
         }
-        if(version == 10){
-            sqlQueries.add("ALTER TABLE "+genFullTableSQL()+" ADD `"+ TIME_PLAYED +"` int(10) default '0';");
+        if (version == 10) {
+            sqlQueries.add("ALTER TABLE " + genFullTableSQL() + " ADD `" + TIME_PLAYED + "` int(10) default '0';");
             version++;
         }
-        if(version == 11){
-            sqlQueries.add("ALTER TABLE "+genFullTableSQL()+" ADD `"+ FOOD_EATEN +"` int(10) default '0';");
+        if (version == 11) {
+            sqlQueries.add("ALTER TABLE " + genFullTableSQL() + " ADD `" + FOOD_EATEN + "` int(10) default '0';");
+            version++;
+        }
+        if (version == 12) {
+            sqlQueries.add("ALTER TABLE " + genFullTableSQL() + " ADD `" + ITEMS_DROPPED + "` int(10) default '0';");
             version++;
         }
 
 
-        if(version != config.getInt("db_version", 1)){
+        if (version != config.getInt("db_version", 1)) {
             try {
                 config.set("db_version", version);
                 if (main.debug)
@@ -103,24 +108,23 @@ public class SQLTABLE {
         return sqlQueries;
     }
 
-    public static String genINSERT(QueObject queObject){
+    public static String genINSERT(QueObject queObject) {
         String insert = "INSERT INTO "
                 + genFullTableSQL()
                 + " (" + PLAYER + ", " + PLAYER + "_name, " + queObject.QueType + ")"
                 + " VALUES (" + MySQLQuotes(queObject.PlayerUUID) + ", " + MySQLQuotes(queObject.PlayerName) + ", " + queObject.Quantity + ") "
                 + "ON DUPLICATE KEY UPDATE "
                 + queObject.QueType + "=" + queObject.QueType + "+" + queObject.Quantity + ", "
-                + PLAYER + "_name=" + MySQLQuotes(queObject.PlayerName) + ";"
-            ;
+                + PLAYER + "_name=" + MySQLQuotes(queObject.PlayerName) + ";";
 
         return insert;
     }
 
-    public static String genFullTableSQL(){
+    public static String genFullTableSQL() {
         return "`" + main.database + "`.`" + main.prefix + "`";
     }
 
-    private static String MySQLQuotes(String original){
+    private static String MySQLQuotes(String original) {
         return "'" + original + "'";
     }
 }

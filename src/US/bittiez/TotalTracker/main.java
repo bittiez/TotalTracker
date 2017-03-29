@@ -26,7 +26,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
-import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,21 +34,24 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-public class main extends JavaPlugin implements Listener{
+public class main extends JavaPlugin implements Listener {
     public static boolean debug = true;
     public static Logger log;
+    public static String prefix;
+    public static String database;
+    public static File playerVersionFile;
     private static Long processEveryMinutes = 5L;
     private static int MaxCapacity = 150;
+    public FileConfiguration playerVersion;
+    public FileConfiguration config = getConfig();
     private ArrayList<QueObject> QueObjects;
     private boolean ignoreBrokenCreative = false;
     private boolean ignorePlacedCreative = false;
     private BukkitScheduler scheduler = getServer().getScheduler();
 
-    public FileConfiguration playerVersion;
-    public FileConfiguration config = getConfig();
-    public static String prefix;
-    public static String database;
-    public static File playerVersionFile;
+    public static String genMySQLUrl(FileConfiguration config) {
+        return "jdbc:mysql://" + config.getString("mysql_address") + ":" + config.getString("mysql_port") + "/" + config.getString("mysql_database");
+    }
 
     @Override
     public void onEnable() {
@@ -58,7 +60,7 @@ public class main extends JavaPlugin implements Listener{
         createConfig();
         playerVersionFile = new File(Paths.get(this.getDataFolder().getAbsolutePath().toString(), "players.yml").toAbsolutePath().toString());
 
-        if(!config.getBoolean("setup_complete")){
+        if (!config.getBoolean("setup_complete")) {
             log.warning("You must edit your config file and restart the server to finish setting up TotalTracker. Make sure to change setup_complete to true when you are finished.");
             setEnabled(false);
         } else {
@@ -89,7 +91,7 @@ public class main extends JavaPlugin implements Listener{
             scheduler.scheduleSyncRepeatingTask(this, new Runnable() {
                 @Override
                 public void run() {
-                    for(Player player : getServer().getOnlinePlayers()){
+                    for (Player player : getServer().getOnlinePlayers()) {
                         QueObjects.add(new QueObject(player, SQLTABLE.TIME_PLAYED, 2));
                     }
                     checkQue();
@@ -99,11 +101,11 @@ public class main extends JavaPlugin implements Listener{
         }
     }
 
-    public void tableSetup(){
+    public void tableSetup() {
         ArrayList<String> queries = SQLTABLE.genSQL(config, getDataFolder());
-        if(queries.size() > 0) {
+        if (queries.size() > 0) {
             Sql2o SQL = new Sql2o(genMySQLUrl(config), config.getString("mysql_username"), config.getString("mysql_password"));
-            try(Connection con = SQL.open()) {
+            try (Connection con = SQL.open()) {
                 for (String q : queries) {
                     if (debug)
                         log.info("RUN SQL: " + q);
@@ -111,19 +113,15 @@ public class main extends JavaPlugin implements Listener{
                 }
             } catch (Exception e) {
                 log.severe("Failed to connect to the database, make sure your connection information is correct!");
-                if(debug)
+                if (debug)
                     e.printStackTrace();
             }
         }
     }
 
-    public static String genMySQLUrl(FileConfiguration config){
-        return "jdbc:mysql://" + config.getString("mysql_address") + ":" + config.getString("mysql_port") + "/" + config.getString("mysql_database");
-    }
-
     public boolean onCommand(CommandSender sender, Command cmd, String label, String args[]) {
         if (cmd.getName().equalsIgnoreCase("tt")) {
-            if(args.length > 0) {
+            if (args.length > 0) {
                 if (args[0].equalsIgnoreCase("sync") && sender.hasPermission("TotalTracker.sync")) {
                     runQue();
                     sender.sendMessage("Processing the que now!");
@@ -144,26 +142,26 @@ public class main extends JavaPlugin implements Listener{
         return false;
     }
 
-    private void runQue(){
+    private void runQue() {
         QueProcessor qp = new QueProcessor(new ArrayList<>(QueObjects), log, config);
         QueObjects.clear();
         qp.runTaskAsynchronously(this);
     }
 
-    private void checkForUpdates(){
+    private void checkForUpdates() {
         String currentVersion = getDescription().getVersion();
 
         try {
             FileConfiguration updated = new YamlConfiguration();
             updated.loadFromString(IOUtils.toString(URI.create("https://raw.githubusercontent.com/bittiez/TotalTracker/master/src/plugin.yml")));
             String updatedVersion = updated.getString("version");
-            if(!currentVersion.equals(updatedVersion)){
+            if (!currentVersion.equals(updatedVersion)) {
                 log.warning(genVersionOutdatedMessage(currentVersion, updatedVersion));
                 scheduler.scheduleSyncRepeatingTask(this, new Runnable() {
                     @Override
                     public void run() {
-                        for(Player player : getServer().getOnlinePlayers()){
-                            if(player.isOp() || player.hasPermission("TotalTracker.updates")){
+                        for (Player player : getServer().getOnlinePlayers()) {
+                            if (player.isOp() || player.hasPermission("TotalTracker.updates")) {
                                 player.sendMessage(genVersionOutdatedMessage(currentVersion, updatedVersion));
                             }
                         }
@@ -172,16 +170,17 @@ public class main extends JavaPlugin implements Listener{
             }
         } catch (IOException e) {
             log.warning("[CE1]Failed to check for updates, you can check manually at: https://github.com/bittiez/TotalTracker/releases or https://www.spigotmc.org/resources/totaltracker.38304/");
-            if(debug)
+            if (debug)
                 e.printStackTrace();
-        } catch (InvalidConfigurationException e){
+        } catch (InvalidConfigurationException e) {
             log.warning("[CE2]Failed to check for updates, you can check manually at: https://github.com/bittiez/TotalTracker/releases or https://www.spigotmc.org/resources/totaltracker.38304/");
-            if(debug)
+            if (debug)
                 e.printStackTrace();
         }
     }
-    private String genVersionOutdatedMessage(String version, String updatedVersion){
-        return "Your version("+version+") of "+ ChatColor.GOLD +" TotalTracker "+ChatColor.RESET+"is not up to date("+updatedVersion+"), you can get the latest version at https://github.com/bittiez/TotalTracker/releases or https://www.spigotmc.org/resources/totaltracker.38304/";
+
+    private String genVersionOutdatedMessage(String version, String updatedVersion) {
+        return "Your version(" + version + ") of " + ChatColor.GOLD + " TotalTracker " + ChatColor.RESET + "is not up to date(" + updatedVersion + "), you can get the latest version at https://github.com/bittiez/TotalTracker/releases or https://www.spigotmc.org/resources/totaltracker.38304/";
     }
 
     private void createConfig() {
@@ -190,116 +189,132 @@ public class main extends JavaPlugin implements Listener{
     }
 
     @EventHandler
-    public void onEntityDeath(EntityDeathEvent e){
-        if(e.getEntity().getLastDamageCause() instanceof EntityDamageByEntityEvent) {
+    public void onEntityDeath(EntityDeathEvent e) {
+        if (e.getEntity().getLastDamageCause() instanceof EntityDamageByEntityEvent) {
             EntityDamageByEntityEvent nEvent = (EntityDamageByEntityEvent) e.getEntity().getLastDamageCause();
             Entity ekiller = nEvent.getDamager();
             if (ekiller instanceof Player) {
                 //Player killed entity
-                Player p = (Player)ekiller;
-                QueObject queObject = new QueObject(p.getUniqueId().toString(), SQLTABLE.MOB_KILLS, p.getName());
-                QueObjects.add(queObject);
+                Player p = (Player) ekiller;
+                QueObjects.add(new QueObject(p, SQLTABLE.MOB_KILLS));
             }
         }
 
     }
+
     @EventHandler
     public void onDeath(PlayerDeathEvent e) {
         Player victim = e.getEntity();
         Player killer = victim.getKiller();
-        if(killer != null){
+        if (killer != null) {
             QueObject queObject = new QueObject(killer.getUniqueId().toString(), SQLTABLE.PVP_KILLS, killer.getName());
             QueObjects.add(queObject);
         }
-        if(victim != null){
+        if (victim != null) {
             QueObject queObject = new QueObject(victim.getUniqueId().toString(), SQLTABLE.DEATHS, victim.getName());
             QueObjects.add(queObject);
         }
-        if(QueObjects.size() >= MaxCapacity)
+        if (QueObjects.size() >= MaxCapacity)
             runQue();
     }
+
     @EventHandler
-    public void OnPlayerJoin(PlayerJoinEvent e){
-        QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.JOINS, e.getPlayer().getName()));
+    public void OnPlayerJoin(PlayerJoinEvent e) {
+        QueObjects.add(new QueObject(e.getPlayer(), SQLTABLE.JOINS));
         checkQue();
 
-        if(config.getBoolean("auto_import", true)){
+        if (config.getBoolean("auto_import", true)) {
             new ImportProcessor(e.getPlayer(), playerVersion, QueObjects).run();
         }
     }
+
     @EventHandler
-    public void OnItemPickedUp(PlayerPickupItemEvent e){
-        QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.ITEM_PICKUP, e.getPlayer().getName()));
+    public void OnDropItem(PlayerDropItemEvent e) {
+        QueObjects.add(new QueObject(e.getPlayer(), SQLTABLE.ITEMS_DROPPED, e.getItemDrop().getItemStack().getAmount()));
         checkQue();
     }
+
     @EventHandler
-    public void OnEntityDamage(EntityDamageEvent e){
-        if(e.getEntity() instanceof Player){
-            Player p = (Player)e.getEntity();
+    public void OnItemPickedUp(PlayerPickupItemEvent e) {
+        QueObjects.add(new QueObject(e.getPlayer(), SQLTABLE.ITEM_PICKUP));
+        checkQue();
+    }
+
+    @EventHandler
+    public void OnEntityDamage(EntityDamageEvent e) {
+        if (e.getEntity() instanceof Player) {
+            Player p = (Player) e.getEntity();
             QueObject de = new QueObject(p.getUniqueId().toString(), SQLTABLE.DAMAGE_TAKEN, p.getName());
-            de.Quantity = (int)e.getFinalDamage();
+            de.Quantity = (int) e.getFinalDamage();
             QueObjects.add(de);
             checkQue();
         }
     }
+
     @EventHandler
-    public void OnChatMessage(AsyncPlayerChatEvent e){
+    public void OnChatMessage(AsyncPlayerChatEvent e) {
         QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.PLAYER_CHAT, e.getPlayer().getName()));
         checkQue();
     }
+
     @EventHandler
-    public void OnEntityDamageByEntity(EntityDamageByEntityEvent e){
-        if(e.getDamager() instanceof Player){
-            Player p = (Player)e.getDamager();
+    public void OnEntityDamageByEntity(EntityDamageByEntityEvent e) {
+        if (e.getDamager() instanceof Player) {
+            Player p = (Player) e.getDamager();
             QueObject de = new QueObject(p.getUniqueId().toString(), SQLTABLE.DAMAGE_CAUSED, p.getName());
-            de.Quantity = (int)e.getFinalDamage();
+            de.Quantity = (int) e.getFinalDamage();
             QueObjects.add(de);
             checkQue();
         }
     }
+
     @EventHandler
-    public void onBlockBreak(BlockBreakEvent e){
-        if(ignoreBrokenCreative && e.getPlayer().getGameMode().equals(GameMode.CREATIVE))
+    public void onBlockBreak(BlockBreakEvent e) {
+        if (ignoreBrokenCreative && e.getPlayer().getGameMode().equals(GameMode.CREATIVE))
             return;
-        if(e.getPlayer() != null) {
+        if (e.getPlayer() != null) {
             QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.BLOCKS_BROKEN, e.getPlayer().getName()));
             checkQue();
         }
     }
+
     @EventHandler
-    public void onBlockPlaced(BlockPlaceEvent e){
-        if(ignorePlacedCreative && e.getPlayer().getGameMode().equals(GameMode.CREATIVE))
+    public void onBlockPlaced(BlockPlaceEvent e) {
+        if (ignorePlacedCreative && e.getPlayer().getGameMode().equals(GameMode.CREATIVE))
             return;
-        if(e.getPlayer() != null) {
+        if (e.getPlayer() != null) {
             QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.BLOCKS_PLACED, e.getPlayer().getName()));
             checkQue();
         }
     }
+
     @EventHandler
-    public void onItemCraft(CraftItemEvent e){
-        if(e.getWhoClicked() != null && e.getWhoClicked() instanceof Player){
-            Player p = (Player)e.getWhoClicked();
+    public void onItemCraft(CraftItemEvent e) {
+        if (e.getWhoClicked() != null && e.getWhoClicked() instanceof Player) {
+            Player p = (Player) e.getWhoClicked();
             QueObjects.add(new QueObject(p.getUniqueId().toString(), SQLTABLE.ITEMS_CRAFTED, p.getName()));
             checkQue();
         }
     }
+
     @EventHandler
-    public void OnXPGained(PlayerExpChangeEvent e){
+    public void OnXPGained(PlayerExpChangeEvent e) {
         QueObject qe = new QueObject(e.getPlayer(), SQLTABLE.XP_GAINED);
         qe.Quantity = e.getAmount();
         QueObjects.add(qe);
         checkQue();
     }
+
     @EventHandler
-    public void onFoodEated(PlayerItemConsumeEvent e){
+    public void onFoodEated(PlayerItemConsumeEvent e) {
         ItemStack IS = e.getItem();
-        if(IS.getType().isEdible()){
+        if (IS.getType().isEdible()) {
             QueObjects.add(new QueObject(e.getPlayer(), SQLTABLE.FOOD_EATEN));
         }
     }
 
-    private void checkQue(){
-        if(QueObjects.size() >= MaxCapacity)
+    private void checkQue() {
+        if (QueObjects.size() >= MaxCapacity)
             runQue();
     }
 }
