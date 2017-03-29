@@ -78,6 +78,16 @@ public class ImportProcessor extends BukkitRunnable {
             QueObjects.add(new QueObject(player, SQLTABLE.BLOCKS_BROKEN, player.getStatistic(Statistic.MINE_BLOCK, Material.SAND)));
             v++;
         }
+        if (v == 12) {
+            QueObjects.add(new QueObject(player, SQLTABLE.ITEMS_ENCHANTED, player.getStatistic(Statistic.ITEM_ENCHANTED)));
+            QueObjects.add(new QueObject(player, SQLTABLE.BLOCKS_BROKEN, player.getStatistic(Statistic.MINE_BLOCK, Material.CLAY)));
+            QueObjects.add(new QueObject(player, SQLTABLE.BLOCKS_BROKEN, player.getStatistic(Statistic.MINE_BLOCK, Material.DIAMOND_ORE)));
+            QueObjects.add(new QueObject(player, SQLTABLE.BLOCKS_BROKEN, player.getStatistic(Statistic.MINE_BLOCK, Material.EMERALD_ORE)));
+            QueObjects.add(new QueObject(player, SQLTABLE.BLOCKS_BROKEN, player.getStatistic(Statistic.MINE_BLOCK, Material.IRON_ORE)));
+            QueObjects.add(new QueObject(player, SQLTABLE.BLOCKS_BROKEN, player.getStatistic(Statistic.MINE_BLOCK, Material.GOLD_ORE)));
+
+            v++;
+        }
 
         if (v != playerVersion.getInt(player.getUniqueId().toString() + ".version")) {
             playerVersion.set(player.getUniqueId().toString() + ".version", v);
