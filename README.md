@@ -31,7 +31,8 @@ This will keep track of many stats, currently:
 - XP Gained
 - Time Played
 - Food Eaten
-- Add Items Dropped
+- Items Dropped
+- Items Enchanted
 
 # Usage
 
@@ -78,4 +79,3 @@ https://github.com/bittiez/TotalTracker/blob/master/src/config.yml
 - Demo site
 - Money earned (Vault)
 - Current money (Vault)
-- Items Enchanted

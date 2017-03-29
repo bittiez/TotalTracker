@@ -14,6 +14,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -189,6 +190,14 @@ public class main extends JavaPlugin implements Listener {
     }
 
     @EventHandler
+    public void OnItemEnchanted(PrepareItemEnchantEvent e){
+        if(!e.isCancelled()){
+            QueObjects.add(new QueObject(e.getEnchanter(), SQLTABLE.ITEMS_ENCHANTED));
+            checkQue();
+        }
+    }
+
+    @EventHandler
     public void onEntityDeath(EntityDeathEvent e) {
         if (e.getEntity().getLastDamageCause() instanceof EntityDamageByEntityEvent) {
             EntityDamageByEntityEvent nEvent = (EntityDamageByEntityEvent) e.getEntity().getLastDamageCause();
@@ -197,6 +206,7 @@ public class main extends JavaPlugin implements Listener {
                 //Player killed entity
                 Player p = (Player) ekiller;
                 QueObjects.add(new QueObject(p, SQLTABLE.MOB_KILLS));
+                checkQue();
             }
         }
 
