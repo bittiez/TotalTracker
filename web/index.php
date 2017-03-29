@@ -104,6 +104,13 @@ $content = " <img src='img/cube.svg'>"; //Make sure not to use " in this variabl
     </div>
     <div class="<?php echo $gClass; ?>" style="<?php echo $customStyle; ?>">
       &nbsp;
+      <h2>Items Dropped</h2>
+      <div id="iDropIt">
+          <?php echo $content; ?>
+      </div>
+    </div>
+    <div class="<?php echo $gClass; ?>" style="<?php echo $customStyle; ?>">
+      &nbsp;
       <h2>Chat Messages</h2>
       <div id="pChatMsg">
           <?php echo $content; ?>
@@ -187,6 +194,7 @@ $content = " <img src='img/cube.svg'>"; //Make sure not to use " in this variabl
       ["dTaken", "damage_taken", "Damage Taken"],
       ["dCaused", "damage_caused", "Damage Caused"],
       ["iPickUp", "items_picked_up", "Items Picked Up"],
+      ["iDropIt", "items_dropped", "Items Dropped"],
       ["pChatMsg", "chat_messages", "Chat Messages"],
       ["iCrafted", "items_crafted", "Items Crafted"],
       ["xpGained", "xp_gained", "XP Gained"],
