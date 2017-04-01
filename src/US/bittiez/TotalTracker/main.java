@@ -15,10 +15,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
@@ -187,6 +184,14 @@ public class main extends JavaPlugin implements Listener {
     private void createConfig() {
         config.options().copyDefaults();
         saveDefaultConfig();
+    }
+
+    @EventHandler
+    public void OnArrowShot(ProjectileLaunchEvent e){
+        if(e.getEntity().getShooter() instanceof Player){
+            Player p = (Player) e.getEntity().getShooter();
+            QueObjects.add(new QueObject(p, SQLTABLE.ARROWS_SHOT));
+        }
     }
 
     @EventHandler

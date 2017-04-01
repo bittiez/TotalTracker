@@ -24,6 +24,7 @@ public class SQLTABLE {
     public final static String FOOD_EATEN = "food_eaten";
     public final static String ITEMS_DROPPED = "items_dropped";
     public final static String ITEMS_ENCHANTED = "items_enchanted";
+    public final static String ARROWS_SHOT = "arrows_shot";
 
     public static ArrayList<String> genSQL(FileConfiguration config, File dataPath) {
         int version = config.getInt("db_version", 1);
@@ -94,6 +95,10 @@ public class SQLTABLE {
         }
         if (version == 13) {
             sqlQueries.add("ALTER TABLE " + genFullTableSQL() + " ADD `" + ITEMS_ENCHANTED + "` int(10) default '0';");
+            version++;
+        }
+        if (version == 14) {
+            sqlQueries.add("ALTER TABLE " + genFullTableSQL() + " ADD `" + ARROWS_SHOT + "` int(10) default '0';");
             version++;
         }
 

@@ -36,125 +36,41 @@
     <div class="row">
 <?php $gClass = "col-lg-3 col-md-4 col-sm-6 col-xs-12";
 $customStyle = "display: inline-block; min-height: 200px;";
-$content = " <img src='img/cube.svg'>"; //Make sure not to use " in this variable ?>
-      <div class="<?php echo $gClass; ?>" style="<?php echo $customStyle; ?>">
-        &nbsp;
-        <h2>Blocks Broken</h2>
-        <div id="bBroken">
-            <?php echo $content; ?>
-        </div>
-      </div>
-      <div class="<?php echo $gClass; ?>" style="<?php echo $customStyle; ?>">
-        &nbsp;
-        <h2>Blocks Placed</h2>
-        <div id="bPlaced">
-            <?php echo $content; ?>
-        </div>
-      </div>
+$content = " <img src='img/cube.svg'>"; //Make sure not to use " in this variable
 
-      <div class="<?php echo $gClass; ?>" style="<?php echo $customStyle; ?>">
-        &nbsp;
-        <h2>Player Deaths</h2>
-        <div id="pDeaths">
-            <?php echo $content; ?>
-        </div>
-      </div>
-      <div class="<?php echo $gClass; ?>" style="<?php echo $customStyle; ?>">
-        &nbsp;
-        <h2>Mob Kills</h2>
-        <div id="mKills">
-            <?php echo $content; ?>
-        </div>
-      </div>
+// [ID TO MATCH JS AT BOTTOM] [TABLE NAME ON LEFT SIDE OF TABLE]
+$tableArray = [
+  ["bBroken", "Blocks Broken"],
+  ["bPlaced", "Blocks Placed"],
+  ["pDeaths", "Player Deaths"],
+  ["pKills", "Player Kills"],
+  ["mKills", "Mob Kills"],
+  ["pLogins", "Player Logins"],
+  ["dTaken", "Damage Taken"],
+  ["dCaused", "Damage Caused"],
+  ["iPickUp", "Items Picked Up"],
+  ["iDropIt", "Items Dropped"],
+  ["pChatMsg", "Chat Messages"],
+  ["iCrafted", "Items Crafted"],
+  ["iChanted", "Items Enchanted"],
+  ["xpGained", "XP Gained"],
+  ["timePlayed", "Time Played"],
+  ["foodEaten", "Food Eaten"],
+  ["arrowShot", "Arrows Shot"]
+];
 
-      <div class="<?php echo $gClass; ?>" style="<?php echo $customStyle; ?>">
-        &nbsp;
-        <h2>Player Kills</h2>
-        <div id="pKills">
-            <?php echo $content; ?>
-        </div>
-      </div>
-      <div class="<?php echo $gClass; ?>" style="<?php echo $customStyle; ?>">
-        &nbsp;
-        <h2>Player Logins</h2>
-        <div id="pLogins">
-            <?php echo $content; ?>
-        </div>
-      </div>
-      <div class="<?php echo $gClass; ?>" style="<?php echo $customStyle; ?>">
-        &nbsp;
-        <h2>Damage Taken</h2>
-        <div id="dTaken">
-            <?php echo $content; ?>
-        </div>
-      </div>
-    <div class="<?php echo $gClass; ?>" style="<?php echo $customStyle; ?>">
-      &nbsp;
-      <h2>Damage Caused</h2>
-      <div id="dCaused">
-          <?php echo $content; ?>
-      </div>
+foreach ($tableArray as $table) { ?>
+  <div class="<?php echo $gClass; ?>" style="<?php echo $customStyle; ?>">
+    &nbsp;
+    <h2><?php echo $table[1]; ?></h2>
+    <div id="<?php echo $table[0]; ?>">
+        <?php echo $content; ?>
     </div>
-    <div class="<?php echo $gClass; ?>" style="<?php echo $customStyle; ?>">
-      &nbsp;
-      <h2>Items Picked Up</h2>
-      <div id="iPickUp">
-          <?php echo $content; ?>
-      </div>
-    </div>
-    <div class="<?php echo $gClass; ?>" style="<?php echo $customStyle; ?>">
-      &nbsp;
-      <h2>Items Dropped</h2>
-      <div id="iDropIt">
-          <?php echo $content; ?>
-      </div>
-    </div>
-    <div class="<?php echo $gClass; ?>" style="<?php echo $customStyle; ?>">
-      &nbsp;
-      <h2>Chat Messages</h2>
-      <div id="pChatMsg">
-          <?php echo $content; ?>
-      </div>
-    </div>
-    <div class="<?php echo $gClass; ?>" style="<?php echo $customStyle; ?>">
-      &nbsp;
-      <h2>Items Crafted</h2>
-      <div id="iCrafted">
-          <?php echo $content; ?>
-      </div>
-    </div>
-    <div class="<?php echo $gClass; ?>" style="<?php echo $customStyle; ?>">
-      &nbsp;
-      <h2>Items Enchanted</h2>
-      <div id="iChanted">
-          <?php echo $content; ?>
-      </div>
-    </div>
-    <div class="<?php echo $gClass; ?>" style="<?php echo $customStyle; ?>">
-      &nbsp;
-      <h2>XP Gained</h2>
-      <div id="xpGained">
-          <?php echo $content; ?>
-      </div>
-    </div>
-    <div class="<?php echo $gClass; ?>" style="<?php echo $customStyle; ?>">
-      &nbsp;
-      <h2>Time Played</h2>
-      <div id="timePlayed">
-          <?php echo $content; ?>
-      </div>
-    </div>
-    <div class="<?php echo $gClass; ?>" style="<?php echo $customStyle; ?>">
-      &nbsp;
-      <h2>Food Eaten</h2>
-      <div id="foodEaten">
-          <?php echo $content; ?>
-      </div>
-    </div>
-
-    </div>
+  </div>
+<?php } ?>
 
 
+  </div>
 </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -195,8 +111,8 @@ $content = " <img src='img/cube.svg'>"; //Make sure not to use " in this variabl
       ["bBroken", "blocks_broken", "Blocks Broken"],
       ["bPlaced", "blocks_placed", "Blocks Placed"],
       ["pDeaths", "deaths", "Deaths"],
-      ["mKills", "mob_kills", "Mob Kills"],
       ["pKills", "pvp_kills", "PvP Kills"],
+      ["mKills", "mob_kills", "Mob Kills"],
       ["pLogins", "logins", "Login Count"],
       ["dTaken", "damage_taken", "Damage Taken"],
       ["dCaused", "damage_caused", "Damage Caused"],
@@ -207,7 +123,8 @@ $content = " <img src='img/cube.svg'>"; //Make sure not to use " in this variabl
       ["iChanted", "items_enchanted", "Items Enchanted"],
       ["xpGained", "xp_gained", "XP Gained"],
       ["timePlayed", "time_played", "Time Played"],
-      ["foodEaten", "food_eaten", "Food Eaten"]
+      ["foodEaten", "food_eaten", "Food Eaten"],
+      ["arrowShot", "arrows_shot", "Arrows Shot"]
     ];
 
     function reloadAllPrefix(prefix){

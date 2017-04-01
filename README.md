@@ -33,6 +33,7 @@ This will keep track of many stats, currently:
 - Food Eaten
 - Items Dropped
 - Items Enchanted
+- Arrows Shot
 
 # Usage
 
@@ -75,7 +76,5 @@ https://github.com/bittiez/TotalTracker/blob/master/src/config.yml
 - Add distance walked
 - Add fish caught
 - Add buckets filled
-- Add arrows shot
-- Demo site
 - Money earned (Vault)
 - Current money (Vault)
