@@ -64,17 +64,20 @@ https://github.com/bittiez/TotalTracker/blob/master/src/plugin.yml
 - The plugin will automatically update your database, all you have to do is install the new jar file!
 
 **Updating the web portion**  
-- Just upload all file **except** the config.php file. Unless you have made custom changes, then it's up to you to update it with the new changes.
+- Just upload all files **except** the config.php file. Unless you have made custom changes, then it's up to you to update it with the new changes.
 
 # Configuration
 
 https://github.com/bittiez/TotalTracker/blob/master/src/config.yml
 
 # To-do
-- Add a search function to the web portion
-- Add pages(Currently only shows top 10) to the web portion
+- [WEB]Add a search function to the web portion
+- [WEB]Add pages(Currently only shows top 10) to the web portion
 - Add distance walked
 - Add fish caught
 - Add buckets filled
+- Add buckets emptied
 - Money earned (Vault)
 - Current money (Vault)
+- Add words said
+- Add tools broken
