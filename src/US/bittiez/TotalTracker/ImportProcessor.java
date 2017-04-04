@@ -70,22 +70,24 @@ public class ImportProcessor extends BukkitRunnable {
             v++;
         }
         if (v == 11) {
-            QueObjects.add(new QueObject(player, SQLTABLE.BLOCKS_BROKEN, player.getStatistic(Statistic.MINE_BLOCK, Material.STONE)));
-            QueObjects.add(new QueObject(player, SQLTABLE.BLOCKS_BROKEN, player.getStatistic(Statistic.MINE_BLOCK, Material.COBBLESTONE)));
-            QueObjects.add(new QueObject(player, SQLTABLE.BLOCKS_BROKEN, player.getStatistic(Statistic.MINE_BLOCK, Material.WOOD)));
-            QueObjects.add(new QueObject(player, SQLTABLE.BLOCKS_BROKEN, player.getStatistic(Statistic.MINE_BLOCK, Material.LOG)));
-            QueObjects.add(new QueObject(player, SQLTABLE.BLOCKS_BROKEN, player.getStatistic(Statistic.MINE_BLOCK, Material.DIRT)));
-            QueObjects.add(new QueObject(player, SQLTABLE.BLOCKS_BROKEN, player.getStatistic(Statistic.MINE_BLOCK, Material.SAND)));
+            try {
+                for (Material m : Material.values())
+                    if (m.isBlock())
+                        QueObjects.add(new QueObject(player, SQLTABLE.BLOCKS_BROKEN, player.getStatistic(Statistic.MINE_BLOCK, m)));
+            } catch(Exception e) {}
+
             v++;
         }
         if (v == 12) {
             QueObjects.add(new QueObject(player, SQLTABLE.ITEMS_ENCHANTED, player.getStatistic(Statistic.ITEM_ENCHANTED)));
-            QueObjects.add(new QueObject(player, SQLTABLE.BLOCKS_BROKEN, player.getStatistic(Statistic.MINE_BLOCK, Material.CLAY)));
-            QueObjects.add(new QueObject(player, SQLTABLE.BLOCKS_BROKEN, player.getStatistic(Statistic.MINE_BLOCK, Material.DIAMOND_ORE)));
-            QueObjects.add(new QueObject(player, SQLTABLE.BLOCKS_BROKEN, player.getStatistic(Statistic.MINE_BLOCK, Material.EMERALD_ORE)));
-            QueObjects.add(new QueObject(player, SQLTABLE.BLOCKS_BROKEN, player.getStatistic(Statistic.MINE_BLOCK, Material.IRON_ORE)));
-            QueObjects.add(new QueObject(player, SQLTABLE.BLOCKS_BROKEN, player.getStatistic(Statistic.MINE_BLOCK, Material.GOLD_ORE)));
-
+            v++;
+        }
+        if (v == 13) {
+            try {
+                for (Material m : Material.values())
+                    if (m.isBlock())
+                        QueObjects.add(new QueObject(player, SQLTABLE.BLOCKS_BROKEN, player.getStatistic(Statistic.USE_ITEM, m)));
+            } catch(Exception e) {}
             v++;
         }
 
