@@ -8,6 +8,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ImportProcessor extends BukkitRunnable {
     private Player player;
@@ -104,6 +105,28 @@ public class ImportProcessor extends BukkitRunnable {
                 try {
                     if (m.isBlock())
                         QueObjects.add(new QueObject(player, SQLTABLE.BLOCKS_PLACED, player.getStatistic(Statistic.USE_ITEM, m)));
+                } catch (Exception e) {
+                }
+            }
+            v++;
+            cv++;
+        }
+        if (v == cv) {
+            List<Integer> tools = new ArrayList<Integer>();
+            for (int i = 256; i <= 259; i++)
+                tools.add(i);
+            for (int i = 267; i <= 279; i++)
+                tools.add(i);
+            for (int i = 283; i <= 286; i++)
+                tools.add(i);
+            for (int i = 290; i <= 294; i++)
+                tools.add(i);
+            tools.add(359);
+
+            for (Material m : Material.values()) {
+                try {
+                    if (tools.contains(m.ordinal()))
+                        QueObjects.add(new QueObject(player, SQLTABLE.TOOLS_BROKEN, player.getStatistic(Statistic.BREAK_ITEM, m)));
                 } catch (Exception e) {
                 }
             }

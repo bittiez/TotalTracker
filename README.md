@@ -34,6 +34,7 @@ This will keep track of many stats, currently:
 - Items Dropped
 - Items Enchanted
 - Arrows Shot
+- Tools Broken
 
 # Usage
 
@@ -80,4 +81,3 @@ https://github.com/bittiez/TotalTracker/blob/master/src/config.yml
 - Money earned (Vault)
 - Current money (Vault)
 - Add words said
-- Add tools broken

@@ -187,16 +187,16 @@ public class main extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void OnArrowShot(ProjectileLaunchEvent e){
-        if(e.getEntity().getShooter() instanceof Player){
+    public void onArrowShot(ProjectileLaunchEvent e) {
+        if (e.getEntity().getShooter() instanceof Player) {
             Player p = (Player) e.getEntity().getShooter();
             QueObjects.add(new QueObject(p, SQLTABLE.ARROWS_SHOT));
         }
     }
 
     @EventHandler
-    public void OnItemEnchanted(PrepareItemEnchantEvent e){
-        if(!e.isCancelled()){
+    public void onItemEnchanted(PrepareItemEnchantEvent e) {
+        if (!e.isCancelled()) {
             QueObjects.add(new QueObject(e.getEnchanter(), SQLTABLE.ITEMS_ENCHANTED));
             checkQue();
         }
@@ -234,7 +234,7 @@ public class main extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void OnPlayerJoin(PlayerJoinEvent e) {
+    public void onPlayerJoin(PlayerJoinEvent e) {
         QueObjects.add(new QueObject(e.getPlayer(), SQLTABLE.JOINS));
         if (config.getBoolean("auto_import", true)) {
             new ImportProcessor(e.getPlayer(), playerVersion, QueObjects).run();
@@ -243,19 +243,25 @@ public class main extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void OnDropItem(PlayerDropItemEvent e) {
+    public void onToolBreak(PlayerItemBreakEvent e) {
+        QueObjects.add(new QueObject(e.getPlayer(), SQLTABLE.TOOLS_BROKEN));
+        checkQue();
+    }
+
+    @EventHandler
+    public void onDropItem(PlayerDropItemEvent e) {
         QueObjects.add(new QueObject(e.getPlayer(), SQLTABLE.ITEMS_DROPPED, e.getItemDrop().getItemStack().getAmount()));
         checkQue();
     }
 
     @EventHandler
-    public void OnItemPickedUp(PlayerPickupItemEvent e) {
+    public void onItemPickedUp(PlayerPickupItemEvent e) {
         QueObjects.add(new QueObject(e.getPlayer(), SQLTABLE.ITEM_PICKUP));
         checkQue();
     }
 
     @EventHandler
-    public void OnEntityDamage(EntityDamageEvent e) {
+    public void onEntityDamage(EntityDamageEvent e) {
         if (e.getEntity() instanceof Player) {
             Player p = (Player) e.getEntity();
             QueObject de = new QueObject(p.getUniqueId().toString(), SQLTABLE.DAMAGE_TAKEN, p.getName());
@@ -266,13 +272,13 @@ public class main extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void OnChatMessage(AsyncPlayerChatEvent e) {
+    public void onChatMessage(AsyncPlayerChatEvent e) {
         QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.PLAYER_CHAT, e.getPlayer().getName()));
         checkQue();
     }
 
     @EventHandler
-    public void OnEntityDamageByEntity(EntityDamageByEntityEvent e) {
+    public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Player) {
             Player p = (Player) e.getDamager();
             QueObject de = new QueObject(p.getUniqueId().toString(), SQLTABLE.DAMAGE_CAUSED, p.getName());
@@ -312,7 +318,7 @@ public class main extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void OnXPGained(PlayerExpChangeEvent e) {
+    public void onXPGained(PlayerExpChangeEvent e) {
         QueObject qe = new QueObject(e.getPlayer(), SQLTABLE.XP_GAINED);
         qe.Quantity = e.getAmount();
         QueObjects.add(qe);
