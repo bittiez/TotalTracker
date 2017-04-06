@@ -236,11 +236,10 @@ public class main extends JavaPlugin implements Listener {
     @EventHandler
     public void OnPlayerJoin(PlayerJoinEvent e) {
         QueObjects.add(new QueObject(e.getPlayer(), SQLTABLE.JOINS));
-        checkQue();
-
         if (config.getBoolean("auto_import", true)) {
             new ImportProcessor(e.getPlayer(), playerVersion, QueObjects).run();
         }
+        checkQue();
     }
 
     @EventHandler
