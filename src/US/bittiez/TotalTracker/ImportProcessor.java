@@ -86,7 +86,7 @@ public class ImportProcessor extends BukkitRunnable {
             try {
                 for (Material m : Material.values())
                     if (m.isBlock())
-                        QueObjects.add(new QueObject(player, SQLTABLE.BLOCKS_BROKEN, player.getStatistic(Statistic.USE_ITEM, m)));
+                        QueObjects.add(new QueObject(player, SQLTABLE.BLOCKS_PLACED, player.getStatistic(Statistic.USE_ITEM, m)));
             } catch(Exception e) {}
             v++;
         }
