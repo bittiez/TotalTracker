@@ -1,69 +1,65 @@
+<?php
+include_once('lang/en.php'); //Include default language, will over ride with language set in config
+include_once('config.php');
+if(isset($config['language']))
+  if($config['language'] != "en"){
+    include_once('lang/'.$config['language'].'.php'); //Include language in config if it is not set to english
+  }
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>TotalTracker Stats</title>
-
-    <!-- Bootstrap -->
+    <title><?php echo $lang['page_title']; ?></title>
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/custom.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
   <body>
-<div class="wrapper">
-  <!-- UnComment out/delete this section to remove the multiple server buttons -->
+<?php
+$mMarginTop = "";
+if($config['enable_server_tabs']){
+  include("templates/menu.php");
+  $mMarginTop="margin-top: 40px;";
+}?>
 
-<!-- <div class="row">
-  <div class="col-xs-12">
-    <button type="button" class="btn btn-primary" onclick="reloadAllPrefix('CE_')">Main Server</button>
-    <button type="button" class="btn btn-primary" onclick="reloadAllPrefix('te')">Test Server</button>
-  </div>
-</div> -->
-
-<!-- End server button area -->
-
-
-    <div class="row">
+<div class="wrapper" style="<?php echo $mMarginTop; ?>">
+<div class="row">
 <?php $gClass = "col-lg-3 col-md-4 col-sm-6 col-xs-12";
 $customStyle = "display: inline-block; min-height: 200px;";
 $content = " <img src='img/cube.svg'>"; //Make sure not to use " in this variable
 
-// [ID TO MATCH JS AT BOTTOM] [TABLE NAME ON LEFT SIDE OF TABLE]
 $tableArray = [
-  ["bBroken", "Blocks Broken"],
-  ["bPlaced", "Blocks Placed"],
-  ["pDeaths", "Player Deaths"],
-  ["pKills", "Player Kills"],
-  ["mKills", "Mob Kills"],
-  ["pLogins", "Player Logins"],
-  ["dTaken", "Damage Taken"],
-  ["dCaused", "Damage Caused"],
-  ["iPickUp", "Items Picked Up"],
-  ["iDropIt", "Items Dropped"],
-  ["pChatMsg", "Chat Messages"],
-  ["iCrafted", "Items Crafted"],
-  ["iChanted", "Items Enchanted"],
-  ["iBrokeIt", "Tools Broken"],
-  ["xpGained", "XP Gained"],
-  ["timePlayed", "Time Played"],
-  ["foodEaten", "Food Eaten"],
-  ["arrowShot", "Arrows Shot"]
+  ["bBroken", "blocks_broken", $lang['block_broken']],
+  ["bPlaced", "blocks_placed", $lang['block_placed']],
+  ["pDeaths", "deaths", $lang['player_death']],
+  ["pKills", "pvp_kills", $lang['player_kill']],
+  ["mKills", "mob_kills", $lang['mob_kill']],
+  ["arrowShot", "arrows_shot", $lang['arrow_shot']],
+  ["pLogins", "logins", $lang['player_join']],
+  ["dTaken", "damage_taken", $lang['damage_taken']],
+  ["dCaused", "damage_caused", $lang['damage_caused']],
+  ["iPickUp", "items_picked_up", $lang['item_pick_up']],
+  ["iDropIt", "items_dropped", $lang['item_dropped']],
+  ["pChatMsg", "chat_messages", $lang['chat_msg']],
+  ["iCrafted", "items_crafted", $lang['item_crafted']],
+  ["iChanted", "items_enchanted", $lang['item_chanted']],
+  ["iBrokeIt", "tools_broken", $lang['tools_broken']],
+  ["xpGained", "xp_gained",  $lang['xp_gain']],
+  ["timePlayed", "time_played", $lang['time_played']],
+  ["foodEaten", "food_eaten", $lang['food_eaten']]
 ];
 
 foreach ($tableArray as $table) { ?>
   <div class="<?php echo $gClass; ?>" style="<?php echo $customStyle; ?>">
     &nbsp;
-    <h2><?php echo $table[1]; ?></h2>
+    <h2><?php echo $table[2]; ?></h2>
     <div id="<?php echo $table[0]; ?>">
         <?php echo $content; ?>
     </div>
@@ -107,27 +103,8 @@ foreach ($tableArray as $table) { ?>
         loadStat(stats[i][0], stats[i][1], args);
      }, time);
     }
-    //Stats setup: [ID Of where to put the ajax content, database column name, title for the # column]
-    var stats = [
-      ["bBroken", "blocks_broken", "Blocks Broken"],
-      ["bPlaced", "blocks_placed", "Blocks Placed"],
-      ["pDeaths", "deaths", "Deaths"],
-      ["pKills", "pvp_kills", "PvP Kills"],
-      ["mKills", "mob_kills", "Mob Kills"],
-      ["pLogins", "logins", "Login Count"],
-      ["dTaken", "damage_taken", "Damage Taken"],
-      ["dCaused", "damage_caused", "Damage Caused"],
-      ["iPickUp", "items_picked_up", "Items Picked Up"],
-      ["iDropIt", "items_dropped", "Items Dropped"],
-      ["pChatMsg", "chat_messages", "Chat Messages"],
-      ["iCrafted", "items_crafted", "Items Crafted"],
-      ["iChanted", "items_enchanted", "Items Enchanted"],
-      ["iBrokeIt", "tools_broken", "Tools Broken"],
-      ["xpGained", "xp_gained", "XP Gained"],
-      ["timePlayed", "time_played", "Time Played"],
-      ["foodEaten", "food_eaten", "Food Eaten"],
-      ["arrowShot", "arrows_shot", "Arrows Shot"]
-    ];
+
+    var stats = <?php echo json_encode($tableArray); ?>;
 
     function reloadAllPrefix(prefix){
       gPrefix = prefix;
