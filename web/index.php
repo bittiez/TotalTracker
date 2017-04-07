@@ -1,9 +1,9 @@
 <?php
 include_once('lang/en.php'); //Include default language, will over ride with language set in config
 include_once('config.php');
-if(isset($language))
-  if($language != "en"){
-    include_once('lang/'.$language.'.php'); //Include language in config if it is not set to english
+if(isset($config['language']))
+  if($config['language'] != "en"){
+    include_once('lang/'.$config['language'].'.php'); //Include language in config if it is not set to english
   }
 ?>
 <!DOCTYPE html>
@@ -23,17 +23,15 @@ if(isset($language))
   </head>
   <body>
 <div class="wrapper">
-  <!-- Un Comment out/delete this section to remove the multiple server buttons -->
 
-<!-- <div class="row">
+<?php if($config['enable_server_tabs']){ ?>
+ <div class="row">
   <div class="col-xs-12">
     <button type="button" class="btn btn-primary" onclick="reloadAllPrefix('CE_')">Main Server</button>
     <button type="button" class="btn btn-primary" onclick="reloadAllPrefix('te')">Test Server</button>
   </div>
-</div> -->
-
-<!-- End server button area -->
-
+</div>
+<?php } ?>
 
 <div class="row">
 <?php $gClass = "col-lg-3 col-md-4 col-sm-6 col-xs-12";
