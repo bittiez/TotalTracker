@@ -22,17 +22,9 @@ if(isset($config['language']))
     <![endif]-->
   </head>
   <body>
+<?php if($config['enable_server_tabs']){ include("templates/menu.php"); }?>
+
 <div class="wrapper">
-
-<?php if($config['enable_server_tabs']){ ?>
- <div class="row">
-  <div class="col-xs-12">
-    <button type="button" class="btn btn-primary" onclick="reloadAllPrefix('CE_')">Main Server</button>
-    <button type="button" class="btn btn-primary" onclick="reloadAllPrefix('te')">Test Server</button>
-  </div>
-</div>
-<?php } ?>
-
 <div class="row">
 <?php $gClass = "col-lg-3 col-md-4 col-sm-6 col-xs-12";
 $customStyle = "display: inline-block; min-height: 200px;";
