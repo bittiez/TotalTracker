@@ -22,9 +22,14 @@ if(isset($config['language']))
     <![endif]-->
   </head>
   <body>
-<?php if($config['enable_server_tabs']){ include("templates/menu.php"); }?>
+<?php
+$mMarginTop = "";
+if($config['enable_server_tabs']){
+  include("templates/menu.php");
+  $mMarginTop="margin-top: 40px;";
+}?>
 
-<div class="wrapper">
+<div class="wrapper" style="<?php echo $mMarginTop; ?>">
 <div class="row">
 <?php $gClass = "col-lg-3 col-md-4 col-sm-6 col-xs-12";
 $customStyle = "display: inline-block; min-height: 200px;";
