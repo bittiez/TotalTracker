@@ -1,9 +1,10 @@
 <?php
 include_once('lang/en.php'); //Include default language, will over ride with language set in config
 include_once('config.php');
-if($language != "en"){
-  include_once('lang/'.$language.'.php'); //Include language in config if it is not set to english
-}
+if(isset($language))
+  if($language != "en"){
+    include_once('lang/'.$language.'.php'); //Include language in config if it is not set to english
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,32 +40,31 @@ if($language != "en"){
 $customStyle = "display: inline-block; min-height: 200px;";
 $content = " <img src='img/cube.svg'>"; //Make sure not to use " in this variable
 
-// [ID TO MATCH JS AT BOTTOM] [TABLE NAME ON LEFT SIDE OF TABLE]
 $tableArray = [
-  ["bBroken", $lang['block_broken']],
-  ["bPlaced", $lang['block_placed']],
-  ["pDeaths", $lang['player_death']],
-  ["pKills", $lang['player_kill'],
-  ["mKills", $lang['mob_kill']],
-  ["arrowShot", $lang['arrow_shot']],
-  ["pLogins", $lang['player_join']],
-  ["dTaken", $lang['damage_taken']],
-  ["dCaused", $lang['damage_caused']],
-  ["iPickUp", $lang['item_pick_up']],
-  ["iDropIt", $lang['item_dropped']],
-  ["pChatMsg", $lang['chat_msg']],
-  ["iCrafted", $lang['item_crafted']],
-  ["iChanted", $lang['item_chanted']],
-  ["iBrokeIt", $lang['tools_broken']],
-  ["xpGained", $lang['xp_gain']],
-  ["timePlayed", $lang['time_played']],
-  ["foodEaten", $lang['food_eaten']]
+  ["bBroken", "blocks_broken", $lang['block_broken']],
+  ["bPlaced", "blocks_placed", $lang['block_placed']],
+  ["pDeaths", "deaths", $lang['player_death']],
+  ["pKills", "pvp_kills", $lang['player_kill']],
+  ["mKills", "mob_kills", $lang['mob_kill']],
+  ["arrowShot", "arrows_shot", $lang['arrow_shot']],
+  ["pLogins", "logins", $lang['player_join']],
+  ["dTaken", "damage_taken", $lang['damage_taken']],
+  ["dCaused", "damage_caused", $lang['damage_caused']],
+  ["iPickUp", "items_picked_up", $lang['item_pick_up']],
+  ["iDropIt", "items_dropped", $lang['item_dropped']],
+  ["pChatMsg", "chat_messages", $lang['chat_msg']],
+  ["iCrafted", "items_crafted", $lang['item_crafted']],
+  ["iChanted", "items_enchanted", $lang['item_chanted']],
+  ["iBrokeIt", "tools_broken", $lang['tools_broken']],
+  ["xpGained", "xp_gained",  $lang['xp_gain']],
+  ["timePlayed", "time_played", $lang['time_played']],
+  ["foodEaten", "food_eaten", $lang['food_eaten']]
 ];
 
 foreach ($tableArray as $table) { ?>
   <div class="<?php echo $gClass; ?>" style="<?php echo $customStyle; ?>">
     &nbsp;
-    <h2><?php echo $table[1]; ?></h2>
+    <h2><?php echo $table[2]; ?></h2>
     <div id="<?php echo $table[0]; ?>">
         <?php echo $content; ?>
     </div>
@@ -108,27 +108,8 @@ foreach ($tableArray as $table) { ?>
         loadStat(stats[i][0], stats[i][1], args);
      }, time);
     }
-    //Stats setup: [ID Of where to put the ajax content, database column name, title for the # column]
-    var stats = [
-      ["bBroken", "blocks_broken", "Blocks Broken"],
-      ["bPlaced", "blocks_placed", "Blocks Placed"],
-      ["pDeaths", "deaths", "Deaths"],
-      ["pKills", "pvp_kills", "PvP Kills"],
-      ["mKills", "mob_kills", "Mob Kills"],
-      ["pLogins", "logins", "Login Count"],
-      ["dTaken", "damage_taken", "Damage Taken"],
-      ["dCaused", "damage_caused", "Damage Caused"],
-      ["iPickUp", "items_picked_up", "Items Picked Up"],
-      ["iDropIt", "items_dropped", "Items Dropped"],
-      ["pChatMsg", "chat_messages", "Chat Messages"],
-      ["iCrafted", "items_crafted", "Items Crafted"],
-      ["iChanted", "items_enchanted", "Items Enchanted"],
-      ["iBrokeIt", "tools_broken", "Tools Broken"],
-      ["xpGained", "xp_gained", "XP Gained"],
-      ["timePlayed", "time_played", "Time Played"],
-      ["foodEaten", "food_eaten", "Food Eaten"],
-      ["arrowShot", "arrows_shot", "Arrows Shot"]
-    ];
+
+    var stats = <?php echo json_encode($tableArray); ?>;
 
     function reloadAllPrefix(prefix){
       gPrefix = prefix;
