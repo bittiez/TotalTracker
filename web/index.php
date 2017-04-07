@@ -1,19 +1,20 @@
+<?php
+include_once('lang/en.php'); //Include default language, will over ride with language set in config
+include_once('config.php');
+if($language != "en"){
+  include_once('lang/'.$language.'.php'); //Include language in config if it is not set to english
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>TotalTracker Stats</title>
-
-    <!-- Bootstrap -->
+    <title><?php echo $lang['page_title']; ?></title>
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/custom.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -21,7 +22,7 @@
   </head>
   <body>
 <div class="wrapper">
-  <!-- UnComment out/delete this section to remove the multiple server buttons -->
+  <!-- Un Comment out/delete this section to remove the multiple server buttons -->
 
 <!-- <div class="row">
   <div class="col-xs-12">
@@ -33,31 +34,31 @@
 <!-- End server button area -->
 
 
-    <div class="row">
+<div class="row">
 <?php $gClass = "col-lg-3 col-md-4 col-sm-6 col-xs-12";
 $customStyle = "display: inline-block; min-height: 200px;";
 $content = " <img src='img/cube.svg'>"; //Make sure not to use " in this variable
 
 // [ID TO MATCH JS AT BOTTOM] [TABLE NAME ON LEFT SIDE OF TABLE]
 $tableArray = [
-  ["bBroken", "Blocks Broken"],
-  ["bPlaced", "Blocks Placed"],
-  ["pDeaths", "Player Deaths"],
-  ["pKills", "Player Kills"],
-  ["mKills", "Mob Kills"],
-  ["pLogins", "Player Logins"],
-  ["dTaken", "Damage Taken"],
-  ["dCaused", "Damage Caused"],
-  ["iPickUp", "Items Picked Up"],
-  ["iDropIt", "Items Dropped"],
-  ["pChatMsg", "Chat Messages"],
-  ["iCrafted", "Items Crafted"],
-  ["iChanted", "Items Enchanted"],
-  ["iBrokeIt", "Tools Broken"],
-  ["xpGained", "XP Gained"],
-  ["timePlayed", "Time Played"],
-  ["foodEaten", "Food Eaten"],
-  ["arrowShot", "Arrows Shot"]
+  ["bBroken", $lang['block_broken']],
+  ["bPlaced", $lang['block_placed']],
+  ["pDeaths", $lang['player_death']],
+  ["pKills", $lang['player_kill'],
+  ["mKills", $lang['mob_kill']],
+  ["arrowShot", $lang['arrow_shot']],
+  ["pLogins", $lang['player_join']],
+  ["dTaken", $lang['damage_taken']],
+  ["dCaused", $lang['damage_caused']],
+  ["iPickUp", $lang['item_pick_up']],
+  ["iDropIt", $lang['item_dropped']],
+  ["pChatMsg", $lang['chat_msg']],
+  ["iCrafted", $lang['item_crafted']],
+  ["iChanted", $lang['item_chanted']],
+  ["iBrokeIt", $lang['tools_broken']],
+  ["xpGained", $lang['xp_gain']],
+  ["timePlayed", $lang['time_played']],
+  ["foodEaten", $lang['food_eaten']]
 ];
 
 foreach ($tableArray as $table) { ?>
