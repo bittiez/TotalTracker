@@ -1,6 +1,6 @@
-[ ![Discord Support](https://www.mediafire.com/convkey/1f30/84f194magcxff186g.jpg) ](https://discord.gg/p5DAvc6)
-[ ![Bugs, Issues, Feature Requests](https://www.mediafire.com/convkey/3860/99n15b2cbgvnp416g.jpg) ](../../issues)
-[ ![Donate](https://www.mediafire.com/convkey/3ac7/eurlt0tntrc95zh6g.jpg) ](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=THXHQ5287TBA8)
+[ ![Discord Support](https://www.mediafire.com/convkey/510b/iw2k26exg0qlf076g.jpg) ](https://discord.gg/p5DAvc6)
+[ ![Bugs, Issues, Feature Requests](https://www.mediafire.com/convkey/2320/x80qtabf3auhhjr6g.jpg) ](../../issues)
+[ ![Donate](https://www.mediafire.com/convkey/910d/z8160kkzvezi4km6g.jpg) ](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=THXHQ5287TBA8)
 
 
 # TotalTracker
@@ -41,8 +41,7 @@ This will keep track of many stats, currently:
 Do stuff in game
 
 # Permissions
-
-https://github.com/bittiez/TotalTracker/blob/master/src/plugin.yml
+[View permissions here](../../blob/master/src/plugin.yml)
 
 
 # Installation
@@ -68,8 +67,7 @@ https://github.com/bittiez/TotalTracker/blob/master/src/plugin.yml
 - Just upload all files **except** the config.php file. Unless you have made custom changes, then it's up to you to update it with the new changes.
 
 # Configuration
-
-https://github.com/bittiez/TotalTracker/blob/master/src/config.yml
+[View default configuration file here](../../blob/master/src/config.yml)
 
 # To-do
 - [WEB]Add a search function to the web portion
