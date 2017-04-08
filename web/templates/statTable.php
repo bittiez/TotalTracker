@@ -2,7 +2,7 @@
   <div class="table">
     <div class="row header">
       <div class="cell">
-        Player
+        <?php echo $lang['player_name']; ?>
       </div>
       <div class="cell">
         <?php echo $ttitle; ?>

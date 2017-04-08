@@ -1,10 +1,5 @@
 <?php
-include_once('lang/en.php'); //Include default language, will over ride with language set in config
 include_once('config.php');
-if(isset($config['language']))
-  if($config['language'] != "en"){
-    include_once('lang/'.$config['language'].'.php'); //Include language in config if it is not set to english
-  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,6 +42,7 @@ $tableArray = [
   ["dCaused", "damage_caused", $lang['damage_caused']],
   ["iPickUp", "items_picked_up", $lang['item_pick_up']],
   ["iDropIt", "items_dropped", $lang['item_dropped']],
+  ["iFilledBucket", "buckets_filled", $lang['buckets_filled']],
   ["pChatMsg", "chat_messages", $lang['chat_msg']],
   ["iCrafted", "items_crafted", $lang['item_crafted']],
   ["iChanted", "items_enchanted", $lang['item_chanted']],
