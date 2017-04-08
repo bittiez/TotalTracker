@@ -19,6 +19,15 @@ $config['menu'] = [
   ["Server 2", "S2_"]
 ];
 
+// Currently the only colors available are:
+// "" = default red
+// "green" = green
+// "blue" = blue
+$config['color'] = "";
+
+
+
+
 //Do not edit below here
 //
 //

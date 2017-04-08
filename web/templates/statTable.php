@@ -1,6 +1,6 @@
 <div class="wrapper">
   <div class="table">
-    <div class="row header">
+    <div class="row <?php if(isset($config['color'])) echo $config['color']; ?> header">
       <div class="cell">
         <?php echo $lang['player_name']; ?>
       </div>
