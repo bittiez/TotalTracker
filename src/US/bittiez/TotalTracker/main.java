@@ -42,7 +42,7 @@ public class main extends JavaPlugin implements Listener {
     private static int MaxCapacity = 150;
     public FileConfiguration playerVersion;
     public FileConfiguration config = getConfig();
-    private ArrayList<QueObject> QueObjects;
+    private ArrayList<QueObject> queObjects;
     private boolean ignoreBrokenCreative = false;
     private boolean ignorePlacedCreative = false;
     private BukkitScheduler scheduler = getServer().getScheduler();
@@ -54,7 +54,7 @@ public class main extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         log = getLogger();
-        QueObjects = new ArrayList<QueObject>();
+        queObjects = new ArrayList<QueObject>();
         createConfig();
         playerVersionFile = new File(Paths.get(this.getDataFolder().getAbsolutePath().toString(), "players.yml").toAbsolutePath().toString());
 
@@ -81,7 +81,7 @@ public class main extends JavaPlugin implements Listener {
             scheduler.scheduleSyncRepeatingTask(this, new Runnable() {
                 @Override
                 public void run() {
-                    if (QueObjects.size() > 0) {
+                    if (queObjects.size() > 0) {
                         runQue();
                     }
                 }
@@ -90,7 +90,7 @@ public class main extends JavaPlugin implements Listener {
                 @Override
                 public void run() {
                     for (Player player : getServer().getOnlinePlayers()) {
-                        QueObjects.add(new QueObject(player, SQLTABLE.TIME_PLAYED, 2));
+                        queObjects.add(new QueObject(player, SQLTABLE.TIME_PLAYED, 2));
                     }
                     checkQue();
                 }
@@ -141,8 +141,8 @@ public class main extends JavaPlugin implements Listener {
     }
 
     private void runQue() {
-        QueProcessor qp = new QueProcessor(new ArrayList<>(QueObjects), log, config);
-        QueObjects.clear();
+        QueProcessor qp = new QueProcessor(new ArrayList<>(queObjects), log, config);
+        queObjects.clear();
         qp.runTaskAsynchronously(this);
     }
 
@@ -187,17 +187,22 @@ public class main extends JavaPlugin implements Listener {
     }
 
     @EventHandler
+    public void onBucketFilled(PlayerBucketFillEvent e){
+        queObjects.add(new QueObject(e.getPlayer(), SQLTABLE.BUCKETS_FILLED));
+    }
+
+    @EventHandler
     public void onArrowShot(ProjectileLaunchEvent e) {
         if (e.getEntity().getShooter() instanceof Player) {
             Player p = (Player) e.getEntity().getShooter();
-            QueObjects.add(new QueObject(p, SQLTABLE.ARROWS_SHOT));
+            queObjects.add(new QueObject(p, SQLTABLE.ARROWS_SHOT));
         }
     }
 
     @EventHandler
     public void onItemEnchanted(PrepareItemEnchantEvent e) {
         if (!e.isCancelled()) {
-            QueObjects.add(new QueObject(e.getEnchanter(), SQLTABLE.ITEMS_ENCHANTED));
+            queObjects.add(new QueObject(e.getEnchanter(), SQLTABLE.ITEMS_ENCHANTED));
             checkQue();
         }
     }
@@ -210,7 +215,7 @@ public class main extends JavaPlugin implements Listener {
             if (ekiller instanceof Player) {
                 //Player killed entity
                 Player p = (Player) ekiller;
-                QueObjects.add(new QueObject(p, SQLTABLE.MOB_KILLS));
+                queObjects.add(new QueObject(p, SQLTABLE.MOB_KILLS));
                 checkQue();
             }
         }
@@ -223,40 +228,40 @@ public class main extends JavaPlugin implements Listener {
         Player killer = victim.getKiller();
         if (killer != null) {
             QueObject queObject = new QueObject(killer.getUniqueId().toString(), SQLTABLE.PVP_KILLS, killer.getName());
-            QueObjects.add(queObject);
+            queObjects.add(queObject);
         }
         if (victim != null) {
             QueObject queObject = new QueObject(victim.getUniqueId().toString(), SQLTABLE.DEATHS, victim.getName());
-            QueObjects.add(queObject);
+            queObjects.add(queObject);
         }
-        if (QueObjects.size() >= MaxCapacity)
+        if (queObjects.size() >= MaxCapacity)
             runQue();
     }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
-        QueObjects.add(new QueObject(e.getPlayer(), SQLTABLE.JOINS));
+        queObjects.add(new QueObject(e.getPlayer(), SQLTABLE.JOINS));
         if (config.getBoolean("auto_import", true)) {
-            new ImportProcessor(e.getPlayer(), playerVersion, QueObjects).run();
+            new ImportProcessor(e.getPlayer(), playerVersion, queObjects).run();
         }
         checkQue();
     }
 
     @EventHandler
     public void onToolBreak(PlayerItemBreakEvent e) {
-        QueObjects.add(new QueObject(e.getPlayer(), SQLTABLE.TOOLS_BROKEN));
+        queObjects.add(new QueObject(e.getPlayer(), SQLTABLE.TOOLS_BROKEN));
         checkQue();
     }
 
     @EventHandler
     public void onDropItem(PlayerDropItemEvent e) {
-        QueObjects.add(new QueObject(e.getPlayer(), SQLTABLE.ITEMS_DROPPED, e.getItemDrop().getItemStack().getAmount()));
+        queObjects.add(new QueObject(e.getPlayer(), SQLTABLE.ITEMS_DROPPED, e.getItemDrop().getItemStack().getAmount()));
         checkQue();
     }
 
     @EventHandler
     public void onItemPickedUp(PlayerPickupItemEvent e) {
-        QueObjects.add(new QueObject(e.getPlayer(), SQLTABLE.ITEM_PICKUP));
+        queObjects.add(new QueObject(e.getPlayer(), SQLTABLE.ITEM_PICKUP));
         checkQue();
     }
 
@@ -266,14 +271,14 @@ public class main extends JavaPlugin implements Listener {
             Player p = (Player) e.getEntity();
             QueObject de = new QueObject(p.getUniqueId().toString(), SQLTABLE.DAMAGE_TAKEN, p.getName());
             de.Quantity = (int) e.getFinalDamage();
-            QueObjects.add(de);
+            queObjects.add(de);
             checkQue();
         }
     }
 
     @EventHandler
     public void onChatMessage(AsyncPlayerChatEvent e) {
-        QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.PLAYER_CHAT, e.getPlayer().getName()));
+        queObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.PLAYER_CHAT, e.getPlayer().getName()));
         checkQue();
     }
 
@@ -283,7 +288,7 @@ public class main extends JavaPlugin implements Listener {
             Player p = (Player) e.getDamager();
             QueObject de = new QueObject(p.getUniqueId().toString(), SQLTABLE.DAMAGE_CAUSED, p.getName());
             de.Quantity = (int) e.getFinalDamage();
-            QueObjects.add(de);
+            queObjects.add(de);
             checkQue();
         }
     }
@@ -293,7 +298,7 @@ public class main extends JavaPlugin implements Listener {
         if (ignoreBrokenCreative && e.getPlayer().getGameMode().equals(GameMode.CREATIVE))
             return;
         if (e.getPlayer() != null) {
-            QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.BLOCKS_BROKEN, e.getPlayer().getName()));
+            queObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.BLOCKS_BROKEN, e.getPlayer().getName()));
             checkQue();
         }
     }
@@ -303,7 +308,7 @@ public class main extends JavaPlugin implements Listener {
         if (ignorePlacedCreative && e.getPlayer().getGameMode().equals(GameMode.CREATIVE))
             return;
         if (e.getPlayer() != null) {
-            QueObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.BLOCKS_PLACED, e.getPlayer().getName()));
+            queObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.BLOCKS_PLACED, e.getPlayer().getName()));
             checkQue();
         }
     }
@@ -312,7 +317,7 @@ public class main extends JavaPlugin implements Listener {
     public void onItemCraft(CraftItemEvent e) {
         if (e.getWhoClicked() != null && e.getWhoClicked() instanceof Player) {
             Player p = (Player) e.getWhoClicked();
-            QueObjects.add(new QueObject(p.getUniqueId().toString(), SQLTABLE.ITEMS_CRAFTED, p.getName()));
+            queObjects.add(new QueObject(p.getUniqueId().toString(), SQLTABLE.ITEMS_CRAFTED, p.getName()));
             checkQue();
         }
     }
@@ -321,7 +326,7 @@ public class main extends JavaPlugin implements Listener {
     public void onXPGained(PlayerExpChangeEvent e) {
         QueObject qe = new QueObject(e.getPlayer(), SQLTABLE.XP_GAINED);
         qe.Quantity = e.getAmount();
-        QueObjects.add(qe);
+        queObjects.add(qe);
         checkQue();
     }
 
@@ -329,12 +334,12 @@ public class main extends JavaPlugin implements Listener {
     public void onFoodEated(PlayerItemConsumeEvent e) {
         ItemStack IS = e.getItem();
         if (IS.getType().isEdible()) {
-            QueObjects.add(new QueObject(e.getPlayer(), SQLTABLE.FOOD_EATEN));
+            queObjects.add(new QueObject(e.getPlayer(), SQLTABLE.FOOD_EATEN));
         }
     }
 
     private void checkQue() {
-        if (QueObjects.size() >= MaxCapacity)
+        if (queObjects.size() >= MaxCapacity)
             runQue();
     }
 }
