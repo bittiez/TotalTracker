@@ -76,6 +76,8 @@ foreach ($tableArray as $table) { ?>
      <?php } ?>
 
     function loadStat(id, type, args){
+      $("#"+id).html("<?php echo $content; ?>");
+
       var url = "ajax.php?type=" + type;
       if(args.title != null)
         url = url + "&table_title="+args.title;
