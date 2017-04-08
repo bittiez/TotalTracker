@@ -41,7 +41,7 @@ if(isset($_GET['type'])){
 }
 
 function formatTime($minutes){
-  return toDateInterval($minutes * 60)->format('%a days, %h hours, %i minutes');
+  return toDateInterval($minutes * 60)->format('%a '.$lang['days'].', %h '.$lang['hours'].', %i '.$lang['minutes']);
 }
 function toDateInterval($seconds) {
   return date_create('@' . (($now = time()) + $seconds))->diff(date_create('@' . $now));

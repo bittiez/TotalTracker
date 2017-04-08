@@ -21,4 +21,7 @@ $lang['arrow_shot'] = "Arrows Shot";
 //Added on 1.19.0:
 $lang['buckets_filled'] = "Buckets Filled";
 $lang['player_name'] = "Player";
+$lang['day'] = "days";
+$lang['hour'] = "hours";
+$lang['minute'] = "minutes";
 ?>
