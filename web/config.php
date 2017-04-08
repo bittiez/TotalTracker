@@ -18,4 +18,25 @@ $config['menu'] = [
   ["Server 1", "S1_"],
   ["Server 2", "S2_"]
 ];
+
+// Currently the only colors available are:
+// "" = default red
+// "green" = green
+// "blue" = blue
+$config['color'] = "";
+
+
+
+
+//Do not edit below here
+//
+//
+//
+//
+//
+include_once('lang/en.php'); //Include default language, will over ride with language set in config
+if(isset($config['language']))
+  if($config['language'] != "en"){
+    include_once('lang/'.$config['language'].'.php'); //Include language in config if it is not set to english
+  }
 ?>

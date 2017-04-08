@@ -35,6 +35,7 @@ This will keep track of many stats, currently:
 - Items Enchanted
 - Arrows Shot
 - Tools Broken
+- Buckets Filled
 
 # Usage
 
@@ -74,7 +75,6 @@ Do stuff in game
 - [WEB]Add pages(Currently only shows top 10) to the web portion
 - Add distance walked
 - Add fish caught
-- Add buckets filled
 - Add buckets emptied
 - Money earned (Vault)
 - Current money (Vault)

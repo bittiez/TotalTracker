@@ -1,10 +1,5 @@
 <?php
-include_once('lang/en.php'); //Include default language, will over ride with language set in config
-include_once('config.php');
-if(isset($config['language']))
-  if($config['language'] != "en"){
-    include_once('lang/'.$config['language'].'.php'); //Include language in config if it is not set to english
-  }
+require_once('config.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,6 +8,7 @@ if(isset($config['language']))
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?php echo $lang['page_title']; ?></title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/custom.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -47,6 +43,7 @@ $tableArray = [
   ["dCaused", "damage_caused", $lang['damage_caused']],
   ["iPickUp", "items_picked_up", $lang['item_pick_up']],
   ["iDropIt", "items_dropped", $lang['item_dropped']],
+  ["iFilledBucket", "buckets_filled", $lang['buckets_filled']],
   ["pChatMsg", "chat_messages", $lang['chat_msg']],
   ["iCrafted", "items_crafted", $lang['item_crafted']],
   ["iChanted", "items_enchanted", $lang['item_chanted']],
@@ -79,6 +76,8 @@ foreach ($tableArray as $table) { ?>
      <?php } ?>
 
     function loadStat(id, type, args){
+      $("#"+id).html("<?php echo $content; ?>");
+
       var url = "ajax.php?type=" + type;
       if(args.title != null)
         url = url + "&table_title="+args.title;

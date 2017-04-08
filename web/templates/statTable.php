@@ -1,12 +1,12 @@
 <div class="wrapper">
   <div class="table">
-    <div class="row header">
+    <div class="row <?php if(isset($config['color'])) echo $config['color']; ?> header">
       <div class="cell">
-        Player
+        <?php echo $lang['player_name']; ?>
       </div>
       <div class="cell">
         <?php echo $ttitle; ?>
-        <span style="float: right;"><i class="fa fa-refresh" aria-hidden="true" onclick="loadStat('<?php echo $reloadId; ?>', '<?php echo $type; ?>', {title:'<?php echo $ttitle; ?>', reloadId:'<?php echo $reloadId; ?>', prefix:'<?php echo $mysql['prefix']; ?>'})"></i></span>
+        <span style="float: right;" class="reloadIconSmall"><i class="fa fa-refresh" aria-hidden="true" onclick="loadStat('<?php echo $reloadId; ?>', '<?php echo $type; ?>', {title:'<?php echo $ttitle; ?>', reloadId:'<?php echo $reloadId; ?>', prefix:'<?php echo $mysql['prefix']; ?>'})"></i></span>
       </div>
     </div>
 

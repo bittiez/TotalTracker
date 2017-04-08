@@ -32,16 +32,14 @@ if(isset($_GET['type'])){
 
   if($type == "time_played"){
     foreach($results as $key => $row){
-      $results[$key][$type] = formatTime($row[$type]);
+      $results[$key][$type] = formatTime($row[$type], $lang);
     }
   }
   include('templates/statTable.php');
-
-
 }
 
-function formatTime($minutes){
-  return toDateInterval($minutes * 60)->format('%a days, %h hours, %i minutes');
+function formatTime($minutes, $lang){
+  return toDateInterval($minutes * 60)->format('%a '.$lang['day'].', %h '.$lang['hour'].', %i '.$lang['minute']);
 }
 function toDateInterval($seconds) {
   return date_create('@' . (($now = time()) + $seconds))->diff(date_create('@' . $now));
