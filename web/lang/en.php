@@ -24,4 +24,6 @@ $lang['player_name'] = "Player";
 $lang['day'] = "days";
 $lang['hour'] = "hours";
 $lang['minute'] = "minutes";
+//Added on 1.20.0
+$lang['buckets_emptied'] = "Buckets Emptied";
 ?>

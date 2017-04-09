@@ -8,6 +8,7 @@ public class QueObject {
     public String PlayerUUID;
     public int Quantity = 1;
     public String PlayerName;
+    public boolean sentToDataBase = false;
 
     public QueObject(String PlayerUUID, String queType, String PlayerName) {
         this.PlayerUUID = PlayerUUID;

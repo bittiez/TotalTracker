@@ -1,11 +1,11 @@
 package US.bittiez.TotalTracker;
 
-import org.apache.commons.io.IOUtils;
+import US.bittiez.TotalTracker.Updater.UpdateChecker;
+import US.bittiez.TotalTracker.Updater.UpdateStatus;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
@@ -26,8 +26,6 @@ import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URI;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.logging.Logger;
@@ -46,6 +44,7 @@ public class main extends JavaPlugin implements Listener {
     private boolean ignoreBrokenCreative = false;
     private boolean ignorePlacedCreative = false;
     private BukkitScheduler scheduler = getServer().getScheduler();
+    private static UpdateStatus updateStatus;
 
     public static String genMySQLUrl(FileConfiguration config) {
         return "jdbc:mysql://" + config.getString("mysql_address") + ":" + config.getString("mysql_port") + "/" + config.getString("mysql_database");
@@ -86,16 +85,16 @@ public class main extends JavaPlugin implements Listener {
                     }
                 }
             }, (20L * 60L) * processEveryMinutes, (20L * 60L) * processEveryMinutes);
-            scheduler.scheduleSyncRepeatingTask(this, new Runnable() {
-                @Override
-                public void run() {
-                    for (Player player : getServer().getOnlinePlayers()) {
-                        queObjects.add(new QueObject(player, SQLTABLE.TIME_PLAYED, 2));
-                    }
-                    checkQue();
+            scheduler.scheduleSyncRepeatingTask(this, () -> {
+                for (Player player : getServer().getOnlinePlayers()) {
+                    queObjects.add(new QueObject(player, SQLTABLE.TIME_PLAYED, 2));
                 }
+                checkQue();
             }, (20L * 60L) * 2, (20L * 60L) * 2); //Run every 2 minutes, starting in 2 minutes
-            checkForUpdates();
+            updateStatus = new UpdateChecker("https://raw.githubusercontent.com/bittiez/TotalTracker/master/src/plugin.yml", getDescription().getVersion()).getStatus();
+            if (updateStatus.HasUpdate) {
+                scheduler.scheduleSyncDelayedTask(this, () -> log.info(genVersionOutdatedMessage(updateStatus.LocalVersion, updateStatus.RemoteVersion)), (20 * 60) * 5);
+            }
         }
     }
 
@@ -103,7 +102,8 @@ public class main extends JavaPlugin implements Listener {
         ArrayList<String> queries = SQLTABLE.genSQL(config, getDataFolder());
         if (queries.size() > 0) {
             Sql2o SQL = new Sql2o(genMySQLUrl(config), config.getString("mysql_username"), config.getString("mysql_password"));
-            try (Connection con = SQL.open()) {
+            try {
+                Connection con = SQL.open();
                 for (String q : queries) {
                     if (debug)
                         log.info("RUN SQL: " + q);
@@ -111,9 +111,13 @@ public class main extends JavaPlugin implements Listener {
                 }
             } catch (Exception e) {
                 log.severe("Failed to connect to the database, make sure your connection information is correct!");
+                log.severe("Due to a connection failure, there may be query's that were not run, please check your database and manually run these:");
+                for (String q : queries)
+                    log.severe(q);
                 if (debug)
                     e.printStackTrace();
             }
+
         }
     }
 
@@ -146,37 +150,6 @@ public class main extends JavaPlugin implements Listener {
         qp.runTaskAsynchronously(this);
     }
 
-    private void checkForUpdates() {
-        String currentVersion = getDescription().getVersion();
-
-        try {
-            FileConfiguration updated = new YamlConfiguration();
-            updated.loadFromString(IOUtils.toString(URI.create("https://raw.githubusercontent.com/bittiez/TotalTracker/master/src/plugin.yml")));
-            String updatedVersion = updated.getString("version");
-            if (!currentVersion.equals(updatedVersion)) {
-                log.warning(genVersionOutdatedMessage(currentVersion, updatedVersion));
-                scheduler.scheduleSyncRepeatingTask(this, new Runnable() {
-                    @Override
-                    public void run() {
-                        for (Player player : getServer().getOnlinePlayers()) {
-                            if (player.isOp() || player.hasPermission("TotalTracker.updates")) {
-                                player.sendMessage(genVersionOutdatedMessage(currentVersion, updatedVersion));
-                            }
-                        }
-                    }
-                }, (20L * 60L) * 2, (20L * 60L) * 10); //Run every 10 minutes, starting in 2 minutes
-            }
-        } catch (IOException e) {
-            log.warning("[CE1]Failed to check for updates, you can check manually at: https://github.com/bittiez/TotalTracker/releases or https://www.spigotmc.org/resources/totaltracker.38304/");
-            if (debug)
-                e.printStackTrace();
-        } catch (InvalidConfigurationException e) {
-            log.warning("[CE2]Failed to check for updates, you can check manually at: https://github.com/bittiez/TotalTracker/releases or https://www.spigotmc.org/resources/totaltracker.38304/");
-            if (debug)
-                e.printStackTrace();
-        }
-    }
-
     private String genVersionOutdatedMessage(String version, String updatedVersion) {
         return "Your version(" + version + ") of " + ChatColor.GOLD + " TotalTracker " + ChatColor.RESET + "is not up to date(" + updatedVersion + "), you can get the latest version at https://github.com/bittiez/TotalTracker/releases or https://www.spigotmc.org/resources/totaltracker.38304/";
     }
@@ -187,8 +160,13 @@ public class main extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void onBucketFilled(PlayerBucketFillEvent e){
+    public void onBucketFilled(PlayerBucketFillEvent e) {
         queObjects.add(new QueObject(e.getPlayer(), SQLTABLE.BUCKETS_FILLED));
+    }
+
+    @EventHandler
+    public void onBucketEmptied(PlayerBucketEmptyEvent e) {
+        queObjects.add(new QueObject(e.getPlayer(), SQLTABLE.BUCKETS_EMPTIED));
     }
 
     @EventHandler
@@ -243,6 +221,12 @@ public class main extends JavaPlugin implements Listener {
         queObjects.add(new QueObject(e.getPlayer(), SQLTABLE.JOINS));
         if (config.getBoolean("auto_import", true)) {
             new ImportProcessor(e.getPlayer(), playerVersion, queObjects).run();
+        }
+        if (e.getPlayer().isOp() || e.getPlayer().hasPermission("TotalTracker.updates")) {
+            scheduler.scheduleSyncDelayedTask(this, () -> {
+                if (e != null && e.getPlayer() != null)
+                    e.getPlayer().sendMessage(genVersionOutdatedMessage(updateStatus.LocalVersion, updateStatus.RemoteVersion));
+            }, (20 * 60) * 2);
         }
         checkQue();
     }

@@ -36,9 +36,9 @@ This will keep track of many stats, currently:
 - Arrows Shot
 - Tools Broken
 - Buckets Filled
+- Buckets Emptied
 
 # Usage
-
 Do stuff in game
 
 # Permissions
@@ -46,7 +46,6 @@ Do stuff in game
 
 
 # Installation
-
 - Create a new MySQL Database, do not create any tables, the plugin will do that for you.
 - Place the jar file in your plugins folder
 - Restart your server
@@ -75,7 +74,6 @@ Do stuff in game
 - [WEB]Add pages(Currently only shows top 10) to the web portion
 - Add distance walked
 - Add fish caught
-- Add buckets emptied
 - Money earned (Vault)
 - Current money (Vault)
 - Add words said
