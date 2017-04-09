@@ -27,6 +27,7 @@ public class SQLTABLE {
     public final static String ARROWS_SHOT = "arrows_shot";
     public final static String TOOLS_BROKEN = "tools_broken";
     public final static String BUCKETS_FILLED = "buckets_filled";
+    public final static String BUCKETS_EMPTIED = "buckets_emptied";
 
     public static ArrayList<String> genSQL(FileConfiguration config, File dataPath) {
         int version = config.getInt("db_version", 1);
@@ -109,6 +110,10 @@ public class SQLTABLE {
         }
         if (version == 16) {
             sqlQueries.add("ALTER TABLE " + genFullTableSQL() + " ADD `" + BUCKETS_FILLED + "` int(10) default '0';");
+            version++;
+        }
+        if (version == 17) {
+            sqlQueries.add("ALTER TABLE " + genFullTableSQL() + " ADD `" + BUCKETS_EMPTIED + "` int(10) default '0';");
             version++;
         }
 
