@@ -192,6 +192,11 @@ public class main extends JavaPlugin implements Listener {
     }
 
     @EventHandler
+    public void onBucketEmptied(PlayerBucketEmptyEvent e){
+        queObjects.add(new QueObject(e.getPlayer(), SQLTABLE.BUCKETS_EMPTIED));
+    }
+
+    @EventHandler
     public void onArrowShot(ProjectileLaunchEvent e) {
         if (e.getEntity().getShooter() instanceof Player) {
             Player p = (Player) e.getEntity().getShooter();
