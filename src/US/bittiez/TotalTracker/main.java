@@ -102,7 +102,8 @@ public class main extends JavaPlugin implements Listener {
         ArrayList<String> queries = SQLTABLE.genSQL(config, getDataFolder());
         if (queries.size() > 0) {
             Sql2o SQL = new Sql2o(genMySQLUrl(config), config.getString("mysql_username"), config.getString("mysql_password"));
-            try (Connection con = SQL.open()) {
+            try {
+                Connection con = SQL.open();
                 for (String q : queries) {
                     if (debug)
                         log.info("RUN SQL: " + q);
@@ -110,9 +111,13 @@ public class main extends JavaPlugin implements Listener {
                 }
             } catch (Exception e) {
                 log.severe("Failed to connect to the database, make sure your connection information is correct!");
+                log.severe("Due to a connection failure, there may be query's that were not run, please check your database and manually run these:");
+                for (String q : queries)
+                    log.severe(q);
                 if (debug)
                     e.printStackTrace();
             }
+
         }
     }
 
