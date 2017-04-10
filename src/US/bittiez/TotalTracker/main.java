@@ -222,7 +222,7 @@ public class main extends JavaPlugin implements Listener {
         if (config.getBoolean("auto_import", true)) {
             new ImportProcessor(e.getPlayer(), playerVersion, queObjects).run();
         }
-        if (e.getPlayer().isOp() || e.getPlayer().hasPermission("TotalTracker.updates")) {
+        if (updateStatus.HasUpdate && (e.getPlayer().isOp() || e.getPlayer().hasPermission("TotalTracker.updates"))) {
             scheduler.scheduleSyncDelayedTask(this, () -> {
                 if (e != null && e.getPlayer() != null)
                     e.getPlayer().sendMessage(genVersionOutdatedMessage(updateStatus.LocalVersion, updateStatus.RemoteVersion));
