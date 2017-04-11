@@ -133,6 +133,14 @@ public class ImportProcessor extends BukkitRunnable {
             v++;
             cv++;
         }
+        if (v == cv) {
+            try {
+                QueObjects.add(new QueObject(player, SQLTABLE.FISH_CAUGHT, player.getStatistic(Statistic.FISH_CAUGHT)));
+            } catch (Exception e) {
+            }
+            v++;
+            cv++;
+        }
 
         if (v != playerVersion.getInt(player.getUniqueId().toString() + ".version")) {
             playerVersion.set(player.getUniqueId().toString() + ".version", v);
