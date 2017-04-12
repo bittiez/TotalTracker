@@ -28,7 +28,7 @@ public class SQLTABLE {
     public final static String TOOLS_BROKEN = "tools_broken";
     public final static String BUCKETS_FILLED = "buckets_filled";
     public final static String BUCKETS_EMPTIED = "buckets_emptied";
-    public final static String FISH_CAUGHT = "fich_caught";
+    public final static String FISH_CAUGHT = "fish_caught";
 
     public static ArrayList<String> genSQL(FileConfiguration config, File dataPath) {
         int version = config.getInt("db_version", 1);
