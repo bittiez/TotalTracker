@@ -13,7 +13,7 @@ DB::$port = $mysql['port'];
 if(isset($_GET['type'])){
   $type = $_GET['type'];
   $page = 1;
-  $limit = 10;
+  $limit = $config['rows_to_show'];
   $ttitle = "";
   $reloadId = "";
 

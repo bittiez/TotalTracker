@@ -18,7 +18,6 @@ $lang['xp_gain'] = "XP Gained";
 $lang['time_played'] = "Time Played";
 $lang['food_eaten'] = "Food Eaten";
 $lang['arrow_shot'] = "Arrows Shot";
-//Added on 1.19.0:
 $lang['buckets_filled'] = "Buckets Filled";
 $lang['player_name'] = "Player";
 $lang['day'] = "days";
@@ -26,4 +25,6 @@ $lang['hour'] = "hours";
 $lang['minute'] = "minutes";
 //Added on 1.20.0
 $lang['buckets_emptied'] = "Buckets Emptied";
+//Added on 1.21.0
+$lang['fish_caught'] = "Fish Caught";
 ?>

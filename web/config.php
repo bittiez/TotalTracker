@@ -25,6 +25,9 @@ $config['menu'] = [
 // "blue" = blue
 $config['color'] = "";
 
+//How many rows/player should we show per category? This is the top __ players for each categroy.
+$config['rows_to_show'] = 10;
+
 
 
 
