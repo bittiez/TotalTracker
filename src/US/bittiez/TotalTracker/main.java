@@ -77,12 +77,9 @@ public class main extends JavaPlugin implements Listener {
             playerVersion = YamlConfiguration.loadConfiguration(playerVersionFile);
 
 
-            scheduler.scheduleSyncRepeatingTask(this, new Runnable() {
-                @Override
-                public void run() {
-                    if (queObjects.size() > 0) {
-                        runQue();
-                    }
+            scheduler.scheduleSyncRepeatingTask(this, () -> {
+                if (queObjects.size() > 0) {
+                    runQue();
                 }
             }, (20L * 60L) * processEveryMinutes, (20L * 60L) * processEveryMinutes);
             scheduler.scheduleSyncRepeatingTask(this, () -> {
@@ -320,6 +317,11 @@ public class main extends JavaPlugin implements Listener {
         if (IS.getType().isEdible()) {
             queObjects.add(new QueObject(e.getPlayer(), SQLTABLE.FOOD_EATEN));
         }
+    }
+
+    @EventHandler
+    public void onFishCaught(PlayerFishEvent e) {
+        queObjects.add(new QueObject(e.getPlayer(), SQLTABLE.FISH_CAUGHT));
     }
 
     private void checkQue() {

@@ -19,11 +19,9 @@ require_once('config.php');
   </head>
   <body>
 <?php
-$mMarginTop = "";
-if($config['enable_server_tabs']){
   include("templates/menu.php");
   $mMarginTop="margin-top: 40px;";
-}?>
+?>
 
 <div class="wrapper" style="<?php echo $mMarginTop; ?>">
 <div class="row">
@@ -51,7 +49,8 @@ $tableArray = [
   ["iBrokeIt", "tools_broken", $lang['tools_broken']],
   ["xpGained", "xp_gained",  $lang['xp_gain']],
   ["timePlayed", "time_played", $lang['time_played']],
-  ["foodEaten", "food_eaten", $lang['food_eaten']]
+  ["foodEaten", "food_eaten", $lang['food_eaten']],
+  ["fishCaught", "fish_caught", $lang['fish_caught']]
 ];
 
 foreach ($tableArray as $table) { ?>
@@ -76,6 +75,12 @@ foreach ($tableArray as $table) { ?>
      gPrefix ='<?php echo $_GET['prefix']; ?>';
      <?php } ?>
 
+     function searchUser(){
+       var user = $("#username").val();
+       if(user.length > 0)
+        reloadAllUser(user);
+     }
+
     function loadStat(id, type, args){
       $("#"+id).html("<?php echo $content; ?>");
 
@@ -86,6 +91,8 @@ foreach ($tableArray as $table) { ?>
         url = url + "&reload_id="+args.reloadId;
       if(args.prefix != null)
         url = url + "&prefix=" + args.prefix;
+      if(args.username != null)
+        url = url + "&username=" + args.username;
       $.get( url, function( data ) {
         $("#" + id).html(data);
       });
@@ -103,8 +110,30 @@ foreach ($tableArray as $table) { ?>
         loadStat(stats[i][0], stats[i][1], args);
      }, time);
     }
+    function delayTimerUser(time, i, user){
+      setTimeout(function() {
+        var args = {
+          title:stats[i][2],
+          reloadId:stats[i][0],
+          username:user
+         };
+         if(gPrefix != null)
+          args.prefix = gPrefix;
+
+        loadStat(stats[i][0], stats[i][1], args);
+     }, time);
+    }
 
     var stats = <?php echo json_encode($tableArray); ?>;
+
+    function reloadAllUser(user){
+      for (var i = 0; i < stats.length; i++) {
+         $("#" + stats[i][0]).html("<?php echo $content; ?>");
+      }
+      for (var i = 0; i < stats.length; i++) {
+         delayTimerUser(500 * i, i, user);
+      }
+    }
 
     function reloadAllPrefix(prefix){
       gPrefix = prefix;
@@ -113,6 +142,7 @@ foreach ($tableArray as $table) { ?>
       }
       reloadAll();
     }
+
     function reloadAll(){
       for (var i = 0; i < stats.length; i++) {
          delayTimer(500 * i, i);

@@ -10,7 +10,17 @@
       </div>
     </div>
 
-<?php  foreach($results as $key => $row) { ?>
+<?php
+if(count($results) < 1){ ?>
+  <div class="row">
+    <div class="cell">
+      No data found
+    </div>
+    <div class="cell">
+    </div>
+  </div>
+<?php } else {
+foreach($results as $key => $row) { ?>
     <div class="row">
       <div class="cell">
         <?php echo $row['player_name']; ?>
@@ -19,7 +29,7 @@
         <?php echo $row[$type]; ?>
       </div>
     </div>
-<?php } ?>
+<?php }} ?>
 
 
   </div>

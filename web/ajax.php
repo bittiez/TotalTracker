@@ -13,9 +13,8 @@ DB::$port = $mysql['port'];
 if(isset($_GET['type'])){
   $type = $_GET['type'];
   $page = 1;
-  $limit = 10;
-  $ttitle = "";
-  $reloadId = "";
+  $limit = $config['rows_to_show'];
+  $ttitle = ""; $reloadId = ""; $username = "";
 
   if(isset($_GET['page']))
     $page = $_GET['page'];
@@ -27,8 +26,13 @@ if(isset($_GET['type'])){
     $reloadId = $_GET['reload_id'];
   if(isset($_GET['prefix']))
     $mysql['prefix'] = $_GET['prefix'];
+  if(isset($_GET['username']))
+    $username = $_GET['username'];
 
-  $results = DB::query("SELECT %b, %b FROM `" . $mysql['database'] . "`.`" . $mysql['prefix'] . "TotalTracker` ORDER BY %b DESC LIMIT %i", "player_name", $type, $type, $limit);
+  if(isset($_GET['username']))
+    $results = DB::query("SELECT %b, %b FROM `" . $mysql['database'] . "`.`" . $mysql['prefix'] . "TotalTracker` WHERE player_name=%s ORDER BY %b DESC LIMIT %i", "player_name", $type, $username, $type, $limit);
+  else
+    $results = DB::query("SELECT %b, %b FROM `" . $mysql['database'] . "`.`" . $mysql['prefix'] . "TotalTracker` ORDER BY %b DESC LIMIT %i", "player_name", $type, $type, $limit);
 
   if($type == "time_played"){
     foreach($results as $key => $row){

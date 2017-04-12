@@ -11,10 +11,20 @@
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <?php foreach ($config['menu'] as $menu) {?>
-        <li><a href="#" onclick="reloadAllPrefix('<?php echo $menu[1]; ?>')"><?php echo $menu[0]; ?></a></li>
-        <?php } ?>
+        <?php
+        if($config['enable_server_tabs']){
+         foreach ($config['menu'] as $menu) {
+          ?>
+          <li><a href="#" onclick="reloadAllPrefix('<?php echo $menu[1]; ?>')"><?php echo $menu[0]; ?></a></li>
+          <?php
+          }
+        }
+        ?>
       </ul>
+      <div class="navbar-form nabvar-right form-group">
+        <input type="text" class="form-control" id="username" placeholder="Username">
+        <button type="button" onclick="searchUser()" class="btn btn-primary">Search</button>
+      </div>
     </div><!--/.nav-collapse -->
   </div>
 </nav>
