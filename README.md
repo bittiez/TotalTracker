@@ -37,6 +37,7 @@ This will keep track of many stats, currently:
 - Tools Broken
 - Buckets Filled
 - Buckets Emptied
+- Fish Caught
 
 # Usage
 Do stuff in game
@@ -70,10 +71,8 @@ Do stuff in game
 [View default configuration file here](../../blob/master/src/config.yml)
 
 # To-do
-- [WEB]Add a search function to the web portion
 - [WEB]Add pages(Currently only shows top 10) to the web portion
 - Add distance walked
-- Add fish caught
 - Money earned (Vault)
 - Current money (Vault)
 - Add words said
