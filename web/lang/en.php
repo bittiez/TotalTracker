@@ -29,4 +29,5 @@ $lang['fish_caught'] = "Fish Caught";
 //Added on 1.22.0
 $lang['search_field'] = "Username";
 $lang['search_button'] = "Seach";
+$lang['words_said'] = "Words Said";
 ?>

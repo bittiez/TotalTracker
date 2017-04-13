@@ -38,6 +38,7 @@ This will keep track of many stats, currently:
 - Buckets Filled
 - Buckets Emptied
 - Fish Caught
+- Words Said in chat
 
 # Usage
 Do stuff in game
@@ -75,4 +76,3 @@ Do stuff in game
 - Add distance walked
 - Money earned (Vault)
 - Current money (Vault)
-- Add words said

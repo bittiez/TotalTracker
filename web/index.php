@@ -44,6 +44,7 @@ $tableArray = [
   ["iFilledBucket", "buckets_filled", $lang['buckets_filled']],
   ["iEmptiedBucket", "buckets_emptied", $lang['buckets_emptied']],
   ["pChatMsg", "chat_messages", $lang['chat_msg']],
+  ["iSaidWord", "words_spoken", $lang['words_said']],
   ["iCrafted", "items_crafted", $lang['item_crafted']],
   ["iChanted", "items_enchanted", $lang['item_chanted']],
   ["iBrokeIt", "tools_broken", $lang['tools_broken']],
