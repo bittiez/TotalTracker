@@ -22,8 +22,8 @@
         ?>
       </ul>
       <div class="navbar-form nabvar-right form-group">
-        <input type="text" class="form-control" id="username" placeholder="Username">
-        <button type="button" onclick="searchUser()" class="btn btn-primary">Search</button>
+        <input type="text" class="form-control" id="username" placeholder="<?php echo $lang['search_field']; ?>">
+        <button type="button" onclick="searchUser()" class="btn btn-primary"><?php echo $lang['search_button']; ?></button>
       </div>
     </div><!--/.nav-collapse -->
   </div>
