@@ -1,4 +1,8 @@
 <?php
+if(!(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest')) {
+  die("You cannot load this directly.");
+}
+
 require_once('config.php');
 require_once('libs/meekrodb.2.3.class.php');
 

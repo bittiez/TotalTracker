@@ -259,7 +259,8 @@ public class main extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onChatMessage(AsyncPlayerChatEvent e) {
-        queObjects.add(new QueObject(e.getPlayer().getUniqueId().toString(), SQLTABLE.PLAYER_CHAT, e.getPlayer().getName()));
+        queObjects.add(new QueObject(e.getPlayer(), SQLTABLE.PLAYER_CHAT));
+        queObjects.add(new QueObject(e.getPlayer(), SQLTABLE.WORDS_SPOKEN, e.getMessage().split(" ").length));
         checkQue();
     }
 
@@ -321,7 +322,8 @@ public class main extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onFishCaught(PlayerFishEvent e) {
-        queObjects.add(new QueObject(e.getPlayer(), SQLTABLE.FISH_CAUGHT));
+        if (e.getCaught() != null)
+            queObjects.add(new QueObject(e.getPlayer(), SQLTABLE.FISH_CAUGHT));
     }
 
     private void checkQue() {
