@@ -321,7 +321,8 @@ public class main extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onFishCaught(PlayerFishEvent e) {
-        queObjects.add(new QueObject(e.getPlayer(), SQLTABLE.FISH_CAUGHT));
+        if (e.getCaught() != null)
+            queObjects.add(new QueObject(e.getPlayer(), SQLTABLE.FISH_CAUGHT));
     }
 
     private void checkQue() {
