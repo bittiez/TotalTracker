@@ -131,7 +131,7 @@ public class SQLTABLE {
         if (version == cv) {
             StringBuilder sql = new StringBuilder();
 
-            sqlQueries.add("DROP TABLE IF EXISTS " + genFullTableSQL() + ";");
+            sqlQueries.add("DROP TABLE IF EXISTS " + genFullTableSQL(true) + ";");
 
             sql.append("CREATE TABLE IF NOT EXISTS ").append(genFullTableSQL(true)).append(" (");
             sql.append("`id` int(10) not null auto_increment, ");
@@ -206,7 +206,7 @@ public class SQLTABLE {
 
     public static String genFullTableSQL(boolean serverStats) {
         if(serverStats)
-            return "`" + main.database + "`.`" + main.prefix + "`.`" + SERVER_SUFFIX + "`";
+            return "`" + main.database + "`.`" + main.prefix + SERVER_SUFFIX + "`";
         else
             return genFullTableSQL();
     }
