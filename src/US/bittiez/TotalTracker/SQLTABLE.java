@@ -135,7 +135,6 @@ public class SQLTABLE {
 
             sql.append("CREATE TABLE IF NOT EXISTS ").append(genFullTableSQL(true)).append(" (");
             sql.append("`id` int(10) not null auto_increment, ");
-            sql.append("`server_name` text(255), ");
             sql.append("`" + PVP_KILLS + "` BIGINT(20) default '0', ");
             sql.append("`" + DEATHS + "` BIGINT(20) default '0', ");
             sql.append("`" + MOB_KILLS + "` BIGINT(20) default '0', ");
@@ -158,8 +157,7 @@ public class SQLTABLE {
             sql.append("`" + BUCKETS_EMPTIED + "` BIGINT(20) default '0', ");
             sql.append("`" + FISH_CAUGHT + "` BIGINT(20) default '0', ");
             sql.append("`" + WORDS_SPOKEN + "` BIGINT(20) default '0', ");
-            sql.append("PRIMARY KEY (`id`),");
-            sql.append("UNIQUE KEY (`server_name`)");
+            sql.append("PRIMARY KEY (`id`)");
             sql.append(") ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;");
             sqlQueries.add(sql.toString());
             version++; cv++;
@@ -192,18 +190,13 @@ public class SQLTABLE {
 
         return insert;
     }
-    public static String genINSERT(QueObject queObject, Boolean server) {
-        if(!server)
-            return genINSERT(queObject);
-
+    public static String genServerInsert(QueObject queObject, String rowID) {
         String insert = "INSERT INTO "
                 + genFullTableSQL(true)
-                + " (server_name, " + queObject.QueType + ")"
-                + " VALUES (" + MySQLQuotes(queObject.PlayerUUID) + ", " + MySQLQuotes(queObject.PlayerName) + ", " + queObject.Quantity + ") "
+                + " (" + queObject.QueType + ")"
+                + " VALUES (" + queObject.Quantity + ") "
                 + "ON DUPLICATE KEY UPDATE "
-                + queObject.QueType + "=" + queObject.QueType + "+" + queObject.Quantity + ", "
-                + PLAYER + "_name=" + MySQLQuotes(queObject.PlayerName) + ";";
-
+                + queObject.QueType + "=" + queObject.QueType + "+" + queObject.Quantity + ";";
         return insert;
     }
 
