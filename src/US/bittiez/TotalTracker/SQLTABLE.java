@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class SQLTABLE {
+    private final static String SERVER_SUFFIX = "_server";
     public final static String PLAYER = "player";
     public final static String PVP_KILLS = "pvp_kills";
     public final static String DEATHS = "deaths";
@@ -126,6 +127,43 @@ public class SQLTABLE {
             sqlQueries.add("ALTER TABLE " + genFullTableSQL() + " ADD `" + WORDS_SPOKEN + "` int(10) default '0';");
             version++;
         }
+        int cv = 20; // Switch to this method, easier in the long run
+        if (version == cv) {
+            StringBuilder sql = new StringBuilder();
+
+            sqlQueries.add("DROP TABLE IF EXISTS " + genFullTableSQL() + ";");
+
+            sql.append("CREATE TABLE IF NOT EXISTS ").append(genFullTableSQL(true)).append(" (");
+            sql.append("`id` int(10) not null auto_increment, ");
+            sql.append("`server_name` text(255), ");
+            sql.append("`" + PVP_KILLS + "` int(10) default '0', ");
+            sql.append("`" + DEATHS + "` int(10) default '0', ");
+            sql.append("`" + MOB_KILLS + "` int(10) default '0', ");
+            sql.append("`" + BLOCKS_PLACED + "` int(10) default '0', ");
+            sql.append("`" + BLOCKS_BROKEN + "` int(10) default '0', ");
+            sql.append("`" + JOINS + "` int(10) default '0', ");
+            sql.append("`" + DAMAGE_TAKEN + "` int(10) default '0', ");
+            sql.append("`" + DAMAGE_CAUSED + "` int(10) default '0', ");
+            sql.append("`" + ITEM_PICKUP + "` int(10) default '0', ");
+            sql.append("`" + PLAYER_CHAT + "` int(10) default '0', ");
+            sql.append("`" + ITEMS_CRAFTED + "` int(10) default '0', ");
+            sql.append("`" + XP_GAINED + "` int(10) default '0', ");
+            sql.append("`" + TIME_PLAYED + "` int(10) default '0', ");
+            sql.append("`" + FOOD_EATEN + "` int(10) default '0', ");
+            sql.append("`" + ITEMS_DROPPED + "` int(10) default '0', ");
+            sql.append("`" + ITEMS_ENCHANTED + "` int(10) default '0', ");
+            sql.append("`" + ARROWS_SHOT + "` int(10) default '0', ");
+            sql.append("`" + TOOLS_BROKEN + "` int(10) default '0', ");
+            sql.append("`" + BUCKETS_FILLED + "` int(10) default '0', ");
+            sql.append("`" + BUCKETS_EMPTIED + "` int(10) default '0', ");
+            sql.append("`" + FISH_CAUGHT + "` int(10) default '0', ");
+            sql.append("`" + WORDS_SPOKEN + "` int(10) default '0', ");
+            sql.append("PRIMARY KEY (`id`),");
+            sql.append("UNIQUE KEY (`server_name`)");
+            sql.append(") ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;");
+            sqlQueries.add(sql.toString());
+            version++; cv++;
+        }
 
 
         if (version != config.getInt("db_version", 1)) {
@@ -157,6 +195,13 @@ public class SQLTABLE {
 
     public static String genFullTableSQL() {
         return "`" + main.database + "`.`" + main.prefix + "`";
+    }
+
+    public static String genFullTableSQL(boolean serverStats) {
+        if(serverStats)
+            return "`" + main.database + "`.`" + main.prefix + "`.`" + SERVER_SUFFIX + "`";
+        else
+            return genFullTableSQL();
     }
 
     private static String MySQLQuotes(String original) {
