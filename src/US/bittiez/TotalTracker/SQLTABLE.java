@@ -136,28 +136,28 @@ public class SQLTABLE {
             sql.append("CREATE TABLE IF NOT EXISTS ").append(genFullTableSQL(true)).append(" (");
             sql.append("`id` int(10) not null auto_increment, ");
             sql.append("`server_name` text(255), ");
-            sql.append("`" + PVP_KILLS + "` int(10) default '0', ");
-            sql.append("`" + DEATHS + "` int(10) default '0', ");
-            sql.append("`" + MOB_KILLS + "` int(10) default '0', ");
-            sql.append("`" + BLOCKS_PLACED + "` int(10) default '0', ");
-            sql.append("`" + BLOCKS_BROKEN + "` int(10) default '0', ");
-            sql.append("`" + JOINS + "` int(10) default '0', ");
-            sql.append("`" + DAMAGE_TAKEN + "` int(10) default '0', ");
-            sql.append("`" + DAMAGE_CAUSED + "` int(10) default '0', ");
-            sql.append("`" + ITEM_PICKUP + "` int(10) default '0', ");
-            sql.append("`" + PLAYER_CHAT + "` int(10) default '0', ");
-            sql.append("`" + ITEMS_CRAFTED + "` int(10) default '0', ");
-            sql.append("`" + XP_GAINED + "` int(10) default '0', ");
-            sql.append("`" + TIME_PLAYED + "` int(10) default '0', ");
-            sql.append("`" + FOOD_EATEN + "` int(10) default '0', ");
-            sql.append("`" + ITEMS_DROPPED + "` int(10) default '0', ");
-            sql.append("`" + ITEMS_ENCHANTED + "` int(10) default '0', ");
-            sql.append("`" + ARROWS_SHOT + "` int(10) default '0', ");
-            sql.append("`" + TOOLS_BROKEN + "` int(10) default '0', ");
-            sql.append("`" + BUCKETS_FILLED + "` int(10) default '0', ");
-            sql.append("`" + BUCKETS_EMPTIED + "` int(10) default '0', ");
-            sql.append("`" + FISH_CAUGHT + "` int(10) default '0', ");
-            sql.append("`" + WORDS_SPOKEN + "` int(10) default '0', ");
+            sql.append("`" + PVP_KILLS + "` BIGINT(20) default '0', ");
+            sql.append("`" + DEATHS + "` BIGINT(20) default '0', ");
+            sql.append("`" + MOB_KILLS + "` BIGINT(20) default '0', ");
+            sql.append("`" + BLOCKS_PLACED + "` BIGINT(20) default '0', ");
+            sql.append("`" + BLOCKS_BROKEN + "` BIGINT(20) default '0', ");
+            sql.append("`" + JOINS + "` BIGINT(20) default '0', ");
+            sql.append("`" + DAMAGE_TAKEN + "` BIGINT(20) default '0', ");
+            sql.append("`" + DAMAGE_CAUSED + "` BIGINT(20) default '0', ");
+            sql.append("`" + ITEM_PICKUP + "` BIGINT(20) default '0', ");
+            sql.append("`" + PLAYER_CHAT + "` BIGINT(20) default '0', ");
+            sql.append("`" + ITEMS_CRAFTED + "` BIGINT(02) default '0', ");
+            sql.append("`" + XP_GAINED + "` BIGINT(20) default '0', ");
+            sql.append("`" + TIME_PLAYED + "` BIGINT(20) default '0', ");
+            sql.append("`" + FOOD_EATEN + "` BIGINT(20) default '0', ");
+            sql.append("`" + ITEMS_DROPPED + "` BIGINT(20) default '0', ");
+            sql.append("`" + ITEMS_ENCHANTED + "` BIGINT(20) default '0', ");
+            sql.append("`" + ARROWS_SHOT + "` BIGINT(20) default '0', ");
+            sql.append("`" + TOOLS_BROKEN + "` BIGINT(20) default '0', ");
+            sql.append("`" + BUCKETS_FILLED + "` BIGINT(20) default '0', ");
+            sql.append("`" + BUCKETS_EMPTIED + "` BIGINT(20) default '0', ");
+            sql.append("`" + FISH_CAUGHT + "` BIGINT(20) default '0', ");
+            sql.append("`" + WORDS_SPOKEN + "` BIGINT(20) default '0', ");
             sql.append("PRIMARY KEY (`id`),");
             sql.append("UNIQUE KEY (`server_name`)");
             sql.append(") ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;");
@@ -185,6 +185,20 @@ public class SQLTABLE {
         String insert = "INSERT INTO "
                 + genFullTableSQL()
                 + " (" + PLAYER + ", " + PLAYER + "_name, " + queObject.QueType + ")"
+                + " VALUES (" + MySQLQuotes(queObject.PlayerUUID) + ", " + MySQLQuotes(queObject.PlayerName) + ", " + queObject.Quantity + ") "
+                + "ON DUPLICATE KEY UPDATE "
+                + queObject.QueType + "=" + queObject.QueType + "+" + queObject.Quantity + ", "
+                + PLAYER + "_name=" + MySQLQuotes(queObject.PlayerName) + ";";
+
+        return insert;
+    }
+    public static String genINSERT(QueObject queObject, Boolean server) {
+        if(!server)
+            return genINSERT(queObject);
+
+        String insert = "INSERT INTO "
+                + genFullTableSQL(true)
+                + " (server_name, " + queObject.QueType + ")"
                 + " VALUES (" + MySQLQuotes(queObject.PlayerUUID) + ", " + MySQLQuotes(queObject.PlayerName) + ", " + queObject.Quantity + ") "
                 + "ON DUPLICATE KEY UPDATE "
                 + queObject.QueType + "=" + queObject.QueType + "+" + queObject.Quantity + ", "
