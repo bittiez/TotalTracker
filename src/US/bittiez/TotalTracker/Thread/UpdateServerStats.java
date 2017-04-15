@@ -7,13 +7,17 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
+import java.util.logging.Logger;
+
 public class UpdateServerStats implements Runnable{
     private FileConfiguration config;
+    private Logger log;
     private String sql = "SELECT id FROM " + SQLTABLE.genFullTableSQL(true) + " LIMIT 1";
 
-    public UpdateServerStats(FileConfiguration config){
+    public UpdateServerStats(FileConfiguration config, Logger log){
 
         this.config = config;
+        this.log = log;
     }
 
     @Override
@@ -24,7 +28,13 @@ public class UpdateServerStats implements Runnable{
                 totalStats = con.createQuery(sql).executeAndFetchFirst(TotalStats.class);
             }
         if(totalStats != null){
-
+            if(main.debug)
+                log.info("Total Stats ID: " + totalStats.id); //Working
+//            UPDATE `teTotalTracker_server` c
+//            INNER JOIN (
+//                    SELECT SUM(pvp_kills) as total FROM `teTotalTracker`
+//            ) x
+//            SET c.pvp_kills = x.total
         }
     }
 }
