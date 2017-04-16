@@ -13,21 +13,17 @@ import java.util.logging.Logger;
 public class UpdateServerStats implements Runnable{
     private FileConfiguration config;
     private Logger log;
-    private String sql = "SELECT id FROM " + SQLTABLE.genFullTableSQL(true) + " LIMIT 1";
 
     public UpdateServerStats(FileConfiguration config, Logger log){
 
         this.config = config;
         this.log = log;
     }
-
+//CREATE GET ID METHOD IN SQLTABLE...
     @Override
     public void run() {
         Sql2o SQL = new Sql2o(main.genMySQLUrl(config), config.getString("mysql_username"), config.getString("mysql_password"));
-        TotalStats totalStats;
-            try (Connection con = SQL.open()) {
-                totalStats = con.createQuery(sql).executeAndFetchFirst(TotalStats.class);
-            }
+        TotalStats totalStats = SQLTABLE.getServerStatId(config);
         if(totalStats != null){
             if(main.debug)
                 log.info("Total Stats ID: " + totalStats.id);

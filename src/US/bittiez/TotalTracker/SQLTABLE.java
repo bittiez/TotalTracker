@@ -1,7 +1,10 @@
 package US.bittiez.TotalTracker;
 
+import US.bittiez.TotalTracker.Models.TotalStats;
 import US.bittiez.TotalTracker.Sql.Stats;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.sql2o.Connection;
+import org.sql2o.Sql2o;
 
 import java.io.File;
 import java.nio.file.Paths;
@@ -131,8 +134,7 @@ public class SQLTABLE {
             sqlQueries.add("ALTER TABLE " + genFullTableSQL() + " ADD `" + WORDS_SPOKEN + "` int(10) default '0';");
             version++;
         }
-        int cv = 20; // Switch to this method, easier in the long run
-        if (version == cv) {
+        if (version == 20) {
             StringBuilder sql = new StringBuilder();
 
             sqlQueries.add("DROP TABLE IF EXISTS " + genFullTableSQL(true) + ";");
@@ -165,7 +167,7 @@ public class SQLTABLE {
             sql.append(") ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;");
             sqlQueries.add(sql.toString());
             sqlQueries.add("INSERT INTO " + genFullTableSQL(true) + " (pvp_kills) VALUES (0);");
-            version++; cv++;
+            version++;
         }
 
 
@@ -195,14 +197,33 @@ public class SQLTABLE {
 
         return insert;
     }
-    public static String genServerInsert(QueObject queObject, String rowID) {
+
+    public static String genServerInsert(QueObject queObject, long rowID) {
         String insert = "INSERT INTO "
                 + genFullTableSQL(true)
                 + " (" + queObject.QueType + ")"
-                + " VALUES (" + queObject.Quantity + ") "
-                + "ON DUPLICATE KEY UPDATE "
+                + " VALUES (" + queObject.Quantity + ")"
+                + " WHERE id=" + rowID
+                + " ON DUPLICATE KEY UPDATE "
                 + queObject.QueType + "=" + queObject.QueType + "+" + queObject.Quantity + ";";
         return insert;
+    }
+
+    public static TotalStats getServerStatId(FileConfiguration config) {
+        Sql2o SQL = new Sql2o(main.genMySQLUrl(config), config.getString("mysql_username"), config.getString("mysql_password"));
+        String sql = "SELECT id FROM " + SQLTABLE.genFullTableSQL(true) + " LIMIT 1";
+        TotalStats totalStats;
+
+        try (Connection con = SQL.open()) {
+            totalStats = con.createQuery(sql).executeAndFetchFirst(TotalStats.class);
+        } catch (Exception e) {
+            try (Connection con = SQL.open()) {
+                con.createQuery("INSERT INTO " + genFullTableSQL(true) + " (pvp_kills) VALUES (0);").executeUpdate();
+                totalStats = con.createQuery(sql).executeAndFetchFirst(TotalStats.class);
+            }
+        }
+        return totalStats;
+
     }
 
     public static String genFullTableSQL() {
@@ -210,7 +231,7 @@ public class SQLTABLE {
     }
 
     public static String genFullTableSQL(boolean serverStats) {
-        if(serverStats)
+        if (serverStats)
             return "`" + main.database + "`.`" + main.prefix + SERVER_SUFFIX + "`";
         else
             return genFullTableSQL();

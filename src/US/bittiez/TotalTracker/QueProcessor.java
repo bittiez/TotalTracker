@@ -1,5 +1,6 @@
 package US.bittiez.TotalTracker;
 
+import US.bittiez.TotalTracker.Models.TotalStats;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.sql2o.Connection;
@@ -29,6 +30,8 @@ public class QueProcessor extends BukkitRunnable {
             if (main.debug)
                 log.info("Trying to process a que of " + QueObjects.size() + " QueObjects.");
 
+            TotalStats totalStats = SQLTABLE.getServerStatId(config);
+
             for (QueObject o : QueObjects) {
                 Boolean addNew = true;
 
@@ -56,16 +59,22 @@ public class QueProcessor extends BukkitRunnable {
                             log.info("Saving [" + co.Quantity + "] x [" + co.QueType + "] for [" + co.PlayerName + "]");
                             log.info("RUNSQL: " + SQLTABLE.genINSERT(co));
                         }
-                        if (co.Quantity > 0)
+                        if (co.Quantity > 0) {
                             con.createQuery(SQLTABLE.genINSERT(co)).executeUpdate();
+                            if (totalStats != null)
+                                con.createQuery(SQLTABLE.genServerInsert(co, totalStats.id)).executeUpdate();
+                        }
                         co.sentToDataBase = true;
                     }
                 } catch (Exception e) {
                     log.severe("Failed to connect to the database, make sure your connection information is correct!");
                     log.severe("Due to a connection failure, there may be query's that were not run, please check your database and manually run these:");
                     for (QueObject co : ConsolidatedQueObjects)
-                        if(!co.sentToDataBase)
+                        if (!co.sentToDataBase) {
                             log.severe(SQLTABLE.genINSERT(co));
+                            if (totalStats != null)
+                                log.severe(SQLTABLE.genServerInsert(co, totalStats.id));
+                        }
                     if (main.debug)
                         e.printStackTrace();
                 }
