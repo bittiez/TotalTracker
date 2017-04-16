@@ -24,67 +24,55 @@ public class ImportProcessor extends BukkitRunnable {
     @Override
     public void run() {
         int v = playerVersion.getInt(player.getUniqueId().toString() + ".version", 1);
-        int cv = 1;
 
-        if (v == cv) {
+        if (v == 1) {
             QueObjects.add(new QueObject(player, SQLTABLE.PVP_KILLS, player.getStatistic(Statistic.PLAYER_KILLS)));
             QueObjects.add(new QueObject(player, SQLTABLE.DEATHS, player.getStatistic(Statistic.DEATHS)));
             QueObjects.add(new QueObject(player, SQLTABLE.MOB_KILLS, player.getStatistic(Statistic.MOB_KILLS)));
-            //Missing: Blocks Placed
             v++;
-            cv++;
         }
-        if (v == cv) {
+        if (v == 2) {
             v++;
-            cv++; //Don't ask, bad design in the beginning, to late to fix it now :(
         }
-        if (v == cv) {
+        if (v == 3) {
             QueObject qe = new QueObject(player.getUniqueId().toString(), SQLTABLE.JOINS, player.getName());
             qe.Quantity = player.getStatistic(Statistic.LEAVE_GAME);
             QueObjects.add(qe);
             v++;
-            cv++;
         }
-        if (v == cv) {
+        if (v == 4) {
             QueObject qe = new QueObject(player.getUniqueId().toString(), SQLTABLE.DAMAGE_TAKEN, player.getName());
             qe.Quantity = player.getStatistic(Statistic.DAMAGE_TAKEN) / 10;
             QueObjects.add(qe);
             v++;
-            cv++;
         }
-        if (v == cv) {
+        if (v == 5) {
             QueObject qe = new QueObject(player.getUniqueId().toString(), SQLTABLE.DAMAGE_CAUSED, player.getName());
             qe.Quantity = player.getStatistic(Statistic.DAMAGE_DEALT) / 10;
             QueObjects.add(qe);
             v++;
-            cv++;
         }
-        if (v == cv) {
+        if (v == 6) {
             v++;
-            cv++;//Don't ask, bad design in the beginning, to late to fix it now :(
         }
-        if (v == cv) {
+        if (v == 7) {
             v++;
-            cv++;//Don't ask, bad design in the beginning, to late to fix it now :(
         }
-        if (v == cv) {
+        if (v == 8) {
             v++;
-            cv++;//Don't ask, bad design in the beginning, to late to fix it now :(
         }
-        if (v == cv) {
+        if (v == 9) {
             QueObject qe = new QueObject(player, SQLTABLE.TIME_PLAYED);
             // 20 ticks per second
             qe.Quantity = (player.getStatistic(Statistic.PLAY_ONE_TICK) / 20) / 60;
             QueObjects.add(qe);
             v++;
-            cv++;
         }
-        if (v == cv) {
+        if (v == 10) {
             QueObjects.add(new QueObject(player, SQLTABLE.FOOD_EATEN, player.getStatistic(Statistic.CAKE_SLICES_EATEN)));
             v++;
-            cv++;
         }
-        if (v == cv) {
+        if (v == 11) {
             for (Material m : Material.values()) {
                 try {
                     if (m.isBlock())
@@ -93,14 +81,12 @@ public class ImportProcessor extends BukkitRunnable {
                 }
             }
             v++;
-            cv++;
         }
-        if (v == cv) {
+        if (v == 12) {
             QueObjects.add(new QueObject(player, SQLTABLE.ITEMS_ENCHANTED, player.getStatistic(Statistic.ITEM_ENCHANTED)));
             v++;
-            cv++;
         }
-        if (v == cv) {
+        if (v == 13) {
             for (Material m : Material.values()) {
                 try {
                     if (m.isBlock())
@@ -109,9 +95,8 @@ public class ImportProcessor extends BukkitRunnable {
                 }
             }
             v++;
-            cv++;
         }
-        if (v == cv) {
+        if (v == 14) {
             List<Integer> tools = new ArrayList<Integer>();
             for (int i = 256; i <= 259; i++)
                 tools.add(i);
@@ -131,15 +116,13 @@ public class ImportProcessor extends BukkitRunnable {
                 }
             }
             v++;
-            cv++;
         }
-        if (v == cv) {
+        if (v == 15) {
             try {
                 QueObjects.add(new QueObject(player, SQLTABLE.FISH_CAUGHT, player.getStatistic(Statistic.FISH_CAUGHT)));
             } catch (Exception e) {
             }
             v++;
-            cv++;
         }
 
         if (v != playerVersion.getInt(player.getUniqueId().toString() + ".version")) {
