@@ -55,11 +55,13 @@ public class QueProcessor extends BukkitRunnable {
                 Sql2o SQL = new Sql2o(main.genMySQLUrl(config), config.getString("mysql_username"), config.getString("mysql_password"));
                 try (Connection con = SQL.open()) {
                     for (QueObject co : ConsolidatedQueObjects) {
-                        if (main.debug) {
-                            log.info("Saving [" + co.Quantity + "] x [" + co.QueType + "] for [" + co.PlayerName + "]");
-                            log.info("RUNSQL: " + SQLTABLE.genINSERT(co));
-                        }
                         if (co.Quantity > 0) {
+                            if (main.debug) {
+                                log.info("Saving [" + co.Quantity + "] x [" + co.QueType + "] for [" + co.PlayerName + "]");
+                                log.info("RUNSQL: " + SQLTABLE.genINSERT(co));
+                                log.info("RUNSQL: " + SQLTABLE.genServerInsert(co, totalStats.id));
+                            }
+
                             con.createQuery(SQLTABLE.genINSERT(co)).executeUpdate();
                             if (totalStats != null)
                                 con.createQuery(SQLTABLE.genServerInsert(co, totalStats.id)).executeUpdate();

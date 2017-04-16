@@ -201,9 +201,8 @@ public class SQLTABLE {
     public static String genServerInsert(QueObject queObject, long rowID) {
         String insert = "INSERT INTO "
                 + genFullTableSQL(true)
-                + " (" + queObject.QueType + ")"
-                + " VALUES (" + queObject.Quantity + ")"
-                + " WHERE id=" + rowID
+                + " (id, " + queObject.QueType + ")"
+                + " VALUES (" + rowID + ", " + queObject.Quantity + ")"
                 + " ON DUPLICATE KEY UPDATE "
                 + queObject.QueType + "=" + queObject.QueType + "+" + queObject.Quantity + ";";
         return insert;
