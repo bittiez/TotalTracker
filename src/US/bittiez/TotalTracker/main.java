@@ -1,5 +1,6 @@
 package US.bittiez.TotalTracker;
 
+import US.bittiez.TotalTracker.Thread.UpdateServerStats;
 import US.bittiez.TotalTracker.Updater.UpdateChecker;
 import US.bittiez.TotalTracker.Updater.UpdateStatus;
 import org.bukkit.ChatColor;
@@ -130,6 +131,9 @@ public class main extends JavaPlugin implements Listener {
                     config = getConfig();
                     sender.sendMessage("Config reloaded!");
                     return true;
+                } else if (args[0].equalsIgnoreCase("cache") && sender.hasPermission("TotalTracker.cache")) {
+                    new Thread(new UpdateServerStats(config, log)).start();
+                    sender.sendMessage("Rebuilding the cache now.");
                 } else {
                     sender.sendMessage("It looks like you don't have permission to use that command!");
                 }

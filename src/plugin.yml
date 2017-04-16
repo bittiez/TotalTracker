@@ -1,5 +1,5 @@
 name: TotalTracker
-version: 1.22.1
+version: 1.23.0
 author: bittiez
 main: US.bittiez.TotalTracker.main
 commands:
@@ -14,3 +14,5 @@ permissions:
     TotalTracker.updates:
         description: Will receive notifications when an update is available
         default: op
+    TotalTracker.cache:
+        description: Will rebuild the total server counts for all stats, this may be resource heavy but it will be ran in a seperate thread. Do not do this often, it shouldn't be needed.
