@@ -9,5 +9,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="patched_1.11.2" level="project" />
     <orderEntry type="library" name="sql2o-1.5.4" level="project" />
+    <orderEntry type="library" name="Vault" level="project" />
   </component>
 </module>
