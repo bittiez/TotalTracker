@@ -24,10 +24,11 @@ $lang['day'] = "days";
 $lang['hour'] = "hours";
 $lang['minute'] = "minutes";
 $lang['buckets_emptied'] = "Buckets Emptied";
-//Added on 1.21.0
 $lang['fish_caught'] = "Fish Caught";
 //Added on 1.22.0
 $lang['search_field'] = "Username";
 $lang['search_button'] = "Seach";
 $lang['words_said'] = "Words Said";
+//Added on 1.24.0
+$lang['current_bal'] = "Current Balance";
 ?>
