@@ -72,7 +72,6 @@ Do stuff in game
 [View default configuration file here](../../blob/master/src/config.yml)
 
 # To-do
-- [WEB]Add pages(Currently only shows top 10) to the web portion
 - Add distance walked
 - Money earned (Vault)
 - Current money (Vault)
