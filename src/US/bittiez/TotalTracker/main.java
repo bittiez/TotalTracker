@@ -1,5 +1,7 @@
 package US.bittiez.TotalTracker;
 
+import US.bittiez.TotalTracker.Balance.VaultHandler;
+import US.bittiez.TotalTracker.Sql.Stats;
 import US.bittiez.TotalTracker.Thread.UpdateServerStats;
 import US.bittiez.TotalTracker.Updater.UpdateChecker;
 import US.bittiez.TotalTracker.Updater.UpdateStatus;
@@ -19,6 +21,7 @@ import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.event.world.WorldSaveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -37,6 +40,7 @@ public class main extends JavaPlugin implements Listener {
     public static String prefix;
     public static String database;
     public static File playerVersionFile;
+    private static VaultHandler vaultHandler;
     private static Long processEveryMinutes = 5L;
     private static int MaxCapacity = 150;
     public FileConfiguration playerVersion;
@@ -62,7 +66,6 @@ public class main extends JavaPlugin implements Listener {
             log.warning("You must edit your config file and restart the server to finish setting up TotalTracker. Make sure to change setup_complete to true when you are finished.");
             setEnabled(false);
         } else {
-
             prefix = config.getString("mysql_db_prefix", "") + "TotalTracker";
             database = config.getString("mysql_database");
             processEveryMinutes = config.getLong("sync_interval", 5);
@@ -76,7 +79,7 @@ public class main extends JavaPlugin implements Listener {
 
             tableSetup();
             playerVersion = YamlConfiguration.loadConfiguration(playerVersionFile);
-
+            vaultHandler = new VaultHandler(this);
 
             scheduler.scheduleSyncRepeatingTask(this, () -> {
                 if (queObjects.size() > 0) {
@@ -161,6 +164,14 @@ public class main extends JavaPlugin implements Listener {
     }
 
     @EventHandler
+    public void onWorldSave(WorldSaveEvent e){
+        if(vaultHandler.getSupported())
+            for(Player p : e.getWorld().getPlayers())
+                queObjects.add(new QueObject(p, Stats.CURRENT_MONEY.toString(), vaultHandler.getPlayerBalance(p)));
+        checkQue();
+    }
+
+    @EventHandler
     public void onBucketFilled(PlayerBucketFillEvent e) {
         queObjects.add(new QueObject(e.getPlayer(), SQLTABLE.BUCKETS_FILLED));
     }
@@ -215,6 +226,13 @@ public class main extends JavaPlugin implements Listener {
         }
         if (queObjects.size() >= MaxCapacity)
             runQue();
+    }
+
+    @EventHandler
+    public void onPlayerQuit(PlayerQuitEvent e){
+        if(vaultHandler.getSupported())
+            queObjects.add(new QueObject(e.getPlayer(), Stats.CURRENT_MONEY.toString(), vaultHandler.getPlayerBalance(e.getPlayer())));
+        checkQue();
     }
 
     @EventHandler
