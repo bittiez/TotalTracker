@@ -11,8 +11,8 @@ public class VaultHandler {
     private Economy economy;
 
     public VaultHandler(Plugin plugin){
-
         this.plugin = plugin;
+        setup();
     }
 
     public void setup(){
