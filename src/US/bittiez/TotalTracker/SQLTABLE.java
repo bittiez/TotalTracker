@@ -169,6 +169,11 @@ public class SQLTABLE {
             sqlQueries.add("INSERT INTO " + genFullTableSQL(true) + " (pvp_kills) VALUES (0);");
             version++;
         }
+        if (version == 21) {
+            sqlQueries.add("ALTER TABLE " + genFullTableSQL() + " ADD `" + Stats.CURRENT_MONEY.toString() + "` double(12,2) default '0.0';");
+            sqlQueries.add("ALTER TABLE " + genFullTableSQL(true) + " ADD `" + Stats.CURRENT_MONEY.toString() + "` double(12,2) default '0.0';");
+            version++;
+        }
 
 
         if (version != config.getInt("db_version", 1)) {

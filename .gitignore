@@ -43,7 +43,4 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
-# CI
-web2/application/config/config.php
-web2/application/config/database.php
-web2/application/config/total_tracker.php
+/reqlibs/

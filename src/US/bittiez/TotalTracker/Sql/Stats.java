@@ -23,7 +23,8 @@ public enum Stats {
     BUCKETS_FILLED("buckets_filled"),
     BUCKETS_EMPTIED("buckets_emptied"),
     FISH_CAUGHT("fish_caught"),
-    WORDS_SPOKEN("words_spoken")
+    WORDS_SPOKEN("words_spoken"),
+    CURRENT_MONEY("current_money"),
     ;
 
     private final String name;

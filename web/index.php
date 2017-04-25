@@ -51,7 +51,8 @@ $tableArray = [
   ["xpGained", "xp_gained",  $lang['xp_gain']],
   ["timePlayed", "time_played", $lang['time_played']],
   ["foodEaten", "food_eaten", $lang['food_eaten']],
-  ["fishCaught", "fish_caught", $lang['fish_caught']]
+  ["fishCaught", "fish_caught", $lang['fish_caught']],
+  ["currentBal", "current_money", $lang['current_bal']]
 ];
 
 foreach ($tableArray as $table) { ?>

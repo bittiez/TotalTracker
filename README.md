@@ -39,6 +39,7 @@ This will keep track of many stats, currently:
 - Buckets Emptied
 - Fish Caught
 - Words Said in chat
+- Current Money(Requires Vault)
 
 # Usage
 Do stuff in game
@@ -72,7 +73,4 @@ Do stuff in game
 [View default configuration file here](../../blob/master/src/config.yml)
 
 # To-do
-- [WEB]Add pages(Currently only shows top 10) to the web portion
 - Add distance walked
-- Money earned (Vault)
-- Current money (Vault)

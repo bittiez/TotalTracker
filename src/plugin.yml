@@ -1,7 +1,8 @@
 name: TotalTracker
-version: 1.23.0
+version: 1.24.0
 author: bittiez
 main: US.bittiez.TotalTracker.main
+softdepend: [Vault]
 commands:
     tt:
         description: Various TotalTracker commands
