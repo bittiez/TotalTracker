@@ -150,7 +150,7 @@ public class main extends JavaPlugin implements Listener {
                     sender.sendMessage("Config reloaded!");
                     return true;
                 } else if (args[0].equalsIgnoreCase("cache") && sender.hasPermission("TotalTracker.cache")) {
-                    new Thread(new UpdateServerStats(config, log)).start();
+                    new Thread(new UpdateServerStats(config, log, sender)).start();
                     sender.sendMessage("Rebuilding the cache now.");
                 } else {
                     sender.sendMessage("It looks like you don't have permission to use that command!");

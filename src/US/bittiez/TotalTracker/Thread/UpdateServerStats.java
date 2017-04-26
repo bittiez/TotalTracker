@@ -4,6 +4,7 @@ import US.bittiez.TotalTracker.Models.TotalStats;
 import US.bittiez.TotalTracker.SQLTABLE;
 import US.bittiez.TotalTracker.Sql.Stats;
 import US.bittiez.TotalTracker.main;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
@@ -13,13 +14,15 @@ import java.util.logging.Logger;
 public class UpdateServerStats implements Runnable{
     private FileConfiguration config;
     private Logger log;
+    private CommandSender sender;
 
-    public UpdateServerStats(FileConfiguration config, Logger log){
+    public UpdateServerStats(FileConfiguration config, Logger log, CommandSender sender){
 
         this.config = config;
         this.log = log;
+        this.sender = sender;
     }
-//CREATE GET ID METHOD IN SQLTABLE...
+
     @Override
     public void run() {
         Sql2o SQL = new Sql2o(main.genMySQLUrl(config), config.getString("mysql_username"), config.getString("mysql_password"));
@@ -41,6 +44,7 @@ public class UpdateServerStats implements Runnable{
                     con.createQuery(compiledSql).executeUpdate();
                 }
             }
+            sender.sendMessage("Done rebuilding the cache.");
         }
     }
 }
