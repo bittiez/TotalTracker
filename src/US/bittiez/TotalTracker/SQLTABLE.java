@@ -192,15 +192,28 @@ public class SQLTABLE {
     }
 
     public static String genINSERT(QueObject queObject) {
-        String insert = "INSERT INTO "
-                + genFullTableSQL()
-                + " (" + PLAYER + ", " + PLAYER + "_name, " + queObject.QueType + ")"
-                + " VALUES (" + MySQLQuotes(queObject.PlayerUUID) + ", " + MySQLQuotes(queObject.PlayerName) + ", " + queObject.Quantity + ") "
-                + "ON DUPLICATE KEY UPDATE "
-                + queObject.QueType + "=" + queObject.QueType + "+" + queObject.Quantity + ", "
-                + PLAYER + "_name=" + MySQLQuotes(queObject.PlayerName) + ";";
+        if(queObject.QueType.equals(Stats.CURRENT_MONEY.toString())) {
+            String insert = "INSERT INTO "
+                    + genFullTableSQL()
+                    + " (" + PLAYER + ", " + PLAYER + "_name, " + queObject.QueType + ")"
+                    + " VALUES (" + MySQLQuotes(queObject.PlayerUUID) + ", " + MySQLQuotes(queObject.PlayerName) + ", " + queObject.Quantity + ") "
+                    + "ON DUPLICATE KEY UPDATE "
+                    + queObject.QueType + "=" + queObject.Quantity + ", "
+                    + PLAYER + "_name=" + MySQLQuotes(queObject.PlayerName) + ";";
 
-        return insert;
+            return insert;
+        }
+        else {
+            String insert = "INSERT INTO "
+                    + genFullTableSQL()
+                    + " (" + PLAYER + ", " + PLAYER + "_name, " + queObject.QueType + ")"
+                    + " VALUES (" + MySQLQuotes(queObject.PlayerUUID) + ", " + MySQLQuotes(queObject.PlayerName) + ", " + queObject.Quantity + ") "
+                    + "ON DUPLICATE KEY UPDATE "
+                    + queObject.QueType + "=" + queObject.QueType + "+" + queObject.Quantity + ", "
+                    + PLAYER + "_name=" + MySQLQuotes(queObject.PlayerName) + ";";
+
+            return insert;
+        }
     }
 
     public static String genServerInsert(QueObject queObject, long rowID) {
