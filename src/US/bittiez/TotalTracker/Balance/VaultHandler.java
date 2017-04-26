@@ -23,6 +23,7 @@ public class VaultHandler {
         RegisteredServiceProvider<Economy> rsp = plugin.getServer().getServicesManager().getRegistration(Economy.class);
         if (rsp == null) {
             setSupported(false);
+            return;
         }
         economy = rsp.getProvider();
         setSupported(true);

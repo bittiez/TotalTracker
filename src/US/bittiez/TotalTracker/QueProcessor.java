@@ -2,6 +2,7 @@ package US.bittiez.TotalTracker;
 
 import US.bittiez.TotalTracker.Models.TotalStats;
 import US.bittiez.TotalTracker.Sql.Stats;
+import US.bittiez.TotalTracker.Thread.UpdateServerStats;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.sql2o.Connection;
@@ -65,12 +66,12 @@ public class QueProcessor extends BukkitRunnable {
 
                             con.createQuery(SQLTABLE.genINSERT(co)).executeUpdate();
                             if (totalStats != null && !co.QueType.equals(Stats.CURRENT_MONEY.toString()))
-                                con.createQuery(SQLTABLE.genServerInsert(co, totalStats.id)).executeUpdate();
+                                    con.createQuery(SQLTABLE.genServerInsert(co, totalStats.id)).executeUpdate();
                         }
                         co.sentToDataBase = true;
                     }
+                    con.createQuery(String.format(UpdateServerStats.sql, Stats.CURRENT_MONEY.toString())).executeUpdate(); //Update total money
                 } catch (Exception e) {
-                    log.severe("Failed to connect to the database, make sure your connection information is correct!");
                     log.severe("Due to a connection failure, there may be query's that were not run, please check your database and manually run these:");
                     for (QueObject co : ConsolidatedQueObjects)
                         if (!co.sentToDataBase) {
