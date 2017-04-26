@@ -204,7 +204,7 @@ public class SQLTABLE {
     }
 
     public static String genServerInsert(QueObject queObject, long rowID) {
-        if(queObject.QueType.equals(Stats.CURRENT_MONEY)) {
+        if(queObject.QueType.equals(Stats.CURRENT_MONEY.toString())) {
             String insert = "INSERT INTO "
                     + genFullTableSQL(true)
                     + " (id, " + queObject.QueType + ")"
