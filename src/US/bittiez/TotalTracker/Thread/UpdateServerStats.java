@@ -15,6 +15,10 @@ public class UpdateServerStats implements Runnable{
     private FileConfiguration config;
     private Logger log;
     private CommandSender sender;
+    public static String sql = "UPDATE "
+            + SQLTABLE.genFullTableSQL(true) + " c "
+            + "INNER JOIN ( SELECT SUM(%s) as total FROM " + SQLTABLE.genFullTableSQL() + " ) x "
+            + "SET c.%<s = x.total;";
 
     public UpdateServerStats(FileConfiguration config, Logger log, CommandSender sender){
 
@@ -30,10 +34,6 @@ public class UpdateServerStats implements Runnable{
         if(totalStats != null){
             if(main.debug)
                 log.info("Total Stats ID: " + totalStats.id);
-            String sql = "UPDATE "
-                    + SQLTABLE.genFullTableSQL(true) + " c "
-                    + "INNER JOIN ( SELECT SUM(%s) as total FROM " + SQLTABLE.genFullTableSQL() + " ) x "
-                    + "SET c.%<s = x.total;";
             try (Connection con = SQL.open()) {
                 for (Stats stat : Stats.values()) { //Loop through the stats
                     if (stat.equals(Stats.PLAYER))
