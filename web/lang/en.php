@@ -29,6 +29,4 @@ $lang['fish_caught'] = "Fish Caught";
 $lang['search_field'] = "Username";
 $lang['search_button'] = "Seach";
 $lang['words_said'] = "Words Said";
-//Added on 1.24.0
-$lang['current_bal'] = "Current Balance";
 ?>

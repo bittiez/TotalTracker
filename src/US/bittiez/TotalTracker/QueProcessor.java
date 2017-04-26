@@ -1,6 +1,7 @@
 package US.bittiez.TotalTracker;
 
 import US.bittiez.TotalTracker.Models.TotalStats;
+import US.bittiez.TotalTracker.Sql.Stats;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.sql2o.Connection;
@@ -63,7 +64,7 @@ public class QueProcessor extends BukkitRunnable {
                             }
 
                             con.createQuery(SQLTABLE.genINSERT(co)).executeUpdate();
-                            if (totalStats != null)
+                            if (totalStats != null && !co.QueType.equals(Stats.CURRENT_MONEY.toString()))
                                 con.createQuery(SQLTABLE.genServerInsert(co, totalStats.id)).executeUpdate();
                         }
                         co.sentToDataBase = true;

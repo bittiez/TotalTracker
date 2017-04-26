@@ -18,5 +18,4 @@ $lang['xp_gain'] = "XP bekommen";
 $lang['time_played'] = "Spielzeit";
 $lang['food_eaten'] = "Essen konsumiert";
 $lang['arrow_shot'] = "Pfeile geschossen";
-$lang['current_bal'] = "Kontostand";
 ?>

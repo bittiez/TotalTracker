@@ -217,23 +217,13 @@ public class SQLTABLE {
     }
 
     public static String genServerInsert(QueObject queObject, long rowID) {
-        if(queObject.QueType.equals(Stats.CURRENT_MONEY.toString())) {
-            String insert = "INSERT INTO "
-                    + genFullTableSQL(true)
-                    + " (id, " + queObject.QueType + ")"
-                    + " VALUES (" + rowID + ", " + queObject.Quantity + ")"
-                    + " ON DUPLICATE KEY UPDATE "
-                    + queObject.QueType + "=" + queObject.Quantity + ";";
-            return insert;
-        } else {
-            String insert = "INSERT INTO "
-                    + genFullTableSQL(true)
-                    + " (id, " + queObject.QueType + ")"
-                    + " VALUES (" + rowID + ", " + queObject.Quantity + ")"
-                    + " ON DUPLICATE KEY UPDATE "
-                    + queObject.QueType + "=" + queObject.QueType + "+" + queObject.Quantity + ";";
-            return insert;
-        }
+        String insert = "INSERT INTO "
+                + genFullTableSQL(true)
+                + " (id, " + queObject.QueType + ")"
+                + " VALUES (" + rowID + ", " + queObject.Quantity + ")"
+                + " ON DUPLICATE KEY UPDATE "
+                + queObject.QueType + "=" + queObject.QueType + "+" + queObject.Quantity + ";";
+        return insert;
     }
 
     public static TotalStats getServerStatId(FileConfiguration config) {
